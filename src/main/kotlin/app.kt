@@ -1,6 +1,5 @@
 import java.awt.Color
 import java.awt.image.BufferedImage
-import java.awt.image.Raster
 import java.io.File
 import javax.imageio.ImageIO
 
@@ -8,7 +7,7 @@ val path = ".\\src\\main\\resources\\"
 
 fun main(args: Array<String>) {
     val start = System.currentTimeMillis()
-    val lense = lense(600)
+    val lense = xor(249)
     val end = System.currentTimeMillis()
 
     println(end - start)
@@ -29,6 +28,21 @@ fun lense(size: Int): BufferedImage {
                 image.setRGB(x, y, col.rgb)
             }
 
+        }
+    }
+    return image
+}
+
+fun xor(size: Int): BufferedImage {
+    val image = BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB)
+    for (x: Int in 0..size - 1) {
+        for (y: Int in 0..size - 1) {
+            val unit = x.xor(y)
+            val r = 255 - unit
+            val g = unit
+            val b = unit % 128
+            val color = Color(r, g, b)
+            image.setRGB(x,y,color.rgb)
         }
     }
     return image
