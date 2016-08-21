@@ -1,4 +1,4 @@
-package pa;
+package com.metjka.vort;
 
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
@@ -65,7 +65,7 @@ public class Graph {
         getCellLayer().getChildren().removeAll(model.getRemovedEdges());
 
         // enable dragging of cells
-        for (Cell cell : model.getAddedCells()) {
+        for (Node cell : model.getAddedCells()) {
             mouseGestures.makeDraggable(cell);
         }
 

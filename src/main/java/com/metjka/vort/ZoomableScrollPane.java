@@ -1,4 +1,4 @@
-package pa;
+package com.metjka.vort;
 
 import javafx.event.EventHandler;
 import javafx.scene.Group;

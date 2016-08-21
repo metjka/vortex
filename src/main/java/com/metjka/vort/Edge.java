@@ -1,16 +1,16 @@
-package pa;
+package com.metjka.vort;
 
 import javafx.scene.Group;
 import javafx.scene.shape.Line;
 
 public class Edge extends Group {
 
-    protected Cell source;
-    protected Cell target;
+    protected Node source;
+    protected Node target;
 
     Line line;
 
-    public Edge(Cell source, Cell target) {
+    public Edge(Node source, Node target) {
 
         this.source = source;
         this.target = target;
@@ -30,11 +30,11 @@ public class Edge extends Group {
 
     }
 
-    public Cell getSource() {
+    public Node getSource() {
         return source;
     }
 
-    public Cell getTarget() {
+    public Node getTarget() {
         return target;
     }
 
