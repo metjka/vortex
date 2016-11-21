@@ -1,13 +1,16 @@
 package io.neuro.vort;
 
+import sun.awt.image.PixelConverter;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
+import java.awt.image.RGBImageFilter;
 
 /**
  * Created by Ihor Salnikov on 17.10.2016, 7:20 PM.
  * https://github.com/metjka/VORT
  */
-public class FastRGB {
+public class FastRGB extends RGBImageFilter {
 
     private int width;
     private int height;
@@ -36,9 +39,14 @@ public class FastRGB {
             argb = (((int) pixels[pos++] & 0xff) << 24); // alpha
         }
 
-        argb += ((int) pixels[pos++] & 0xff); // blue
         argb += (((int) pixels[pos++] & 0xff) << 8); // green
         argb += (((int) pixels[pos++] & 0xff) << 16); // red
+        argb += ((int) pixels[pos++] & 0xff); // blue
         return argb;
+    }
+
+    @Override
+    public int filterRGB(int x, int y, int rgb) {
+        return 0;
     }
 }

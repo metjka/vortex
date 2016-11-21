@@ -1,25 +1,55 @@
 package io.neuro.vort
 
-import com.metjka.vort.FastRGB
 import java.awt.Color
 import java.awt.image.BufferedImage
+import java.awt.image.WritableRaster
 import java.io.File
-import java.net.URL
 import javax.imageio.ImageIO
+import javax.swing.GrayFilter
 
-val path = ".\\src\\io.neuro.vort.main\\resources\\"
+class App {
+
+}
+
+val path = "C:/Users/isalnikov/Desktop/VORT/src/main/resources"
+
 
 fun main(args: Array<String>) {
-    var file: File = File(path + "test.png")
-    val bufferedImage: BufferedImage? = ImageIO.read(File(path + "test.png"))
+    var file: File = File(path, "test.png")
+    val bufferedImage: BufferedImage? = ImageIO.read(file)
+    val fastGRB = FastGRB(bufferedImage!!)
 
     val start: Long = System.currentTimeMillis()
-    val image = grayscale(bufferedImage)
+    val rgb = fastGRB.getRGB(1, 1)
+    val color = fastGRB.getColor(rgb!!)
     val end = System.currentTimeMillis()
 
+    val pixels: ByteArray? = fastGRB.pixels
+
+    var pix = ByteArray(fastGRB.height* fastGRB.width)
+
+    val grayFilter = GrayFilter(false, 50)
+
+    for (x: Int in 0..fastGRB.width - 1) {
+        for (y: Int in 0..fastGRB.height - 1) {
+            val filterRGB = grayFilter.filterRGB(0, 0, fastGRB.getRGB(x, y)!!)
+
+        }
+    }
+//    val image = BufferedImage(fastGRB.width, fastGRB.height, BufferedImage.TYPE_INT_ARGB)
+//    val data = image.data as WritableRaster
+//    data.setPixels(0,0,fastGRB.width,fastGRB.height,)
+
+    println(rgb)
     println(end - start)
 
-    ImageIO.write(image, "PNG", File(path + start.toString() + ".png"))
+    //val start: Long = System.currentTimeMillis()
+    //val image = grayscale(bufferedImage)
+    //val end = System.currentTimeMillis()
+//
+    //println(end - start)
+
+    //ImageIO.write(image, "PNG", File(path + start.toString() + ".png"))
 }
 
 fun lense(size: Int): BufferedImage {
