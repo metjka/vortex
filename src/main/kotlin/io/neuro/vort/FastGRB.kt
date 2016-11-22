@@ -7,8 +7,8 @@ import java.awt.image.DataBufferByte
 class FastGRB(image: BufferedImage) {
 
     val pixels: ByteArray? = (image.raster.dataBuffer as DataBufferByte).data
-    val height = image.height - 1
-    val width = image.width - 1
+    val height = image.height
+    val width = image.width
     val alfa: Boolean = if (image.alphaRaster != null) true else false
     val pixelLength = if (alfa) 4 else 3
 
@@ -38,12 +38,6 @@ class FastGRB(image: BufferedImage) {
     fun getColor(rgb: Int): Color {
         val color = Color(rgb, alfa)
         return color
-    }
-
-    fun setPixel(x: Int, y: Int, pixel: Int) {
-        val originalPixel = getPixel(x, y)
-
-
     }
 
     private fun getPixel(x: Int, y: Int) = pixelLength * (x + y * width)
