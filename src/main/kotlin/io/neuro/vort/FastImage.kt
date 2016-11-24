@@ -4,7 +4,7 @@ import java.awt.Color
 import java.awt.image.BufferedImage
 import java.awt.image.DataBufferByte
 
-class FastGRB(image: BufferedImage) {
+class FastImage(image: BufferedImage) {
 
     val pixels: ByteArray? = (image.raster.dataBuffer as DataBufferByte).data
     val height = image.height
