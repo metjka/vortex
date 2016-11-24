@@ -19,4 +19,10 @@ class Test {
         }
     }
 
+    @Test
+    fun arra() {
+        var a = Array<Int>(20, { x -> 0 })
+        a.forEach(::println)
+    }
+
 }
