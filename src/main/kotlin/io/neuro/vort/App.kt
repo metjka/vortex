@@ -26,11 +26,12 @@ fun processStar(): IntArray {
     star.spiralGalaxy(55, 150, 150, 4, 7, 2, 2, 2, 3, 2, 3)
     val p: IntArray = IntArray(300 * 300)
     for (i: Int in 0..star.pixels.size-1) {
-        var f = star.pixels[i]
+        var f: Double = star.pixels[i]
         if (f < 0.0)
-            f = 0.0;
+            f = 0.0
         if (f > Byte.MAX_VALUE)
             f = Byte.MAX_VALUE.toDouble()
+
         val rgb = Color(f.toInt(), f.toInt(), f.toInt(), 255).rgb
         p[i] = rgb
     }

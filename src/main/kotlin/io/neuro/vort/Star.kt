@@ -17,8 +17,13 @@ class Star(fastABGRRGB: FastABGRImage) : ProcessingFilter(fastABGRRGB) {
 
         for (i: Int in 1..spiralHarms) {
             for (j: Int in 0..(number / i)) {
-                val power: Double = random.nextDouble(powerFrom, powerTo)
-                val radius = random.nextInt(radiusFrom, radiusTo)
+
+//                val power: Double = random.nextDouble(powerFrom, powerTo)
+//                val radius = random.nextInt(radiusFrom, radiusTo)
+
+                val power: Double = 2.toDouble()
+                val radius = 2
+
                 val pair: Pair<Int, Int> = spiralDistortion(centerX, centerY, centerDensity, edgeDensity, cycles, startAngle, 0.05)
                 addStar(pair.first, pair.second, power, radius)
                 startAngle += num
@@ -32,10 +37,10 @@ class Star(fastABGRRGB: FastABGRImage) : ProcessingFilter(fastABGRRGB) {
             for (j: Int in (y - num1)..(y + num1) - 1) {
                 val sx = this.seamlessCoordination(i, fastGRB.width)
                 val sy = this.seamlessCoordination(j, fastGRB.height)
-                val val1_1 = Math.abs(sx - x).toDouble()
-                val val1_2 = Math.abs(sy - y).toDouble()
-                val val2_1 = fastGRB.width - val1_1
-                val val2_2 = fastGRB.height - val1_2
+                val val1_1: Double = Math.abs(sx - x).toDouble()
+                val val1_2: Double = Math.abs(sy - y).toDouble()
+                val val2_1: Double = fastGRB.width - val1_1
+                val val2_2: Double = fastGRB.height - val1_2
                 var num2 = Math.sqrt(Math.pow(Math.min(val1_1, val2_1), 2.0) + Math.pow(Math.min(val1_2, val2_2), 2.0))
                 if (num2 < 0.001) {
                     num2 = 0.001
