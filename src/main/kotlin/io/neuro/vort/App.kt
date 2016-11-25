@@ -12,26 +12,44 @@ val path = "./src/main/resources"
 
 fun main(args: Array<String>) {
     val file: File = File(path, "test.png")
-    val bufferedImage: BufferedImage? = ImageIO.read(file)
-    val fastGRB = FastImage(bufferedImage!!)
+    val bufferedImage: BufferedImage = ImageIO.read(file)
+    val fastABGRImage: FastABGRImage = FastABGRImage(bufferedImage)
+    val pix: IntArray = processStar()
 
+    val image = BufferedImage(300, 300, BufferedImage.TYPE_INT_ARGB)
+    image.data = Raster.createRaster(image.sampleModel, DataBufferInt(pix, pix.size), Point())
+    ImageIO.write(image, "PNG", File(path, "1.png"))
+}
+
+fun processStar(): IntArray {
+    val star = Star(FastABGRImage(300, 300))
+    star.spiralGalaxy(55, 150, 150, 4, 7, 2, 2, 2, 3, 2, 3)
+    val p: IntArray = IntArray(300 * 300)
+    for (i: Int in 0..star.pixels.size-1) {
+        var f = star.pixels[i]
+        if (f < 0.0)
+            f = 0.0;
+        if (f > Byte.MAX_VALUE)
+            f = Byte.MAX_VALUE.toDouble()
+        val rgb = Color(f.toInt(), f.toInt(), f.toInt(), 255).rgb
+        p[i] = rgb
+    }
+    return p
+}
+
+private fun processGreyscale(bufferedImage: BufferedImage, fastABGRGRB: FastABGRImage): IntArray {
     val pix = IntArray(bufferedImage.width * bufferedImage.height)
 
-    for (x: Int in 0..fastGRB.width - 1) {
-        for (y: Int in 0..fastGRB.height - 1) {
-            pix[(x + y * fastGRB.width)] = grayscale2(fastGRB.getRGB(x, y)!!, 10, true)
-            if (y == fastGRB.height) {
-                println("$x $y: " + fastGRB.getRGB(x, y))
+    for (x: Int in 0..fastABGRGRB.width - 1) {
+        for (y: Int in 0..fastABGRGRB.height - 1) {
+            pix[(x + y * fastABGRGRB.width)] = grayscale2(fastABGRGRB.getRGB(x, y)!!, 10, true)
+            if (y == fastABGRGRB.height) {
+                println("$x $y: " + fastABGRGRB.getRGB(x, y))
             }
         }
     }
-
-    val image = BufferedImage(fastGRB.width, fastGRB.height, BufferedImage.TYPE_INT_ARGB)
-    image.data = Raster.createRaster(image.sampleModel, DataBufferInt(pix, pix.size), Point())
-    ImageIO.write(image, "PNG", File(path, "1.png"))
-
+    return pix
 }
-
 
 
 fun greyscale(rgb: Int): Int {
@@ -43,7 +61,7 @@ fun greyscale(rgb: Int): Int {
     return color.rgb
 }
 
-fun grayscale2(rgb: Int, percent: Int, brighter:Boolean): Int {
+fun grayscale2(rgb: Int, percent: Int, brighter: Boolean): Int {
     // Use NTSC conversion formula.
     var gray = ((0.30 * (rgb shr 16 and 0xff) +
             0.59 * (rgb shr 8 and 0xff) +
