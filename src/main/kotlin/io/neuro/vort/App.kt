@@ -32,7 +32,9 @@ fun main(args: Array<String>) {
 
 }
 
-fun grayscale(rgb: Int): Int {
+
+
+fun greyscale(rgb: Int): Int {
     val c = Color(rgb)
     val red: Int = ((c.red * 0.299).toInt())
     val green: Int = ((c.green * 0.587).toInt())

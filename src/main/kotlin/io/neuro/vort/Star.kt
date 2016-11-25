@@ -1,13 +1,11 @@
 package io.neuro.vort
 
 import java.util.concurrent.ThreadLocalRandom
-import kotlin.concurrent.fixedRateTimer
-import com.sun.org.apache.xalan.internal.lib.ExsltMath.power
 
-
-class Star(fastRGB: FastImage) {
+class Star(fastRGB: FastImage) : ProcessingFilter(fastRGB) {
 
     val fastGRB = fastRGB
+
     val random = ThreadLocalRandom.current()
 
     fun spiralGalaxy(number: Int, centerX: Int, centerY: Int, centerDensity: Int, edgeDensity: Int,
@@ -34,16 +32,17 @@ class Star(fastRGB: FastImage) {
         val num1 = Math.min(Math.min(4 * (power * radius.toDouble()).toInt(), (this.fastGRB.width - 1) / 2), (this.fastGRB.height - 1) / 2)
         for (i: Int in x - num1..x + num1 - 1) {
             for (j: Int in y - num1..y + num1 - 1) {
-                val i3 = this.seamlessCoordination(i, fastGRB.width)
-                val j1 = this.seamlessCoordination(j, fastGRB.height)
-                val val1_1 = Math.abs(i3 - x) as Double
-                val val1_2 = Math.abs(j1 - y) as Double
-                val val2_1 = fastGRB.width as Double - val1_1
-                val val2_2 = fastGRB.height as Double - val1_2
+                val sx = this.seamlessCoordination(i, fastGRB.width)
+                val sy = this.seamlessCoordination(j, fastGRB.height)
+                val val1_1 = Math.abs(sx - x).toDouble()
+                val val1_2 = Math.abs(sy - y).toDouble()
+                val val2_1 = fastGRB.width.toDouble() - val1_1
+                val val2_2 = fastGRB.height.toDouble() - val1_2
                 var num2 = Math.sqrt(Math.pow(Math.min(val1_1, val2_1), 2.0) + Math.pow(Math.min(val1_2, val2_2), 2.0))
-                if (num2 < 0.001)
+                if (num2 < 0.001) {
                     num2 = 0.001
-                //fastGRB.(i3, j1, ((power * radius).toDouble() / num2).toFloat())
+                }
+                addPixel(sx, sy, ((power * radius) / num2).toInt())
             }
         }
     }
@@ -67,7 +66,7 @@ class Star(fastRGB: FastImage) {
     private fun seamlessCoordination(i: Int, side: Int): Int {
         var num = i % side
         if (num < 0) {
-            num = side + num
+            num += side
         }
         return num
     }
