@@ -91,6 +91,7 @@ public class AppTest extends Application {
             @Override
             public void handle(MouseEvent t) {
 
+
                 orgSceneX = t.getSceneX();
                 orgSceneY = t.getSceneY();
 

@@ -29,7 +29,7 @@ fun processStar(): IntArray {
         var f: Double = star.pixels[i]
         if (f < 0.0)
             f = 0.0
-        if (f > Byte.MAX_VALUE)
+        if (f > 255)
             f = Byte.MAX_VALUE.toDouble()
 
         val rgb = Color(f.toInt(), f.toInt(), f.toInt(), 255).rgb
