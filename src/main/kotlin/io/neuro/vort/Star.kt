@@ -18,11 +18,8 @@ class Star(fastABGRRGB: FastABGRImage) : ProcessingFilter(fastABGRRGB) {
         for (i: Int in 1..spiralHarms) {
             for (j: Int in 0..(number / i)) {
 
-//                val power: Double = random.nextDouble(powerFrom, powerTo)
-//                val radius = random.nextInt(radiusFrom, radiusTo)
-
-                val power: Double = 2.toDouble()
-                val radius = 2
+                val power: Double = random.nextDouble(powerFrom, powerTo)
+                val radius = random.nextInt(radiusFrom, radiusTo)
 
                 val pair: Pair<Int, Int> = spiralDistortion(centerX, centerY, centerDensity, edgeDensity, cycles, startAngle, 0.05)
                 addStar(pair.first, pair.second, power, radius)

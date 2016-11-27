@@ -16,21 +16,21 @@ fun main(args: Array<String>) {
     val fastABGRImage: FastABGRImage = FastABGRImage(bufferedImage)
     val pix: IntArray = processStar()
 
-    val image = BufferedImage(300, 300, BufferedImage.TYPE_INT_ARGB)
+    val image = BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB)
     image.data = Raster.createRaster(image.sampleModel, DataBufferInt(pix, pix.size), Point())
     ImageIO.write(image, "PNG", File(path, "1.png"))
 }
 
 fun processStar(): IntArray {
-    val star = Star(FastABGRImage(300, 300))
-    star.spiralGalaxy(55, 150, 150, 4, 7, 2, 2, 2, 3, 2, 3)
-    val p: IntArray = IntArray(300 * 300)
+    val star = Star(FastABGRImage(512, 512))
+    star.spiralGalaxy(100, 250, 250, 4, 7, 2, 2, 2, 5, 2, 5)
+    val p: IntArray = IntArray(512 * 512)
     for (i: Int in 0..star.pixels.size-1) {
         var f: Double = star.pixels[i]
         if (f < 0.0)
             f = 0.0
         if (f > 255)
-            f = Byte.MAX_VALUE.toDouble()
+            f = 255.0
 
         val rgb = Color(f.toInt(), f.toInt(), f.toInt(), 255).rgb
         p[i] = rgb
