@@ -25,8 +25,9 @@ fun main(args: Array<String>) {
 fun processStar(fastABGRImage1: FastABGRImage): IntArray {
     val star = Star(fastABGRImage1)
     //star.spiralGalaxy(200, fastABGRImage1.width / 2, fastABGRImage1.height / 2, 4, 7, 2, 4, 5, 6, 4, 5)
-    star.starfield(200, 5, 10, 5, 10)
-    val gray = star.gray()
+    star.starfield(400, 5, 10, 5, 10)
+
+    val gray = star.color()
     return gray
 }
 
@@ -43,7 +44,6 @@ private fun processGreyscale(bufferedImage: BufferedImage, fastABGRGRB: FastABGR
     }
     return pix
 }
-
 
 fun greyscale(rgb: Int): Int {
     val c = Color(rgb)

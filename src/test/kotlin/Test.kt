@@ -1,9 +1,6 @@
 import org.junit.Test
 import java.awt.Color
 
-/**
- * Created by metka on 14.8.2016.
- */
 class Test {
 
     @Test
@@ -21,8 +18,8 @@ class Test {
 
     @Test
     fun arra() {
-        var a = Array<Int>(20, { x -> 0 })
-        a.forEach(::println)
+        val listOf = listOf<String>("a", "b")
+        println(listOf.size)
     }
 
 }
