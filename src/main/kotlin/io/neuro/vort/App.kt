@@ -14,28 +14,20 @@ fun main(args: Array<String>) {
     val file: File = File(path, "test.png")
     val bufferedImage: BufferedImage = ImageIO.read(file)
     val fastABGRImage: FastABGRImage = FastABGRImage(bufferedImage)
-    val pix: IntArray = processStar()
+    val fastABGRImage1 = FastABGRImage(512, 512)
+    val pix: IntArray = processStar(fastABGRImage1)
 
-    val image = BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB)
+    val image = BufferedImage(fastABGRImage1.width, fastABGRImage1.height, BufferedImage.TYPE_INT_ARGB)
     image.data = Raster.createRaster(image.sampleModel, DataBufferInt(pix, pix.size), Point())
     ImageIO.write(image, "PNG", File(path, "1.png"))
 }
 
-fun processStar(): IntArray {
-    val star = Star(FastABGRImage(512, 512))
-    star.spiralGalaxy(100, 250, 250, 4, 7, 2, 2, 2, 5, 2, 5)
-    val p: IntArray = IntArray(512 * 512)
-    for (i: Int in 0..star.pixels.size-1) {
-        var f: Double = star.pixels[i]
-        if (f < 0.0)
-            f = 0.0
-        if (f > 255)
-            f = 255.0
-
-        val rgb = Color(f.toInt(), f.toInt(), f.toInt(), 255).rgb
-        p[i] = rgb
-    }
-    return p
+fun processStar(fastABGRImage1: FastABGRImage): IntArray {
+    val star = Star(fastABGRImage1)
+    //star.spiralGalaxy(200, fastABGRImage1.width / 2, fastABGRImage1.height / 2, 4, 7, 2, 4, 5, 6, 4, 5)
+    star.starfield(200, 5, 10, 5, 10)
+    val gray = star.gray()
+    return gray
 }
 
 private fun processGreyscale(bufferedImage: BufferedImage, fastABGRGRB: FastABGRImage): IntArray {
@@ -43,9 +35,9 @@ private fun processGreyscale(bufferedImage: BufferedImage, fastABGRGRB: FastABGR
 
     for (x: Int in 0..fastABGRGRB.width - 1) {
         for (y: Int in 0..fastABGRGRB.height - 1) {
-            pix[(x + y * fastABGRGRB.width)] = grayscale2(fastABGRGRB.getRGB(x, y)!!, 10, true)
+            pix[(x + y * fastABGRGRB.width)] = grayscale2(fastABGRGRB.getARGB(x, y), 10, true)
             if (y == fastABGRGRB.height) {
-                println("$x $y: " + fastABGRGRB.getRGB(x, y))
+                println("$x $y: " + fastABGRGRB.getARGB(x, y))
             }
         }
     }
