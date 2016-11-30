@@ -18,7 +18,7 @@ class Test {
 
     @Test
     fun arra() {
-        val listOf = listOf<String>("a", "b")
+        val listOf = listOf<String>("colorRoof", "b")
         println(listOf.size)
     }
 

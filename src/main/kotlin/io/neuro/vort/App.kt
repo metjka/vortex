@@ -10,21 +10,55 @@ import javax.imageio.ImageIO
 
 val path = "./src/main/resources"
 
+val easyBlur = floatArrayOf(
+        .0f, .2f, .0f,
+        .2f, .2f, .2f,
+        .0f, .2f, .0f
+)
+
+val hardBlur = floatArrayOf(
+        0f, 0f, 1f, 0f, 0f,
+        0f, 1f, 1f, 1f, 0f,
+        1f, 1f, 1f, 1f, 1f,
+        0f, 1f, 1f, 1f, 0f,
+        0f, 0f, 1f, 0f, 0f
+)
+
+val hardMotionBlur = floatArrayOf(
+        1f, 0f, 0f, 0f, 0f,
+        0f, 1f, 0f, 0f, 0f,
+        0f, 0f, 1f, 0f, 0f,
+        0f, 0f, 0f, 1f, 0f,
+        0f, 0f, 0f, 0f, 1f
+)
+
+val kernel = Kernel(3, 3, easyBlur)
+val kernel2 = Kernel(5, 5, hardBlur)
+val kernel3 = Kernel(5, 5, hardMotionBlur)
+
 fun main(args: Array<String>) {
     val file: File = File(path, "test.png")
     val bufferedImage: BufferedImage = ImageIO.read(file)
     val fastABGRImage: FastABGRImage = FastABGRImage(bufferedImage)
-    val fastABGRImage1 = FastABGRImage(512, 512)
-    val pix: IntArray = processStar(fastABGRImage1)
 
-    val image = BufferedImage(fastABGRImage1.width, fastABGRImage1.height, BufferedImage.TYPE_INT_ARGB)
+    val image = BufferedImage(fastABGRImage.width, fastABGRImage.height, BufferedImage.TYPE_INT_ARGB)
+
+    val pix: IntArray = blur(fastABGRImage)
+
     image.data = Raster.createRaster(image.sampleModel, DataBufferInt(pix, pix.size), Point())
-    ImageIO.write(image, "PNG", File(path, "1.png"))
+    ImageIO.write(image, "PNG", File(path, "5.png"))
+}
+
+fun blur(fastABGRGRB: FastABGRImage): IntArray {
+    val blur = Filters(fastABGRGRB)
+    val blur1 = blur.blur(kernel3)
+    return blur1
+
 }
 
 fun processStar(fastABGRImage1: FastABGRImage): IntArray {
     val star = Star(fastABGRImage1)
-    //star.spiralGalaxy(200, fastABGRImage1.width / 2, fastABGRImage1.height / 2, 4, 7, 2, 4, 5, 6, 4, 5)
+    star.spiralGalaxy(200, fastABGRImage1.width / 2, fastABGRImage1.height / 2, 4, 7, 2, 4, 5, 6, 4, 5)
     star.starfield(400, 5, 10, 5, 10)
 
     val gray = star.color(arrayListOf(Color.CYAN, Color.BLACK))
@@ -36,12 +70,10 @@ private fun processGreyscale(bufferedImage: BufferedImage, fastABGRGRB: FastABGR
 
     for (x: Int in 0..fastABGRGRB.width - 1) {
         for (y: Int in 0..fastABGRGRB.height - 1) {
-            pix[(x + y * fastABGRGRB.width)] = grayscale2(fastABGRGRB.getARGB(x, y), 10, true)
-            if (y == fastABGRGRB.height) {
-                println("$x $y: " + fastABGRGRB.getARGB(x, y))
-            }
+            pix[(x + y * fastABGRGRB.width)] = grayscale2(fastABGRGRB.getARGB(x, y)!!, 10, true)
         }
     }
+
     return pix
 }
 
@@ -55,7 +87,6 @@ fun greyscale(rgb: Int): Int {
 }
 
 fun grayscale2(rgb: Int, percent: Int, brighter: Boolean): Int {
-    // Use NTSC conversion formula.
     var gray = ((0.30 * (rgb shr 16 and 0xff) +
             0.59 * (rgb shr 8 and 0xff) +
             0.11 * (rgb and 0xff)) / 3).toInt()
@@ -71,7 +102,7 @@ fun grayscale2(rgb: Int, percent: Int, brighter: Boolean): Int {
     return rgb and 0xff000000.toInt() or (gray shl 16) or (gray shl 8) or (gray shl 0)
 }
 
-fun lense(size: Int): BufferedImage {
+fun lence(size: Int): BufferedImage {
     val image = BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB)
     val center = size / 2
     for (x: Int in 0..size - 1) {
@@ -103,4 +134,3 @@ fun xor(size: Int): BufferedImage {
     }
     return image
 }
-

@@ -8,7 +8,7 @@
 //
 //
 ///**
-// * A port is a connection point on a node. It contains the values that influence the behavior of the node.
+// * A port is colorRoof connection point on colorRoof node. It contains the values that influence the behavior of the node.
 // * <p/>
 // * It is a good design practice to name the native accessors (the ones that return/set the internal data type) get/set.
 // */

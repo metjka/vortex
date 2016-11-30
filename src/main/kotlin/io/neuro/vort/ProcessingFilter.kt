@@ -7,6 +7,8 @@ abstract class ProcessingFilter(fastABGRImage: FastABGRImage) {
     val width = fastABGRImage.width
     val height = fastABGRImage.height
 
+    val fa = fastABGRImage
+
     val pixels = DoubleArray(width * height)
 
     fun setPixel(x: Int, y: Int, rgb: Double) {
@@ -37,7 +39,7 @@ abstract class ProcessingFilter(fastABGRImage: FastABGRImage) {
         return argbArray
     }
 
-    fun color(colorList: List<Color> ): IntArray {
+    fun color(colorList: List<Color>): IntArray {
 
         val argbArray = IntArray(width * height)
         for (i: Int in 0..pixels.size - 1) {

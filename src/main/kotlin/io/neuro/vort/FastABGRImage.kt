@@ -11,7 +11,6 @@ class FastABGRImage {
     var height: Int
     var width: Int
 
-
     constructor() {
         this.image = BufferedImage(512, 512, BufferedImage.TYPE_INT_ARGB)
         this.height = image.height
@@ -37,11 +36,11 @@ class FastABGRImage {
 
         this.pixels = (image.raster?.dataBuffer as DataBufferInt).data
 
-        this.height = image.height
         this.width = image.width
+        this.height = image.height
 
     }
 
-     fun getARGB(x: Int, y: Int) = x + y * width
+     fun getARGB(x: Int, y: Int) =pixels?.get( x + y * width)
 
 }
