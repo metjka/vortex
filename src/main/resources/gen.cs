@@ -40,262 +40,22 @@ namespace CntProceduralTextures
 
         private static int[] p = new int[256]
         {
-            151,
-            160,
-            137,
-            91,
-            90,
-            15,
-            131,
-            13,
-            201,
-            95,
-            96,
-            53,
-            194,
-            233,
-            7,
-            225,
-            140,
-            36,
-            103,
-            30,
-            69,
-            142,
-            8,
-            99,
-            37,
+            151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225, 140, 36, 103, 30, 69, 142, 8, 99, 37,
             240,
-            21,
-            10,
-            23,
-            190,
-            6,
-            148,
-            247,
-            120,
-            234,
-            75,
-            0,
-            26,
-            197,
-            62,
-            94,
-            252,
-            219,
-            203,
-            117,
-            35,
-            11,
-            32,
-            57,
-            177,
-            33,
-            88,
-            237,
-            149,
-            56,
-            87,
-            174,
-            20,
-            125,
-            136,
-            171,
-            168,
-            68,
-            175,
-            74,
-            165,
-            71,
-            134,
-            139,
-            48,
-            27,
-            166,
-            77,
-            146,
-            158,
-            231,
-            83,
-            111,
-            229,
-            122,
-            60,
-            211,
-            133,
-            230,
-            220,
-            105,
-            92,
-            41,
-            55,
-            46,
-            245,
-            40,
-            244,
-            102,
-            143,
-            54,
-            65,
-            25,
-            63,
-            161,
-            1,
-            216,
-            80,
-            73,
-            209,
-            76,
-            132,
-            187,
-            208,
-            89,
-            18,
-            169,
-            200,
-            196,
-            135,
-            130,
-            116,
-            188,
-            159,
-            86,
-            164,
-            100,
-            109,
-            198,
-            173,
-            186,
-            3,
-            64,
-            52,
-            217,
-            226,
-            250,
-            124,
-            123,
-            5,
-            202,
-            38,
-            147,
-            118,
-            126,
-            (int) byte.MaxValue,
-            82,
-            85,
-            212,
-            207,
-            206,
-            59,
-            227,
-            47,
-            16,
-            58,
-            17,
-            182,
-            189,
-            28,
-            42,
-            223,
-            183,
-            170,
-            213,
+            21, 10, 23, 190, 6, 148, 247, 120, 234, 75, 0, 26, 197, 62, 94, 252, 219, 203, 117, 35, 11, 32, 57, 177, 33,
+            88, 237, 149, 56,
+            87, 174, 20, 125, 136, 171, 168, 68, 175, 74, 165, 71, 134, 139, 48, 27, 166, 77, 146, 158,
+            231, 83, 111, 229, 122, 60, 211, 133, 230, 220, 105, 92, 41, 55, 46, 245, 40, 244, 102, 143, 54, 65,
+            25, 63, 161, 1, 216, 80, 73, 209, 76, 132, 187, 208, 89, 18, 169, 200, 196, 135, 130, 116, 188, 159, 86, 164,
+            100, 109, 198, 173, 186, 3, 64, 52, 217, 226, 250, 124, 123, 5, 202, 38, 147, 118, 126,
+            (int) byte.MaxValue, 82, 85, 212, 207, 206, 59, 227, 47, 16, 58, 17, 182, 189, 28, 42, 223, 183, 170, 213,
             119,
-            248,
-            152,
-            2,
-            44,
-            154,
-            163,
-            70,
-            221,
-            153,
-            101,
-            155,
-            167,
-            43,
-            172,
-            9,
-            129,
-            22,
-            39,
-            253,
-            19,
-            98,
-            108,
-            110,
-            79,
-            113,
-            224,
-            232,
-            178,
-            185,
-            112,
-            104,
-            218,
-            246,
-            97,
-            228,
-            251,
-            34,
-            242,
-            193,
-            238,
-            210,
-            144,
-            12,
+            248, 152, 2, 44, 154, 163, 70, 221, 153, 101, 155, 167, 43, 172, 9, 129, 22, 39, 253, 19, 98,
+            108, 110, 79, 113, 224, 232, 178, 185, 112, 104, 218, 246, 97, 228, 251, 34, 242, 193, 238, 210, 144, 12,
             191,
-            179,
-            162,
-            241,
-            81,
-            51,
-            145,
-            235,
-            249,
-            14,
-            239,
-            107,
-            49,
-            192,
-            214,
-            31,
-            181,
-            199,
-            106,
-            157,
-            184,
-            84,
-            204,
-            176,
-            115,
-            121,
-            50,
-            45,
-            (int) sbyte.MaxValue,
-            4,
-            150,
-            254,
-            138,
-            236,
-            205,
-            93,
-            222,
-            114,
-            67,
-            29,
-            24,
-            72,
-            243,
-            141,
-            128,
-            195,
-            78,
-            66,
-            215,
-            61,
-            156,
-            180
+            179, 162, 241, 81, 51, 145, 235, 249, 14, 239, 107, 49, 192, 214, 31, 181, 199, 106, 157, 184, 84,
+            204, 176, 115, 121, 50, 45, (int) sbyte.MaxValue, 4, 150, 254, 138, 236, 205, 93, 222, 114,
+            67, 29, 24, 72, 243, 141, 128, 195, 78, 66, 215, 61, 156, 180
         };
 
         public Random r;
@@ -459,7 +219,8 @@ namespace CntProceduralTextures
             return "";
         }
 
-        private float getV(long i) {
+        private float getV(long i)
+        {
             return this._Values1D[i];
         }
 
@@ -574,8 +335,9 @@ namespace CntProceduralTextures
             this.setV(i, v1 + v);
         }
 
-        private void addV(int i, int j, float v){
-                this.addV(i + this.wid * j, v);
+        private void addV(int i, int j, float v)
+        {
+            this.addV(i + this.wid * j, v);
         }
 
         private void addV(int i, int j, int k, float v)
@@ -2207,9 +1969,11 @@ namespace CntProceduralTextures
             }
         }
 
-        private void addStar(int x, int y, double power, int radius){
+        private void addStar(int x, int y, double power, int radius)
+        {
             int num1 = Math.Min(Math.Min(4 * (int) (power * (double) radius), this.wid / 2), this.hei / 2);
-            for (int i1 = x - num1; i1 < x + num1; ++i1){
+            for (int i1 = x - num1; i1 < x + num1; ++i1)
+            {
                 for (int i2 = y - num1; i2 < y + num1; ++i2)
                 {
                     int sx = this.seamlessCoord(i1, this.wid, seamlessX);
@@ -3618,104 +3382,95 @@ namespace CntProceduralTextures
 
         private Color getColorScale(int i, int j, float lat)
         {
-            float num1 = this.getV(i, j);
-            if ((double) num1 < 0.0)
+            float num1 = getV(i, j);
+            if (num1 < 0.0)
                 num1 = 0.0f;
-            if ((double) num1 > (double) byte.MaxValue)
-                num1 = (float) byte.MaxValue;
-            float num2 = num1 / (float) byte.MaxValue;
-            float num3 = (float) (this.ColorsGradient.Count - 1) * num2;
+            if (num1 > byte.MaxValue)
+                num1 = byte.MaxValue;
+
+
+            float num2 = num1 / byte.MaxValue;
+            float num3 = (ColorsGradient.Count - 1) * num2;
             int index1 = (int) num3;
             int index2 = index1 + 1;
-            if (index2 == this.ColorsGradient.Count)
-                index2 = this.ColorsGradient.Count - 1;
-            float num4 = (double) index1 < (double) num2 ? num2 - (float) (int) num2 : num3 - (float) index1;
-            return
-                Color.FromArgb(
-                    (int)
-                    ((double) this.ColorsGradient[index1].R * (1.0 - (double) num4) +
-                     (double) this.ColorsGradient[index2].R * (double) num4),
-                    (int)
-                    ((double) this.ColorsGradient[index1].G * (1.0 - (double) num4) +
-                     (double) this.ColorsGradient[index2].G * (double) num4),
-                    (int)
-                    ((double) this.ColorsGradient[index1].B * (1.0 - (double) num4) +
-                     (double) this.ColorsGradient[index2].B * (double) num4));
+            if (index2 == ColorsGradient.Count)
+                index2 = ColorsGradient.Count - 1;
+            float num4;
+            if (index1 < num2)
+            {
+                num4 = num2 - (int) num2;
+            }
+            else
+            {
+                num4 = num3 - index1;
+            }
+            return Color.FromArgb(
+                (int) (ColorsGradient[index1].R * (1.0 - num4) + ColorsGradient[index2].R * num4),
+                (int) (ColorsGradient[index1].G * (1.0 - num4) + ColorsGradient[index2].G * num4),
+                (int) (ColorsGradient[index1].B * (1.0 - num4) + ColorsGradient[index2].B * num4));
         }
 
         private Color getColorScale(int i, int j, int k, float lat)
         {
-            float num1 = this.getV(i, j, k);
-            if ((double) num1 < 0.0)
+            float num1 = getV(i, j, k);
+            if (num1 < 0.0)
                 num1 = 0.0f;
-            if ((double) num1 > (double) byte.MaxValue)
-                num1 = (float) byte.MaxValue;
-            float num2 = num1 / (float) byte.MaxValue;
-            float num3 = (float) (this.ColorsGradient.Count - 1) * num2;
+            if (num1 > byte.MaxValue)
+                num1 = byte.MaxValue;
+
+            float num2 = num1 / byte.MaxValue;
+            float num3 = (ColorsGradient.Count - 1) * num2;
             int index1 = (int) num3;
             int index2 = index1 + 1;
-            if (index2 == this.ColorsGradient.Count)
-                index2 = this.ColorsGradient.Count - 1;
-            float num4 = (double) index1 < (double) num2 ? num2 - (float) (int) num2 : num3 - (float) index1;
-            return
-                Color.FromArgb(
-                    (int)
-                    ((double) this.ColorsGradient[index1].R * (1.0 - (double) num4) +
-                     (double) this.ColorsGradient[index2].R * (double) num4),
-                    (int)
-                    ((double) this.ColorsGradient[index1].G * (1.0 - (double) num4) +
-                     (double) this.ColorsGradient[index2].G * (double) num4),
-                    (int)
-                    ((double) this.ColorsGradient[index1].B * (1.0 - (double) num4) +
-                     (double) this.ColorsGradient[index2].B * (double) num4));
+            if (index2 == ColorsGradient.Count)
+                index2 = ColorsGradient.Count - 1;
+            float num4;
+            if ( index1 < num2)
+                num4 = num2 - (int) num2;
+            else num4 = num3 - index1;
+            return Color.FromArgb(
+                (int) (ColorsGradient[index1].R * (1.0 - num4) + ColorsGradient[index2].R * num4),
+                (int) (ColorsGradient[index1].G * (1.0 - num4) + ColorsGradient[index2].G * num4),
+                (int) (ColorsGradient[index1].B * (1.0 - num4) + ColorsGradient[index2].B * num4));
         }
 
         private Color getColorScaleLat(int i, int j, float lat)
         {
-            float num1 = this.getV(i, j);
-            if ((double) num1 < 0.0)
+            float num1 = getV(i, j);
+            if (num1 < 0.0)
                 num1 = 0.0f;
-            if ((double) num1 > (double) byte.MaxValue)
-                num1 = (float) byte.MaxValue;
+            if (num1 > byte.MaxValue)
+                num1 = byte.MaxValue;
             float num2 = num1 / (float) byte.MaxValue;
-            float num3 = (float) (this.ColorsGradient.Count - 1) * num2;
+            float num3 = (ColorsGradient.Count - 1) * num2;
             int index1 = (int) num3;
             int index2 = index1 + 1;
-            if (index2 == this.ColorsGradient.Count)
-                index2 = this.ColorsGradient.Count - 1;
-            float num4 = (double) index1 < (double) num2 ? num2 - (float) (int) num2 : num3 - (float) index1;
-            int num5 =
-                (int)
-                ((double) this.ColorsGradient[index1].R * (1.0 - (double) num4) +
-                 (double) this.ColorsGradient[index2].R * (double) num4);
+            if (index2 == ColorsGradient.Count)
+                index2 = ColorsGradient.Count - 1;
+            float num4 = (double) index1 < (double) num2 ? num2 - (int) num2 : num3 - index1;
+            int num5 = (int) (ColorsGradient[index1].R * (1.0 - num4) + ColorsGradient[index2].R * (double) num4);
             int num6 =
                 (int)
-                ((double) this.ColorsGradient[index1].G * (1.0 - (double) num4) +
-                 (double) this.ColorsGradient[index2].G * (double) num4);
-            int num7 =
-                (int)
-                ((double) this.ColorsGradient[index1].B * (1.0 - (double) num4) +
-                 (double) this.ColorsGradient[index2].B * (double) num4);
-            int num8 =
-                (int)
-                ((double) this.ColorsGradientLat[index1 % this.ColorsGradientLat.Count].R * (1.0 - (double) num4) +
-                 (double) this.ColorsGradientLat[index2 % this.ColorsGradientLat.Count].R * (double) num4);
-            int num9 =
-                (int)
-                ((double) this.ColorsGradientLat[index1 % this.ColorsGradientLat.Count].G * (1.0 - (double) num4) +
-                 (double) this.ColorsGradientLat[index2 % this.ColorsGradientLat.Count].G * (double) num4);
-            int num10 =
-                (int)
-                ((double) this.ColorsGradientLat[index1 % this.ColorsGradientLat.Count].B * (1.0 - (double) num4) +
-                 (double) this.ColorsGradientLat[index2 % this.ColorsGradientLat.Count].B * (double) num4);
+                (ColorsGradient[index1].G * (1.0 - num4) +
+                 (double) ColorsGradient[index2].G * num4);
+
+            int num7 = (int) (ColorsGradient[index1].B * (1.0 - num4) + ColorsGradient[index2].B * num4);
+
+            int num8 = (int) (ColorsGradientLat[index1 % ColorsGradientLat.Count].R * (1.0 - num4) +
+                              (double) ColorsGradientLat[index2 % ColorsGradientLat.Count].R * num4);
+
+
+            int num9 = (int) (ColorsGradientLat[index1 % ColorsGradientLat.Count].G * (1.0 - num4) +
+                              ColorsGradientLat[index2 % ColorsGradientLat.Count].G * (double) num4);
+
+            int num10 = (int) (ColorsGradientLat[index1 % ColorsGradientLat.Count].B * (1.0 - num4) +
+                               ColorsGradientLat[index2 % ColorsGradientLat.Count].B * (double) num4);
+
             return
                 Color.FromArgb(
-                    this.clamp((int) ((double) num5 * (1.0 - (double) lat) + (double) num8 * (double) lat), 0,
-                        (int) byte.MaxValue),
-                    this.clamp((int) ((double) num6 * (1.0 - (double) lat) + (double) num9 * (double) lat), 0,
-                        (int) byte.MaxValue),
-                    this.clamp((int) ((double) num7 * (1.0 - (double) lat) + (double) num10 * (double) lat), 0,
-                        (int) byte.MaxValue));
+                    clamp((int) (num5 * (1.0 - lat) + num8 * (double) lat), 0, byte.MaxValue),
+                    clamp((int) (num6 * (1.0 - lat) + num9 * (double) lat), 0, byte.MaxValue),
+                    clamp((int) (num7 * (1.0 - lat) + num10 * (double) lat), 0, byte.MaxValue));
         }
 
         private Color getColorScaleLatCB(int i, int j, int k, float lat)
@@ -3918,11 +3673,11 @@ namespace CntProceduralTextures
 
         public Bitmap getBitmap()
         {
-            if (this.ColorsGradient.Count <= 1)
+            if (ColorsGradient.Count <= 1)
                 return this.getBitmap(true);
-            if (this.ColorsGradientLat.Count > 1)
-                return this.getBitmap(new Gen.getPixelDelegate(this.getColorScaleLat));
-            return this.getBitmap(new Gen.getPixelDelegate(this.getColorScale));
+            if (ColorsGradientLat.Count > 1)
+                return this.getBitmap(getColorScaleLat);
+            return getBitmap(getColorScale);
         }
 
         public Bitmap getBitmap(List<Color> c)
@@ -4155,30 +3910,30 @@ namespace CntProceduralTextures
 
         public Bitmap getNormal(float bumpness)
         {
-            Bitmap bitmap = this.createBitmap(this.wid, this.hei);
+            Bitmap bitmap = createBitmap(wid, hei);
             if (bitmap == null)
-                return (Bitmap) null;
-            for (int index1 = 0; index1 < this.hei; ++index1)
+                return  null;
+            for (int index1 = 0; index1 < hei; ++index1)
             {
-                for (int index2 = 0; index2 < this.wid; ++index2)
+                for (int index2 = 0; index2 < wid; ++index2)
                 {
-                    float pix01_1 = this.getPix01(index2 - 1, index1);
-                    float pix01_2 = this.getPix01(index2 + 1, index1);
-                    float pix01_3 = this.getPix01(index2, index1 - 1);
-                    float pix01_4 = this.getPix01(index2, index1 + 1);
-                    float num1 = (float) (0.5 + ((double) pix01_1 - (double) pix01_2) * (double) bumpness);
-                    float num2 = (float) (0.5 + ((double) pix01_3 - (double) pix01_4) * (double) bumpness);
-                    if ((double) num1 < 0.0)
+                    float pix01_1 = getPix01(index2 - 1, index1);
+                    float pix01_2 = getPix01(index2 + 1, index1);
+                    float pix01_3 = getPix01(index2, index1 - 1);
+                    float pix01_4 = getPix01(index2, index1 + 1);
+                    float num1 = (float) (0.5 + ( pix01_1 - pix01_2) * bumpness);
+                    float num2 = (float) (0.5 + ( pix01_3 - pix01_4) * bumpness);
+                    if ( num1 < 0.0)
                         num1 = 0.0f;
-                    if ((double) num1 > 1.0)
+                    if ( num1 > 1.0)
                         num1 = 1f;
-                    if ((double) num2 < 0.0)
+                    if ( num2 < 0.0)
                         num2 = 0.0f;
-                    if ((double) num2 > 1.0)
+                    if ( num2 > 1.0)
                         num2 = 1f;
                     bitmap.SetPixel(index2, index1,
-                        Color.FromArgb((int) ((double) num1 * (double) byte.MaxValue),
-                            (int) ((double) num2 * (double) byte.MaxValue), (int) byte.MaxValue));
+                        Color.FromArgb((int) ( num1 *  byte.MaxValue),
+                            (int) ( num2 *  byte.MaxValue), byte.MaxValue));
                 }
             }
             return bitmap;

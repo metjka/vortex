@@ -32,7 +32,6 @@ class Filters(fastABGRImage: FastABGRImage) : ProcessingFilter(fastABGRImage) {
 
                     }
                 }
-
                 val rgb = Color(
                         colorRoof((kernel.factor * r + bias).toInt()),
                         colorRoof((kernel.factor * g + bias).toInt()),
