@@ -27,7 +27,7 @@ fun processStar(fastABGRImage1: FastABGRImage): IntArray {
     //star.spiralGalaxy(200, fastABGRImage1.width / 2, fastABGRImage1.height / 2, 4, 7, 2, 4, 5, 6, 4, 5)
     star.starfield(400, 5, 10, 5, 10)
 
-    val gray = star.color()
+    val gray = star.color(arrayListOf(Color.CYAN, Color.BLACK))
     return gray
 }
 

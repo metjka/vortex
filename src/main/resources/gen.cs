@@ -459,8 +459,7 @@ namespace CntProceduralTextures
             return "";
         }
 
-        private float getV(long i)
-        {
+        private float getV(long i) {
             return this._Values1D[i];
         }
 
