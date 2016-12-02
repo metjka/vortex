@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    compile 'no.tornado:tornadofx:1.5.7'
+    compile 'no.tornado:tornadofx:1.5.8'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
