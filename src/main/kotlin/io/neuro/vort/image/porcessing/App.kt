@@ -71,7 +71,7 @@ val kernleSharpen = Kernel(3, 3, sharpen)
 val kernelLaplace = Kernel(3, 3, laplace)
 
 fun main(args: Array<String>) {
-    val file: File = File(path, "lena.png")
+    val file: File = File(path, "te/lena.png")
     val bufferedImage: BufferedImage = ImageIO.read(file)
     val fastABGRImage: FastABGRImage = FastABGRImage(bufferedImage)
 
@@ -80,7 +80,7 @@ fun main(args: Array<String>) {
     val startOP = System.currentTimeMillis()
     val filter: BufferedImage = convolveOp.filter(bufferedImage, dest)
     val endOP = System.currentTimeMillis()
-    ImageIO.write(filter, "PNG" , File(path, "base.png"))
+    ImageIO.write(filter, "PNG" , File(path, "te/base.png"))
 
     val image = BufferedImage(fastABGRImage.width, fastABGRImage.height, BufferedImage.TYPE_INT_ARGB)
 
@@ -88,7 +88,7 @@ fun main(args: Array<String>) {
     val pix: IntArray = blur(fastABGRImage)
     val endMY = System.currentTimeMillis()
     image.data = Raster.createRaster(image.sampleModel, DataBufferInt(pix, pix.size), Point())
-    ImageIO.write(image, "PNG", File(path, "5.png"))
+    ImageIO.write(image, "PNG", File(path, "te/5.png"))
 
     println("op")
     println(endOP - startOP)

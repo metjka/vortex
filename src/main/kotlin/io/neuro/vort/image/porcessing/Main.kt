@@ -13,7 +13,7 @@ class Main : Application() {
         nodeNodeContainer.id = "pane"
         val scene = Scene(nodeNodeContainer, 1024.0, 768.0)
 
-        scene.stylesheets.addAll(this.javaClass.classLoader.getResource("style.css").toExternalForm());
+        scene.stylesheets.addAll(this.javaClass.classLoader.getResource("te/style.css").toExternalForm());
 
         primaryStage?.scene = scene
         primaryStage?.show()

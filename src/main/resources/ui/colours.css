@@ -1,0 +1,223 @@
+.block {
+    -fx-text-fill: black;
+    -fx-border-color: black;
+    -fx-effect: dropshadow(two-pass-box, rgba(0,0,0,0.8), 10, 0.0, 3, 3)
+}
+
+.activated .block {
+    -fx-effect: dropshadow(two-pass-box, beige, 10, 0.0, 0, 0)
+}
+
+.nested {
+    -fx-text-fill: black;
+    -fx-border-color: black;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 7px;
+}
+
+.invalid .block {
+    -fx-border-color: red;
+}
+
+.block .header {
+    -fx-text-fill: black;
+}
+
+.block .title {
+    -fx-text-fill: black;
+}
+
+.block .content {
+    -fx-text-fill: black;
+}
+
+.function.block {
+    -fx-background-color: #E97F02;
+    -fx-background-radius: 7px;
+    -fx-border-radius: 9px;
+}
+
+.function.nested {
+    -fx-background-color: #E97F02;
+}
+
+.value.block {
+    -fx-background-color: #BD1550;
+    -fx-background-radius: 7px;
+	-fx-border-radius: 9px;
+}
+
+.value.nested {
+    -fx-background-color: #BD1550;
+}
+
+.value.block Button {
+    -fx-background-color: royalblue;
+    -fx-effect: dropshadow(two-pass-box, black, 3, 0.0, 1, 1)
+}
+
+.block.lifting {
+	-fx-background-color: burlywood;
+	-fx-background-radius: 7px;
+    -fx-border-radius: 9px;
+}
+
+.block.match, .block.constantMatch {
+    -fx-background-color: #8DD0D0;
+    -fx-background-radius: 10 0 10 0;
+    -fx-border-radius: 12 0 12 0;
+}
+
+.display.block {
+    -fx-background-color: #8A9B0F;
+}
+
+.graph.block LineChart {
+    -fx-background-color: #8A9B0F;
+}
+
+.menu {
+    -fx-background-color: #490A3D;
+    -fx-border-color: black;
+    -fx-effect: dropshadow(two-pass-box, black, 15, 0.0, 8, 8)
+}
+
+.menu .title {
+    -fx-font-color: #FCEBB6;
+    -fx-background-color: #A4849E;
+}
+
+.menu .title:hover {
+    -fx-background-color: #926C8B;
+}
+
+.menu .title .arrow-button .arrow {
+    -fx-background-color: #EDE6EC;
+    -fx-focus-color: white;
+}
+
+.menu Button {
+    -fx-background-color: #A4849E;
+}
+
+.menu Button.escape {
+    -fx-background-color: #C0849E;
+}
+
+.menu .menuButton {
+    -fx-background-color: #A4849E;
+    -fx-effect: dropshadow(two-pass-box, black, 5, 0.0, 2, 2)
+}
+
+.menu .menuButton.escape {
+    -fx-background-color: #C0849E;
+}
+
+.menu Button:hover {
+    -fx-background-color: #926C8B;
+}
+
+.menu Button.escape:hover {
+    -fx-background-color: #B0648E;
+}
+
+.menu .menuButton:hover {
+    -fx-background-color: #926C8B;
+}
+
+.menu .menuButton.escape:hover {
+    -fx-background-color: #B0648E;
+}
+
+.menu .list-cell:even {
+    -fx-background-color: #DBCED8;
+}
+
+.menu .list-cell:odd {
+    -fx-background-color: #C8B6C5;
+}
+
+.argumentSpace Label, .argumentLabel {
+    -fx-text-fill: black;
+    -fx-background-color: white;
+}
+
+.curriedOutput {
+    -fx-background-color: navajowhite;
+}
+
+.resultType {
+    -fx-text-fill: black;
+    -fx-background-color: white;
+    -fx-background-radius: 4;
+}
+
+.inputType {
+    -fx-text-fill: black;
+    -fx-background-color: white;
+    -fx-background-radius: 4;
+}
+
+.defName {
+	-fx-text-fill: black;
+	-fx-background-color: #E97F02;
+	-fx-border-color: black;
+}
+
+DrawWire {
+    -fx-stroke: #0066FF;
+    -fx-fill: null;
+}
+
+.invisTouchZone { 
+    -fx-fill: rgba(0,255,0,0);
+}
+
+.anchorPoint {
+    -fx-fill: black;
+}
+
+.anchorPoint.error {
+    -fx-fill: red;
+}
+
+.overlayButtons Button {
+    -fx-text-fill: white;
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+
+.context-menu {
+    -fx-background-color: #777;
+}
+
+.context-menu .menu-item .label {
+    -fx-text-fill: white;
+    -fx-font-family: Titillium;
+}
+
+ImageView.hoverMenu {
+    -fx-effect: dropshadow(two-pass-box, black, 15, 0, 5, 5);
+}
+
+.def {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+}
+
+.lambdaBorder {
+	-fx-background-color: darkslategrey;
+}
+
+.lambdalambda {
+    -fx-text-fill: rgba(255, 255, 255, 0.15);
+    -fx-font-family: Titillium;
+    -fx-font-size: 150px;
+}
+
+.choiceBorder {
+    -fx-background-color: #693333;
+}
+
+Lane .padding {
+    -fx-background-color: #3d1d1d;
+}
+
