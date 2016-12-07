@@ -1,8 +1,9 @@
-package com.metjka.vort.ui.blocks;
+package com.metjka.vort.ui.components;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.metjka.vort.ui.*;
+import com.metjka.vort.ui.serialize.Bundleable;
 import javafx.application.Platform;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
@@ -15,8 +16,21 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Predicate;
 
+/**
+ * Base block shaped UI Component that other visual elements will extend from.
+ * Blocks can add input and output values by implementing the InputBlock and
+ * OutputBlock interfaces.
+ * <p>
+ * MouseEvents are used for setting the selection state of a block, single
+ * clicks can toggle the state to selected. When a block has already been
+ * selected and receives another single left click it will toggle a contextual
+ * menu for the block.
+ * </p>
+ * <p>
+ * Each block implementation should also feature it's own FXML implementation.
+ * </p>
+ */
 public abstract class Block extends StackPane implements Bundleable, ComponentLoader {
-
     private static final String BLOCK_ID_PARAMETER = "id";
     private static final String BLOCK_X_PARAMETER = "x";
     private static final String BLOCK_Y_PARAMETER = "y";
@@ -24,16 +38,16 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
 
     /** The pane that is used to hold state and place all components on. */
     private final ToplevelPane toplevel;
-
+    
     /** The context that deals with dragging and touch event for this Block */
     protected DragContext dragContext;
-
+    
     /** Whether the anchor types are fresh*/
     private boolean freshAnchorTypes;
-
+    
     /** Status of change updating process in this block. */
     private boolean updateInProgress;
-
+    
     /** The container to which this Block currently belongs */
     protected BlockContainer container;
 
@@ -46,7 +60,6 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
      * into different packages - but won't survive class renaming
      */
     private static final Map<String, String> blockClassMap;
-
     static {
         Map<String, String> aMap = new HashMap<>();
         aMap.put(JoinerBlock.class.getSimpleName(), JoinerBlock.class.getName());
@@ -77,15 +90,15 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         this.container = pane;
         this.container.attachBlock(this);
         this.inValidContext = true;
-
+        
         // only the actual shape should be selected for events, not the larger outside bounds
         this.setPickOnBounds(false);
-
+        
         if (! this.belongsOnBottom()) {
-            // make all non container blocks resize themselves around horizontal midpoint to reduce visual movement
+            // make all non container blocks resize themselves around horizontal midpoint to reduce visual movement 
             this.translateXProperty().bind(this.widthProperty().divide(2).negate());
         }
-
+        
         this.dragContext = new DragContext(this);
         this.dragContext.setSecondaryClickAction((p, byMouse) -> CircleMenu.showFor(this, this.localToParent(p), byMouse));
         this.dragContext.setDragFinishAction(event -> refreshContainer());
@@ -101,7 +114,7 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
     public boolean isActivated() {
         return this.dragContext.isActivated();
     }
-
+    
     /**
      * @return All InputAnchors of the block.
      */
@@ -111,13 +124,13 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
      * @return All OutputAnchors of the Block.
      */
     public abstract List<OutputAnchor> getAllOutputs();
-
+    
     public List<ConnectionAnchor> getAllAnchors() {
         List<ConnectionAnchor> result = new ArrayList<>(this.getAllInputs());
         result.addAll(this.getAllOutputs());
         return result;
     }
-
+    
     /** @return true if no connected output anchor exist */
     public boolean isBottomMost() {
         for (OutputAnchor anchor : getAllOutputs()) {
@@ -125,10 +138,10 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
                 return false;
             }
         }
-
+        
         return true;
     }
-
+    
     /**
      * Starts a new (2 phase) change propagation process from this block.
      */
@@ -136,9 +149,9 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         this.handleConnectionChanges(false);
         this.handleConnectionChanges(true);
     }
-
+    
     /**
-     * Connection change preparation; set fresh types in all anchors.
+     * Connection change preparation; set fresh types in all anchors. 
      */
     public final void prepareConnectionChanges() {
         if (this.updateInProgress || this.freshAnchorTypes) {
@@ -155,12 +168,12 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
             this.getStyleClass().add("invalid");
         }
     }
-
+    
     /**
      * Set fresh types in all anchors of this block for the next typechecking cycle.
      */
     protected abstract void refreshAnchorTypes();
-
+    
     /**
      * Handle the expression and types changes caused by modified connections or values.
      * Propagate the changes through connected blocks, and if final phase trigger a visual update.
@@ -175,35 +188,35 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
             // in first phase ensure that anchor types are refreshed
             this.prepareConnectionChanges();
         }
-
+        
         this.updateInProgress = !finalPhase;
         this.freshAnchorTypes = false;
-
-        // First make sure that all connected inputs will be updated too.
+        
+        // First make sure that all connected inputs will be updated too.        
         for (InputAnchor input : this.getAllInputs()) {
             input.getConnection().ifPresent(c -> c.handleConnectionChangesUpwards(finalPhase));
         }
-
+        
         // propagate changes down from the output anchor to connected inputs
         this.getAllOutputs().stream().forEach(output -> output.getOppositeAnchors().forEach(input -> input.handleConnectionChanges(finalPhase)));
-
+        
         // propagate changes to the outside of a choiceblock
         if (container instanceof Lane) {
             ((Lane)container).handleConnectionChanges(finalPhase);
         }
-
+        
         if (finalPhase) {
             // Now that the expressions and types are fully updated, initiate a visual refresh.
             Platform.runLater(this::invalidateVisualState);
         }
     }
-
+    
     /**
      * @param outsideAnchors the set being accumulated of out-of-reach OutputAnchors that are required for the expression.
      * @return The expression this block represents.
      */
     public abstract Expression getLocalExpr(Set<OutputAnchor> outsideAnchors);
-
+    
     /**
      * This method is only used for the inspector window.
      * @return A complete expression of this block and all its dependencies.
@@ -211,12 +224,12 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
     public final Expression getFullExpr() {
         Set<OutputAnchor> outerAnchors = new HashSet<>();
         Expression localExpr = getLocalExpr(outerAnchors);
-
+        
         LetExpression fullExpr = new LetExpression(localExpr, false);
         extendExprGraph(fullExpr, this.toplevel, outerAnchors);
-
+        
         outerAnchors.forEach(block -> block.extendExprGraph(fullExpr, this.toplevel, new HashSet<>()));
-
+        
         return fullExpr;
     }
 
@@ -227,11 +240,11 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
      * @param outsideAnchors a mutable set of required OutputAnchors from a surrounding container
      */
     protected void extendExprGraph(LetExpression exprGraph, BlockContainer container, Set<OutputAnchor> outsideAnchors) {
-        for (InputAnchor input : this.getAllInputs()) {
-            input.extendExprGraph(exprGraph, container, outsideAnchors);
-        }
+         for (InputAnchor input : this.getAllInputs()) {
+             input.extendExprGraph(exprGraph, container, outsideAnchors);
+         }
     }
-
+    
     /** Called when the VisualState changed. */
     public abstract void invalidateVisualState();
 
@@ -239,7 +252,7 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
     public boolean belongsOnBottom() {
         return false;
     }
-
+    
     /** @return class-specific properties of this Block. */
     protected Map<String, Object> toBundleFragment() {
         return ImmutableMap.of();
@@ -254,10 +267,10 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
     public List<? extends WrappedContainer> getInternalContainers() {
         return ImmutableList.of();
     }
-
+    
     /** @return an independent copy of this Block, or Optional.empty if the internal state is too complex too copy.  */
     public abstract Optional<Block> getNewCopy();
-
+    
     /** Remove all associations of this block with others in preparation of removal, including all connections */
     public void deleteAllLinks() {
         this.getAllInputs().forEach(InputAnchor::removeConnections);
@@ -265,39 +278,39 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         this.container.detachBlock(this);
         this.container = TrashContainer.instance;
     }
-
+    
     public void moveIntoContainer(BlockContainer target) {
         BlockContainer source = this.container;
         if (source != target) {
             this.container.detachBlock(this);
             this.container = target;
             target.attachBlock(this);
-
+            
             if (this.getInternalContainers().size() > 0) {
                 this.toplevel.moveInFrontOfParentContainers(this);
             }
-
+            
             if (source instanceof WrappedContainer) {
                 ((WrappedContainer)source).handleConnectionChanges(false);
                 ((WrappedContainer)source).handleConnectionChanges(true);
             }
-
+            
             if (target instanceof WrappedContainer) {
                 ((WrappedContainer)target).handleConnectionChanges(false);
                 ((WrappedContainer)target).handleConnectionChanges(true);
             }
-
+            
             this.initiateConnectionChanges();
         }
-
+        
     }
-
+    
     /** @return the bounds of this block in scene coordinates, excluding the parts sticking out such as anchors. */
     public Bounds getBodyBounds() {
         Node body = this.getChildren().get(0);
         return body.localToScene(body.getLayoutBounds());
     }
-
+    
     /** Scans for and attaches to a new container, if any */
     public void refreshContainer() {
         Bounds myBounds = this.getBodyBounds();
@@ -307,33 +320,32 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
                 new Point2D(myBounds.getMaxX(), myBounds.getMinY()),
                 new Point2D(myBounds.getMinX(), myBounds.getMaxY()),
                 new Point2D(myBounds.getMaxX(), myBounds.getMaxY()));
-
+        
         // use center point plus one corner to determine wherein this block is, to ease moving a block into a small container
         Predicate<Bounds> within = bounds -> bounds.contains(center) && corners.stream().anyMatch(bounds::contains);
-
+        
         // a container may never end up in itself or its children
         List<? extends WrappedContainer> internals = this.getInternalContainers();
         Predicate<BlockContainer> notInSelf = con -> internals.stream().noneMatch(con::isContainedWithin);
-
-        BlockContainer newContainer = toplevel.getAllBlockContainers().
-                filter(container -> within.test(container.containmentBoundsInScene()) && notInSelf.test(container)).
+        
+        BlockContainer newContainer = toplevel.getAllBlockContainers().filter(container -> within.test(container.containmentBoundsInScene()) && notInSelf.test(container)).
                 reduce((a, b) -> !a.containmentBoundsInScene().contains(b.containmentBoundsInScene()) ? a : b).
-                orElse(this.toplevel);
-
+                    orElse(this.toplevel);
+        
         Bounds fitBounds = this.localToParent(this.sceneToLocal(myBounds));
         this.moveIntoContainer(newContainer);
         newContainer.expandToFit(new BoundingBox(fitBounds.getMinX()-10, fitBounds.getMinY()-10, fitBounds.getWidth()+20, fitBounds.getHeight()+20));
     }
-
+    
     /** @return whether this block has a meaningful interpretation the current container. */
     public boolean checkValidInCurrentContainer() {
         return ! (this.container instanceof TrashContainer);
     }
-
+    
     public boolean canAlterAnchors() {
         return false;
     }
-
+    
     public void alterAnchorCount(boolean isRemove) {
         // does not if not supported
     }
@@ -368,5 +380,4 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         block.initiateConnectionChanges();
         return block;
     }
-
 }

@@ -1,6 +1,6 @@
 package com.metjka.vort.ui;
 
-import com.metjka.vort.ui.blocks.Block;
+import com.metjka.vort.ui.components.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
@@ -10,15 +10,34 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.TitledPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchPoint;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+/**
+ * FunctionMenu is a viskell specific menu implementation. A FunctionMenu is an
+ * always present menu, once called it will remain open until the
+ * {@linkplain #close() } method is called. An application can have multiple
+ * instances of FunctionMenu where each menu maintains it's own state.
+ * <p>
+ * FunctionMenu is constructed out of three different spaces:
+ * {@code searchSpace}, {@code categorySpace} and {@code utilSpace}. The
+ * {@code searchSpace} should be used to display search components that can be
+ * used to find stored functions more quickly, {@code categorySpace} contains an
+ * {@linkplain Accordion} where each category of functions is displayed in their
+ * own {@linkplain TitledPane}. {@code utilSpace} can then contain any form of
+ * utility methods or components that might need quick accessing.
+ * </p>
+ */
 public class FunctionMenu extends StackPane implements ComponentLoader {
 
     /**
@@ -40,9 +59,29 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
     @FXML
     private Pane utilSpace;
 
-    public FunctionMenu(boolean byMouse, HaskellCatalog catalog, ToplevelPane pane) {
+    public FunctionMenu(boolean byMouse, ToplevelPane pane) {
         this.parent = pane;
+        this.loadFXML("FunctionMenu");
         this.dragContext = new DragContext(this);
+
+        // drop all synthesized mouse events
+        categoryContainer.addEventFilter(MouseEvent.ANY, e -> {
+            if (e.isSynthesized()) e.consume();
+        });
+
+        // Hiding all other categories on expanding one of them.
+        List<TitledPane> allCatPanes = new ArrayList<>(categoryContainer.getPanes());
+        categoryContainer.expandedPaneProperty().addListener(e -> {
+            TitledPane expPane = categoryContainer.getExpandedPane();
+            if (expPane != null) {
+                categoryContainer.getPanes().retainAll(expPane);
+            } else {
+                categoryContainer.getPanes().clear();
+                categoryContainer.getPanes().addAll(allCatPanes);
+            }
+        });
+
+        this.categorySpace.getChildren().add(categoryContainer);
 
         /* Create content for utilSpace. */
         Button closeButton = new MenuButton("Close", bm -> close(bm));
@@ -56,7 +95,6 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
 
 
         utilSpace.getChildren().addAll(closeButton, disBlockButton, arbBlockButton, valBlockButton, lambdaBlockButton, applyBlockButton, choiceBlockButton);
-
 
         // with an odd number of block buttons fill the last spot with a close button
         if (utilSpace.getChildren().size() % 2 == 1) {
