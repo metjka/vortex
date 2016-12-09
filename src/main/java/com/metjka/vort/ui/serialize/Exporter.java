@@ -2,7 +2,7 @@ package com.metjka.vort.ui.serialize;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import  utwente.viskell.ui.ToplevelPane;
+import com.metjka.vort.ui.ToplevelPane;
 
 import java.util.HashMap;
 import java.util.Map;

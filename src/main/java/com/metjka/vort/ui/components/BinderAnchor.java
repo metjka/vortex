@@ -1,10 +1,9 @@
 package com.metjka.vort.ui.components;
 
+import com.metjka.vort.ui.BlockContainer;
 import javafx.scene.control.Label;
-import  utwente.viskell.haskell.expr.Binder;
-import  utwente.viskell.haskell.expr.LetExpression;
-import  utwente.viskell.ui.BlockContainer;
 
+import javax.xml.bind.Binder;
 import java.util.Set;
 
 /** An internal output anchor for an argument binder. */

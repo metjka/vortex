@@ -22,11 +22,12 @@ import java.util.stream.Stream;
  * And represents the toplevel container of all blocks.
  */
 public class ToplevelPane extends Region implements BlockContainer, Bundleable {
+
     public static final String BLOCKS_SERIALIZED_NAME = "Blocks";
     public static final String CONNECTIONS_SERIALIZED_NAME = "Connections";
 
     /**
-     * middle pane layer for ordinary blocks
+     * bottom pane layer for ordinary blocks
      */
     private final Pane blockLayer;
 
@@ -126,6 +127,15 @@ public class ToplevelPane extends Region implements BlockContainer, Bundleable {
     public boolean removeUpperTouchArea(Shape area) {
         return this.getChildren().remove(area);
     }
+
+    public boolean addLowerTouchArea(Shape area) {
+        return blockLayer.getChildren().add(area);
+    }
+
+    public boolean removeLowerTouchArea(Shape area) {
+        return blockLayer.getChildren().remove(area);
+    }
+
 
     public void clearChildren() {
         this.blockLayer.getChildren().remove(1, this.blockLayer.getChildren().size());
@@ -274,4 +284,6 @@ public class ToplevelPane extends Region implements BlockContainer, Bundleable {
         setTranslateX(getTranslateX() * ratio);
         setTranslateY(getTranslateY() * ratio);
     }
+
+
 }

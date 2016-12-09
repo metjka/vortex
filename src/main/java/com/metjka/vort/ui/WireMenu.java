@@ -38,21 +38,7 @@ public class WireMenu extends TilePane {
         // FIXME: silly workaround, somehow the buttons in this menu don't work on touch click while those in FunctionMenu do...
         cancelButton.setOnTouchPressed(event -> this.attachedWire.remove());
 
-        Type type = wire.getAnchor().getFreshType();
-
-        int tArity = 2;
-        if (type instanceof TypeApp) {
-            List<Type> appChain = ((TypeApp) type).asFlattenedAppChain();
-            if (appChain.get(0) instanceof TupleTypeCon) {
-                tArity = appChain.size() - 1;
-            }
-        }
-        final int tupleArity = tArity; // why do I need such silly workaround when using lambda in Java...
-
         if (wire.getAnchor() instanceof InputAnchor) {
-            Button lambdaBlockButton = new Button("Lambda");
-            lambdaBlockButton.setOnAction(event -> addBlockWithOutput(new LambdaBlock(this.toplevel, type.countArguments())));
-            lambdaBlockButton.setOnTouchPressed(event -> addBlockWithOutput(new LambdaBlock(this.toplevel, type.countArguments())));
 
             Button arbitraryBlockButton = new Button("Arbitrary");
             arbitraryBlockButton.setOnAction(event -> addBlockWithOutput(new ArbitraryBlock(this.toplevel)));
@@ -66,40 +52,15 @@ public class WireMenu extends TilePane {
             IntegerBlockButton.setOnAction(event -> addBlockWithOutput(new SliderBlock(this.toplevel, true)));
             IntegerBlockButton.setOnTouchPressed(event -> addBlockWithOutput(new SliderBlock(this.toplevel, true)));
 
-            Button joinBlockButton = new Button("Joiner");
-            joinBlockButton.setOnAction(event -> addBlockWithOutput(new JoinerBlock(this.toplevel, tupleArity)));
-            joinBlockButton.setOnTouchPressed(event -> addBlockWithOutput(new JoinerBlock(this.toplevel, tupleArity)));
-
-            Button appendBlockButton = new Button("Append");
-            appendBlockButton.setOnAction(event -> addBlockWithOutput(new AppendBlock(this.toplevel, 2)));
-            appendBlockButton.setOnTouchPressed(event -> addBlockWithOutput(new AppendBlock(this.toplevel, 2)));
-
-            this.getChildren().addAll(cancelButton, arbitraryBlockButton, rationalBlockButton, IntegerBlockButton, joinBlockButton, appendBlockButton);
-            if (type.countArguments() > 0) {
-                this.getChildren().add(lambdaBlockButton);
-            }
+            this.getChildren().addAll(cancelButton, arbitraryBlockButton, rationalBlockButton, IntegerBlockButton);
 
         } else {
-            Button applyBlockButton = new Button("Apply");
-            applyBlockButton.setOnAction(event -> addBlockWithInput(new FunApplyBlock(this.toplevel, new ApplyAnchor(type.countArguments()))));
-            applyBlockButton.setOnTouchPressed(event -> addBlockWithInput(new FunApplyBlock(this.toplevel, new ApplyAnchor(type.countArguments()))));
 
             Button disBlockButton = new Button("Observe");
             disBlockButton.setOnAction(event -> addBlockWithInput(new DisplayBlock(this.toplevel)));
             disBlockButton.setOnTouchPressed(event -> addBlockWithInput(new DisplayBlock(this.toplevel)));
 
-            Button graphBlockButton = new Button("Graph");
-            graphBlockButton.setOnAction(event -> addBlockWithInput(new GraphBlock(this.toplevel)));
-            graphBlockButton.setOnTouchPressed(event -> addBlockWithInput(new GraphBlock(this.toplevel)));
-
-            Button splitBlockButton = new Button("Splitter");
-            splitBlockButton.setOnAction(event -> addBlockWithInput(new SplitterBlock(this.toplevel, tupleArity)));
-            splitBlockButton.setOnTouchPressed(event -> addBlockWithInput(new SplitterBlock(this.toplevel, tupleArity)));
-
-            this.getChildren().addAll(cancelButton, disBlockButton, graphBlockButton, splitBlockButton);
-            if (type.countArguments() > 0) {
-                this.getChildren().add(applyBlockButton);
-            }
+            this.getChildren().addAll(cancelButton, disBlockButton);
         }
 
         // opening animation

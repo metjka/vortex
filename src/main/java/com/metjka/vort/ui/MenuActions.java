@@ -1,6 +1,9 @@
 package com.metjka.vort.ui;
 
 import com.google.common.base.Charsets;
+import com.metjka.vort.ui.serialize.Exporter;
+import com.metjka.vort.ui.serialize.Importer;
+import com.metjka.vort.ui.serialize.ViskellFormat;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.MenuItem;
@@ -10,9 +13,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import  utwente.viskell.ui.serialize.Exporter;
-import  utwente.viskell.ui.serialize.Importer;
-import  utwente.viskell.ui.serialize.ViskellFormat;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,12 +38,6 @@ public class MenuActions {
      * The File we're currently working on, if any.
      */
     private Optional<File> currentFile;
-
-    /** The current preferences window, or null if not yet opened. */
-    private PreferencesWindow preferences;
-
-    /** The current inspector window, or null if not yet opened. */
-    private InspectorWindow inspector;
 
     public MenuActions(final MainOverlay ol, final ToplevelPane tl) {
         overlay = ol;
@@ -93,24 +87,6 @@ public class MenuActions {
         list.add(menuSaveAs);
 
         return list;
-    }
-
-    @SuppressWarnings("UnusedParameters")
-    protected void showPreferences(ActionEvent actionEvent) {
-        if (preferences == null) {
-            preferences = new PreferencesWindow(overlay);
-        }
-
-        preferences.show();
-    }
-
-    @SuppressWarnings("UnusedParameters")
-    protected void showInspector(ActionEvent actionEvent) {
-        if (inspector == null) {
-            inspector = new InspectorWindow(overlay);
-        }
-
-        inspector.show();
     }
 
     protected void onNew(ActionEvent actionEvent) {

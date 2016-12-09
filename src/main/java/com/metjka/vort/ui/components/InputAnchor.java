@@ -1,6 +1,8 @@
 package com.metjka.vort.ui.components;
 
 import com.google.common.collect.ImmutableMap;
+import com.metjka.vort.ui.Type;
+import com.metjka.vort.ui.BlockContainer;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
@@ -9,12 +11,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
-import  utwente.viskell.haskell.expr.Expression;
-import  utwente.viskell.haskell.expr.Hole;
-import  utwente.viskell.haskell.expr.LetExpression;
-import  utwente.viskell.haskell.type.Type;
-import  utwente.viskell.haskell.type.TypeScope;
-import  utwente.viskell.ui.BlockContainer;
 
 import java.util.HashSet;
 import java.util.Map;

@@ -2,6 +2,7 @@ package com.metjka.vort.ui.components;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
+import com.metjka.vort.ui.ToplevelPane;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,12 +11,6 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import  utwente.viskell.ghcj.GhciSession;
-import  utwente.viskell.haskell.expr.Expression;
-import  utwente.viskell.haskell.type.FunType;
-import  utwente.viskell.haskell.type.Type;
-import  utwente.viskell.haskell.type.TypeScope;
-import  utwente.viskell.ui.ToplevelPane;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;

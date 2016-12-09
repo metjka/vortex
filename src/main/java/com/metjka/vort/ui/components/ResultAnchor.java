@@ -1,11 +1,8 @@
 package com.metjka.vort.ui.components;
 
+import com.metjka.vort.ui.BlockContainer;
+import com.metjka.vort.ui.Type;
 import javafx.scene.control.Label;
-import  utwente.viskell.haskell.expr.Annotated;
-import  utwente.viskell.haskell.expr.Expression;
-import  utwente.viskell.haskell.type.Type;
-import  utwente.viskell.haskell.type.TypeScope;
-import  utwente.viskell.ui.BlockContainer;
 
 import java.util.Optional;
 import java.util.Set;

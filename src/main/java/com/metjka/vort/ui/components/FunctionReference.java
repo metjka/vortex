@@ -1,6 +1,7 @@
 package com.metjka.vort.ui.components;
 
 import com.metjka.vort.ui.BlockContainer;
+import com.metjka.vort.ui.Type;
 import javafx.scene.layout.Region;
 
 import java.util.Map;

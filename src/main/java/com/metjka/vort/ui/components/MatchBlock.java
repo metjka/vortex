@@ -6,14 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import jfxtras.scene.layout.VBox;
-import  utwente.viskell.haskell.env.FunctionInfo;
-import  utwente.viskell.haskell.expr.Binder;
-import  utwente.viskell.haskell.expr.ConstructorBinder;
-import  utwente.viskell.haskell.expr.Expression;
-import  utwente.viskell.haskell.type.FunType;
-import  utwente.viskell.haskell.type.Type;
-import  utwente.viskell.haskell.type.TypeScope;
-import  utwente.viskell.ui.ToplevelPane;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;

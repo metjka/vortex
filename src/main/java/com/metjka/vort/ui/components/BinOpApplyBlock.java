@@ -2,6 +2,7 @@ package com.metjka.vort.ui.components;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.DragContext;
 import com.metjka.vort.ui.ToplevelPane;
 import javafx.beans.binding.Bindings;

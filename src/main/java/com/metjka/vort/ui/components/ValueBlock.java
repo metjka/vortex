@@ -4,12 +4,6 @@ import com.google.common.collect.ImmutableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import  utwente.viskell.haskell.expr.Binder;
-import  utwente.viskell.haskell.expr.Expression;
-import  utwente.viskell.haskell.expr.Value;
-import  utwente.viskell.haskell.type.Type;
-import  utwente.viskell.haskell.type.TypeScope;
-import  utwente.viskell.ui.ToplevelPane;
 
 import java.util.List;
 import java.util.Optional;

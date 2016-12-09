@@ -1,17 +1,16 @@
 package com.metjka.vort.ui.components;
 
 import com.google.common.collect.ImmutableMap;
+import com.metjka.vort.ui.Type;
+import com.metjka.vort.ui.BlockContainer;
+import com.metjka.vort.ui.ComponentLoader;
+import com.metjka.vort.ui.serialize.Bundleable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.transform.Transform;
-import  utwente.viskell.haskell.expr.LetExpression;
-import  utwente.viskell.haskell.type.*;
-import  utwente.viskell.ui.BlockContainer;
-import  utwente.viskell.ui.ComponentLoader;
-import  utwente.viskell.ui.serialize.Bundleable;
 
 import java.util.Map;
 import java.util.Optional;
@@ -23,13 +22,13 @@ import java.util.Set;
  * and {@link OutputAnchor}. Both anchors are stored referenced respectively as
  * startAnchor and endAnchor {@link Optional} within this class.
  * Visually a connection is represented as a cubic Bezier curve.
- * 
+ * <p>
  * Connection is also a changeListener for a Transform, in order to be able to
  * update the Line's position when the anchor's positions change.
  */
 public class Connection extends CubicCurve implements
         ChangeListener<Transform>, Bundleable, ComponentLoader {
-    
+
     /**
      * Control offset for this bezier curve of this line.
      * It determines how a far a line attempts to goes straight from its end points.
@@ -42,31 +41,40 @@ public class Connection extends CubicCurve implements
     private static final String SOURCE_LABEL = "from";
     private static final String SINK_LABEL = "to";
 
-    /** Starting point of this Line that can be Anchored onto other objects. */
+    /**
+     * Starting point of this Line that can be Anchored onto other objects.
+     */
     private final OutputAnchor startAnchor;
-    /** Ending point of this Line that can be Anchored onto other objects. */
+    /**
+     * Ending point of this Line that can be Anchored onto other objects.
+     */
     private final InputAnchor endAnchor;
 
-    /** Whether this connection produced an error in the latest type unification. */
+    /**
+     * Whether this connection produced an error in the latest type unification.
+     */
     private boolean errorState;
 
-    /** Whether this connection is impossible due to scope restrictions */
+    /**
+     * Whether this connection is impossible due to scope restrictions
+     */
     private boolean scopeError;
 
-    /** 
+    /**
      * Construct a new Connection.
+     *
      * @param source The OutputAnchor this connection comes from
-     * @param sink The InputAnchor this connection goes to
+     * @param sink   The InputAnchor this connection goes to
      */
     public Connection(OutputAnchor source, InputAnchor sink) {
         this.setMouseTransparent(true);
         this.setFill(null);
-        
+
         this.startAnchor = source;
         this.endAnchor = sink;
         this.errorState = false;
         this.scopeError = false;
-        
+
         source.getPane().addConnection(this);
         this.invalidateAnchorPositions();
         this.startAnchor.addConnection(this);
@@ -82,7 +90,7 @@ public class Connection extends CubicCurve implements
             this.errorState = true;
         }
     }
-    
+
     /**
      * @return the output anchor of this connection.
      */
@@ -96,10 +104,11 @@ public class Connection extends CubicCurve implements
     public InputAnchor getEndAnchor() {
         return this.endAnchor;
     }
-    
+
     /**
      * Handles the upward connections changes through an connection.
      * Also perform typechecking for this connection.
+     *
      * @param finalPhase whether the change propagation is in the second (final) phase.
      */
     public void handleConnectionChangesUpwards(boolean finalPhase) {
@@ -149,10 +158,12 @@ public class Connection extends CubicCurve implements
         this.invalidateAnchorPositions();
     }
 
-    /** Update the UI positions of both start and end anchors. */
+    /**
+     * Update the UI positions of both start and end anchors.
+     */
     private void invalidateAnchorPositions() {
-    	this.setStartPosition(this.startAnchor.getAttachmentPoint());
-    	this.setEndPosition(this.endAnchor.getAttachmentPoint());
+        this.setStartPosition(this.startAnchor.getAttachmentPoint());
+        this.setEndPosition(this.endAnchor.getAttachmentPoint());
     }
 
     @Override
@@ -168,16 +179,16 @@ public class Connection extends CubicCurve implements
         return bundle.build();
     }
 
-    public static void fromBundle(Map<String,Object> connectionBundle,
-                                        Map<Integer, Block> blockLookupTable) {
-        Map<String,Object> source = (Map<String,Object>)connectionBundle.get(SOURCE_LABEL);
-        Integer sourceId = ((Double)source.get(ConnectionAnchor.BLOCK_LABEL)).intValue();
+    public static void fromBundle(Map<String, Object> connectionBundle,
+                                  Map<Integer, Block> blockLookupTable) {
+        Map<String, Object> source = (Map<String, Object>) connectionBundle.get(SOURCE_LABEL);
+        Integer sourceId = ((Double) source.get(ConnectionAnchor.BLOCK_LABEL)).intValue();
         Block sourceBlock = blockLookupTable.get(sourceId);
         OutputAnchor sourceAnchor = sourceBlock.getAllOutputs().get(0);
 
-        Map<String,Object> sink = (Map<String,Object>)connectionBundle.get(SINK_LABEL);
-        Integer sinkId = ((Double)sink.get(ConnectionAnchor.BLOCK_LABEL)).intValue();
-        Integer sinkAnchorNumber = ((Double)sink.get(ConnectionAnchor.ANCHOR_LABEL)).intValue();
+        Map<String, Object> sink = (Map<String, Object>) connectionBundle.get(SINK_LABEL);
+        Integer sinkId = ((Double) sink.get(ConnectionAnchor.BLOCK_LABEL)).intValue();
+        Integer sinkAnchorNumber = ((Double) sink.get(ConnectionAnchor.ANCHOR_LABEL)).intValue();
         Block sinkBlock = blockLookupTable.get(sinkId);
         InputAnchor sinkAnchor = sinkBlock.getAllInputs().get(sinkAnchorNumber);
 
@@ -188,6 +199,7 @@ public class Connection extends CubicCurve implements
 
     /**
      * Sets the start coordinates for this Connection.
+     *
      * @param point Coordinates local to this Line's parent.
      */
     private void setStartPosition(Point2D point) {
@@ -198,6 +210,7 @@ public class Connection extends CubicCurve implements
 
     /**
      * Sets the end coordinates for this Connection.
+     *
      * @param point coordinates local to this Line's parent.
      */
     private void setEndPosition(Point2D point) {
@@ -206,11 +219,13 @@ public class Connection extends CubicCurve implements
         updateBezierControlPoints(this);
     }
 
-    /** Returns the current bezier offset based on the current start and end positions. */
+    /**
+     * Returns the current bezier offset based on the current start and end positions.
+     */
     private static double getBezierYOffset(CubicCurve wire) {
-        double distX = Math.abs(wire.getEndX() - wire.getStartX())/3;
+        double distX = Math.abs(wire.getEndX() - wire.getStartX()) / 3;
         double diffY = wire.getEndY() - wire.getStartY();
-        double distY = diffY > 0 ? diffY/2 : Math.max(0, -diffY-10); 
+        double distY = diffY > 0 ? diffY / 2 : Math.max(0, -diffY - 10);
         if (distY < BEZIER_CONTROL_OFFSET) {
             if (distX < BEZIER_CONTROL_OFFSET) {
                 // short lines are extra flexible
@@ -223,7 +238,9 @@ public class Connection extends CubicCurve implements
         }
     }
 
-    /** Updates the Bezier offset (curviness) according to the current start and end positions. */
+    /**
+     * Updates the Bezier offset (curviness) according to the current start and end positions.
+     */
     protected static void updateBezierControlPoints(CubicCurve wire) {
         double yOffset = getBezierYOffset(wire);
         wire.setControlX1(wire.getStartX());
@@ -231,17 +248,18 @@ public class Connection extends CubicCurve implements
         wire.setControlX2(wire.getEndX());
         wire.setControlY2(wire.getEndY() - yOffset);
     }
-    
+
     protected static double lengthSquared(CubicCurve wire) {
         double diffX = wire.getStartX() - wire.getEndX();
         double diffY = wire.getStartY() - wire.getEndY();
-        return diffX*diffX + diffY*diffY;
+        return diffX * diffX + diffY * diffY;
     }
-    
+
     /**
      * Extends the expression graph to include all subexpression required
-     * @param exprGraph the let expression representing the current expression graph
-     * @param container the container to which this expression graph is constrained
+     *
+     * @param exprGraph      the let expression representing the current expression graph
+     * @param container      the container to which this expression graph is constrained
      * @param outsideAnchors a mutable set of required OutputAnchors from a surrounding container
      */
     protected void extendExprGraph(LetExpression exprGraph, BlockContainer container, Set<OutputAnchor> outsideAnchors) {
@@ -252,58 +270,58 @@ public class Connection extends CubicCurve implements
             outsideAnchors.add(anchor);
     }
 
-	public void invalidateVisualState() {
-	    this.scopeError = !this.endAnchor.getContainer().isContainedWithin(this.startAnchor.getContainer());
-	    
-		if (this.errorState) {
-		    this.setStroke(Color.RED);
-		    this.getStrokeDashArray().clear();
-			this.setStrokeWidth(3);
+    public void invalidateVisualState() {
+        this.scopeError = !this.endAnchor.getContainer().isContainedWithin(this.startAnchor.getContainer());
 
-		}  else if (this.scopeError) {
+        if (this.errorState) {
+            this.setStroke(Color.RED);
+            this.getStrokeDashArray().clear();
+            this.setStrokeWidth(3);
+
+        } else if (this.scopeError) {
             this.setStroke(Color.RED);
             this.setStrokeWidth(3);
-	        if (this.getStrokeDashArray().isEmpty()) {
-	            this.getStrokeDashArray().addAll(10.0, 10.0);
-	        }
-		
-		} else {
-		    this.setStroke(Color.BLACK);
-		    this.getStrokeDashArray().clear();
-			this.setStrokeWidth(calculateTypeWidth(this.endAnchor.getType()));
-		}
-	}
+            if (this.getStrokeDashArray().isEmpty()) {
+                this.getStrokeDashArray().addAll(10.0, 10.0);
+            }
 
-	private static int calculateTypeWidth(Type wireType) {
-		Type type = wireType.getConcrete();
-		
-		int fcount = 0;
-		while (type instanceof FunType) {
-			fcount++;
-			type = ((FunType)type).getResult();
-		}
-	
-		if (fcount > 0) {
-			return 4 + 2*fcount;
-		}
-		
-		int arity = 0;
-		while (type instanceof TypeApp) {
-			arity++;
-			type = ((TypeApp)type).getTypeFun();
-		}
-		
-		if (type instanceof ListTypeCon) {
-			return 5;
-		}
-		
-		return 3 + arity;
-	}
+        } else {
+            this.setStroke(Color.BLACK);
+            this.getStrokeDashArray().clear();
+            this.setStrokeWidth(calculateTypeWidth(this.endAnchor.getType()));
+        }
+    }
 
-	public boolean hasTypeError() {
-	    return this.errorState;
-	}
-	
+    private static int calculateTypeWidth(Type wireType) {
+        Type type = wireType.getConcrete();
+
+        int fcount = 0;
+        while (type instanceof FunType) {
+            fcount++;
+            type = ((FunType) type).getResult();
+        }
+
+        if (fcount > 0) {
+            return 4 + 2 * fcount;
+        }
+
+        int arity = 0;
+        while (type instanceof TypeApp) {
+            arity++;
+            type = ((TypeApp) type).getTypeFun();
+        }
+
+        if (type instanceof ListTypeCon) {
+            return 5;
+        }
+
+        return 3 + arity;
+    }
+
+    public boolean hasTypeError() {
+        return this.errorState;
+    }
+
     public boolean hasScopeError() {
         return this.scopeError;
     }

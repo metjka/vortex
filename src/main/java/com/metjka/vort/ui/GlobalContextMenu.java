@@ -10,11 +10,6 @@ public class GlobalContextMenu extends ContextMenu {
     public GlobalContextMenu(MenuActions menuActions) {
         super();
 
-        MenuItem menuPreferences = new MenuItem("Preferences...");
-        menuPreferences.setOnAction(menuActions::showPreferences);
-
-        MenuItem menuInspector = new MenuItem("Inspector");
-        menuInspector.setOnAction(menuActions::showInspector);
 
         MenuItem menuFullScreen = new MenuItem("Toggle full screen");
         menuFullScreen.setOnAction(menuActions::toggleFullScreen);
@@ -22,7 +17,5 @@ public class GlobalContextMenu extends ContextMenu {
         MenuItem menuQuit = new MenuItem("Quit");
         menuQuit.setOnAction(menuActions::onQuit);
 
-        this.getItems().addAll(menuActions.fileMenuItems());
-        this.getItems().addAll(menuInspector, menuPreferences, menuFullScreen, menuQuit);
     }
 }

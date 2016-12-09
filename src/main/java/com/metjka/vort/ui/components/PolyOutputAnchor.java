@@ -1,8 +1,8 @@
 package com.metjka.vort.ui.components;
 
-import  utwente.viskell.haskell.expr.Binder;
-import  utwente.viskell.haskell.type.Type;
+import com.metjka.vort.ui.Type;
 
+import javax.xml.bind.Binder;
 import java.util.ArrayList;
 import java.util.Optional;
 

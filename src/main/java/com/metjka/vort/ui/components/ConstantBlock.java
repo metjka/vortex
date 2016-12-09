@@ -2,6 +2,7 @@ package com.metjka.vort.ui.components;
 
 import com.google.common.collect.ImmutableMap;
 import com.metjka.vort.ui.ToplevelPane;
+import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.serialize.Bundleable;
 import javafx.scene.control.TextInputDialog;
 

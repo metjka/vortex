@@ -1,7 +1,9 @@
 package com.metjka.vort.ui.components;
 
+import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.BlockContainer;
 import com.metjka.vort.ui.ComponentLoader;
+import com.metjka.vort.ui.ToplevelPane;
 import com.metjka.vort.ui.serialize.Bundleable;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
@@ -99,7 +101,7 @@ public abstract class ConnectionAnchor extends StackPane implements ComponentLoa
         this.block.handleConnectionChanges(finalPhase);
     }
 
-    public abstract Type getFreshType(); 
+    public abstract Type getFreshType();
     
     private void handleMousePress(MouseEvent event) {
         if (this.wireInProgress == null && this.eventRedirectionTarget == null && !event.isSynthesized()) {

@@ -89,12 +89,8 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button valBlockButton = new MenuButton("Constant", bm -> addConstantBlock());
         Button arbBlockButton = new MenuButton("Arbitrary", bm -> addBlock(new ArbitraryBlock(parent)));
         Button disBlockButton = new MenuButton("Observe", bm -> addBlock(new DisplayBlock(parent)));
-        Button lambdaBlockButton = new MenuButton("Lambda", bm -> addLambdaBlock());
-        Button choiceBlockButton = new MenuButton("Choice", bm -> addChoiceBlock());
-        Button applyBlockButton = new MenuButton("Apply", bm -> addBlock(new FunApplyBlock(parent, new ApplyAnchor(1))));
 
-
-        utilSpace.getChildren().addAll(closeButton, disBlockButton, arbBlockButton, valBlockButton, lambdaBlockButton, applyBlockButton, choiceBlockButton);
+        utilSpace.getChildren().addAll(closeButton, disBlockButton, arbBlockButton, valBlockButton);
 
         // with an odd number of block buttons fill the last spot with a close button
         if (utilSpace.getChildren().size() % 2 == 1) {
@@ -146,15 +142,6 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         ConstantBlock val = new ConstantBlock(this.parent);
         addBlock(val);
         val.editValue(Optional.of("\"Hello, World!\""));
-    }
-
-    private void addLambdaBlock() {
-        addBlock(new LambdaBlock(this.parent, 1));
-    }
-
-    private void addChoiceBlock() {
-        ChoiceBlock def = new ChoiceBlock(this.parent);
-        addBlock(def);
     }
 
     private void addBlock(Block block) {

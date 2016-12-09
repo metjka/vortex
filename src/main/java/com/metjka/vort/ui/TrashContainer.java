@@ -1,10 +1,10 @@
 package com.metjka.vort.ui;
 
+import com.metjka.vort.ui.components.Block;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
-import  utwente.viskell.ui.components.Block;
 
 import java.util.stream.Stream;
 

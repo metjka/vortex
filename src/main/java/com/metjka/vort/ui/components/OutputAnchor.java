@@ -1,14 +1,12 @@
 package com.metjka.vort.ui.components;
 
 import com.google.common.collect.ImmutableMap;
+import com.metjka.vort.ui.BlockContainer;
+import com.metjka.vort.ui.Type;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
-import  utwente.viskell.haskell.expr.*;
-import  utwente.viskell.haskell.type.Type;
-import  utwente.viskell.haskell.type.TypeScope;
-import  utwente.viskell.ui.BlockContainer;
 
 import java.util.*;
 
