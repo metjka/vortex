@@ -1,12 +1,14 @@
 package com.metjka.vort.ui;
 
-import com.metjka.vort.ui.components.*;
+import com.metjka.vort.ui.components.blocks.Block;
+import com.metjka.vort.ui.components.connections.Connection;
+import com.metjka.vort.ui.components.connections.DrawWire;
+import com.metjka.vort.ui.components.connections.InputAnchor;
+import com.metjka.vort.ui.components.connections.OutputAnchor;
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
-
-import java.util.List;
 
 /**
  * A menu for attaching something to an open wire.

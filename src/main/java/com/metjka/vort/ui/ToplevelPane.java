@@ -1,7 +1,10 @@
 package com.metjka.vort.ui;
 
 import com.google.common.collect.ImmutableMap;
-import com.metjka.vort.ui.components.*;
+import com.metjka.vort.ui.components.blocks.Block;
+import com.metjka.vort.ui.components.connections.Connection;
+import com.metjka.vort.ui.components.connections.ConnectionAnchor;
+import com.metjka.vort.ui.components.connections.DrawWire;
 import com.metjka.vort.ui.serialize.Bundleable;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;

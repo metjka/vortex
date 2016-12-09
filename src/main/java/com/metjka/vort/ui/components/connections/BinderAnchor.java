@@ -1,6 +1,7 @@
-package com.metjka.vort.ui.components;
+package com.metjka.vort.ui.components.connections;
 
 import com.metjka.vort.ui.BlockContainer;
+import com.metjka.vort.ui.components.blocks.Block;
 import javafx.scene.control.Label;
 
 import javax.xml.bind.Binder;
@@ -45,7 +46,7 @@ public class BinderAnchor extends OutputAnchor {
     }
 
     @Override
-    protected void handleConnectionChanges(boolean finalPhase) {
+    public void handleConnectionChanges(boolean finalPhase) {
         this.container.handleConnectionChanges(finalPhase);
     }
     

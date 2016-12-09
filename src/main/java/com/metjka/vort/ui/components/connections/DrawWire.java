@@ -1,10 +1,12 @@
-package com.metjka.vort.ui.components;
+package com.metjka.vort.ui.components.connections;
 
 import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.BlockContainer;
 import com.metjka.vort.ui.ComponentLoader;
 import com.metjka.vort.ui.ToplevelPane;
 import com.metjka.vort.ui.WireMenu;
+import com.metjka.vort.ui.components.Target;
+import com.metjka.vort.ui.components.blocks.Block;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

@@ -1,9 +1,10 @@
-package com.metjka.vort.ui.components;
+package com.metjka.vort.ui.components.connections;
 
 import com.google.common.collect.ImmutableMap;
 import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.BlockContainer;
 import com.metjka.vort.ui.ComponentLoader;
+import com.metjka.vort.ui.components.blocks.Block;
 import com.metjka.vort.ui.serialize.Bundleable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

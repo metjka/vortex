@@ -1,8 +1,10 @@
-package com.metjka.vort.ui.components;
+package com.metjka.vort.ui.components.connections;
 
 import com.google.common.collect.ImmutableMap;
 import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.BlockContainer;
+import com.metjka.vort.ui.components.Target;
+import com.metjka.vort.ui.components.blocks.Block;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
@@ -22,82 +24,101 @@ import java.util.Set;
  */
 public class InputAnchor extends ConnectionAnchor implements Target {
 
-    /** The visual representation of the InputAnchor. */
-    @FXML protected Shape visibleAnchor;
-    
-    /** The invisible part of the InputAnchor (the touch zone). */
-    @FXML protected Shape invisibleAnchor;
+    /**
+     * The visual representation of the InputAnchor.
+     */
+    @FXML
+    protected Shape visibleAnchor;
 
-    /** The thing sticking out of an unconnected InputAnchor. */
-    @FXML protected Shape openWire;
-    
-    /** The Optional connection this anchor has. */
+    /**
+     * The invisible part of the InputAnchor (the touch zone).
+     */
+    @FXML
+    protected Shape invisibleAnchor;
+
+    /**
+     * The thing sticking out of an unconnected InputAnchor.
+     */
+    @FXML
+    protected Shape openWire;
+
+    /**
+     * The Optional connection this anchor has.
+     */
     private Optional<Connection> connection;
-    
-    /** The local type of this anchor */
+
+    /**
+     * The local type of this anchor
+     */
     private Type type;
-    
-    /** Property storing the error state. */
+
+    /**
+     * Property storing the error state.
+     */
     private BooleanProperty errorState;
 
     /**
-     * @param block
-     *            The Block this anchor is connected to.
+     * @param block The Block this anchor is connected to.
      */
     public InputAnchor(Block block) {
         super(block);
         this.loadFXML("InputAnchor");
-        
+
         this.connection = Optional.empty();
-        this.type = TypeScope.unique("???");
-        
+        this.type = Type.IMAGE;
+
         this.errorState = new SimpleBooleanProperty(false);
         this.errorState.addListener(this::checkError);
     }
 
-    /** For use in subclasses only. */
+    /**
+     * For use in subclasses only.
+     */
     protected InputAnchor() {
         super(null);
         this.connection = Optional.empty();
         this.errorState = new SimpleBooleanProperty(false);
         this.errorState.addListener(this::checkError);
     }
-    
+
     /**
      * @param block The Block this anchor is connected to.
-     * @param type The type constraint for this anchor.
+     * @param type  The type constraint for this anchor.
      */
     public InputAnchor(Block block, Type type) {
         this(block);
         this.type = type;
     }
-    
+
     @Override
     public ConnectionAnchor getAssociatedAnchor() {
         return this;
     }
-    
+
     /**
      * @param state The new error state for this ConnectionAnchor.
      */
     protected void setErrorState(boolean state) {
         this.errorState.set(state);
     }
-    
-    /** @return The Optional connection this anchor has. */
+
+    /**
+     * @return The Optional connection this anchor has.
+     */
     public Optional<Connection> getConnection() {
         return this.connection;
     }
 
     /**
      * Sets the connection of this anchor.
+     *
      * @param connection The connection to set.
      */
     protected void setConnection(Connection connection) {
         this.connection = Optional.of(connection);
         this.openWire.setVisible(false);
     }
-    
+
     @Override
     public void removeConnections() {
         if (this.connection.isPresent()) {
@@ -116,12 +137,14 @@ public class InputAnchor extends ConnectionAnchor implements Target {
     public boolean hasConnection() {
         return this.connection.isPresent();
     }
-    
-    /** @return True if this anchor has an error free connection */
+
+    /**
+     * @return True if this anchor has an error free connection
+     */
     public boolean hasValidConnection() {
-        return this.connection.isPresent() && ! (this.errorState.get() || this.connection.get().hasScopeError());
+        return this.connection.isPresent() && !(this.errorState.get() || this.connection.get().hasScopeError());
     }
-    
+
     @Override
     public Point2D getAttachmentPoint() {
         return this.getPane().sceneToLocal(this.localToScene(new Point2D(0, -7)));
@@ -133,75 +156,12 @@ public class InputAnchor extends ConnectionAnchor implements Target {
     public Type getType() {
         return this.type;
     }
-    
-    @Override
-    public Type getFreshType() {
-        return this.type.getFresh();
-    }
 
     /**
      * @return the string representation of the in- or output type.
      */
     public final String getStringType() {
-        return this.getType().prettyPrint();
-    }
-    
-    /**
-     * Sets the type constraint of this input anchor to a fresh type.
-     * @param type constraint which this input anchor will require.
-     * @param scope wherein the fresh type is constructed.
-     */
-    public void setFreshRequiredType(Type type, TypeScope scope) {
-        this.type = type.getFresh(scope);
-    }
-
-    public void setExactRequiredType(Type type) {
-        this.type = type;
-    }
-    
-    /**
-     * @return Optional of the connection's opposite output anchor.
-     */
-    public Optional<OutputAnchor> getOppositeAnchor() {
-        return this.connection.map(c -> c.getStartAnchor());
-    }
-    
-    /**
-     * @return The local expression carried by the connection connected to this anchor.
-     */
-    public Expression getLocalExpr(Set<OutputAnchor> outsideAnchors) {
-        return this.connection.map(c -> c.getStartAnchor().getVariable()).orElse(new Hole());
-    }
-    
-    /**
-     * This function assumes that the function is in the top level container.
-     * @return The full expression carried by the connection connected to this anchor.
-     */
-    public Expression getFullExpr() {
-        Set<OutputAnchor> outsideAnchors = new HashSet<>();
-        LetExpression fullExpr = new LetExpression(this.getLocalExpr(outsideAnchors), false);
-        
-        /**
-         * Iterate over the container until it doesn't find new nodes.
-         */
-        boolean cont = true;
-        for (int numAnchors = -1; numAnchors != outsideAnchors.size() || cont; numAnchors = outsideAnchors.size()) {
-            cont = (numAnchors != outsideAnchors.size());
-            extendExprGraph(fullExpr, block.container, outsideAnchors);
-            outsideAnchors.forEach(connection -> connection.extendExprGraph(fullExpr, block.container, outsideAnchors));
-        }
-    
-        return fullExpr;
-    }
-    
-    /**
-     * Extends the expression graph to include all subexpression required
-     * @param exprGraph the let expression representing the current expression graph
-     * @param container the container to which this expression graph is constrained
-     * @param outsideAnchors a mutable set of required OutputAnchors from a surrounding container
-     */
-    protected void extendExprGraph(LetExpression exprGraph, BlockContainer container, Set<OutputAnchor> outsideAnchors) {
-        connection.ifPresent(connection -> connection.extendExprGraph(exprGraph, container, outsideAnchors));
+        return type.toString();
     }
 
     /**
@@ -235,7 +195,7 @@ public class InputAnchor extends ConnectionAnchor implements Target {
             this.visibleAnchor.setFill(Color.BLACK);
         }
     }
-    
+
     @Override
     public void setWireInProgress(DrawWire wire) {
         super.setWireInProgress(wire);
@@ -248,16 +208,18 @@ public class InputAnchor extends ConnectionAnchor implements Target {
         }
     }
 
-    /** Called when the VisualState changed. */
+    /**
+     * Called when the VisualState changed.
+     */
     public void invalidateVisualState() {
-    	this.connection.ifPresent(c -> c.invalidateVisualState());
+        this.connection.ifPresent(c -> c.invalidateVisualState());
     }
 
     @Override
     public BlockContainer getContainer() {
         return this.block.getContainer();
     }
-    
+
     @Override
     public String toString() {
         return "InputAnchor for " + this.block;

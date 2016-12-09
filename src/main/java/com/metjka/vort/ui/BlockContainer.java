@@ -1,6 +1,6 @@
 package com.metjka.vort.ui;
 
-import com.metjka.vort.ui.components.Block;
+import com.metjka.vort.ui.components.blocks.Block;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;

@@ -1,6 +1,6 @@
 package com.metjka.vort.ui;
 
-import com.metjka.vort.ui.components.*;
+import com.metjka.vort.ui.components.blocks.Block;
 import javafx.animation.KeyFrame;
 import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
@@ -86,11 +86,8 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         /* Create content for utilSpace. */
         Button closeButton = new MenuButton("Close", bm -> close(bm));
         closeButton.getStyleClass().add("escape");
-        Button valBlockButton = new MenuButton("Constant", bm -> addConstantBlock());
-        Button arbBlockButton = new MenuButton("Arbitrary", bm -> addBlock(new ArbitraryBlock(parent)));
-        Button disBlockButton = new MenuButton("Observe", bm -> addBlock(new DisplayBlock(parent)));
 
-        utilSpace.getChildren().addAll(closeButton, disBlockButton, arbBlockButton, valBlockButton);
+        utilSpace.getChildren().addAll(closeButton);
 
         // with an odd number of block buttons fill the last spot with a close button
         if (utilSpace.getChildren().size() % 2 == 1) {
@@ -136,12 +133,6 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
             this.setOnTouchPressed(event -> dragReset.play());
             this.setOnTouchMoved(event -> this.touchDragCounter++);
         }
-    }
-
-    private void addConstantBlock() {
-        ConstantBlock val = new ConstantBlock(this.parent);
-        addBlock(val);
-        val.editValue(Optional.of("\"Hello, World!\""));
     }
 
     private void addBlock(Block block) {

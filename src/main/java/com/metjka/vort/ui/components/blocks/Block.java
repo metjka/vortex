@@ -1,20 +1,20 @@
-package com.metjka.vort.ui.components;
+package com.metjka.vort.ui.components.blocks;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.metjka.vort.ui.*;
+import com.metjka.vort.ui.components.connections.ConnectionAnchor;
+import com.metjka.vort.ui.components.connections.InputAnchor;
+import com.metjka.vort.ui.components.connections.OutputAnchor;
 import com.metjka.vort.ui.serialize.Bundleable;
 import javafx.application.Platform;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.function.Predicate;
 
 /**
  * Base block shaped UI Component that other visual elements will extend from.
@@ -75,17 +75,6 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
 
     static {
         Map<String, String> aMap = new HashMap<>();
-        aMap.put(JoinerBlock.class.getSimpleName(), JoinerBlock.class.getName());
-        aMap.put(ConstantMatchBlock.class.getSimpleName(), ConstantMatchBlock.class.getName());
-        aMap.put(LiftingBlock.class.getSimpleName(), LiftingBlock.class.getName());
-        aMap.put(MatchBlock.class.getSimpleName(), MatchBlock.class.getName());
-        aMap.put(GraphBlock.class.getSimpleName(), GraphBlock.class.getName());
-        aMap.put(BinOpApplyBlock.class.getSimpleName(), BinOpApplyBlock.class.getName());
-        aMap.put(SimulateBlock.class.getSimpleName(), SimulateBlock.class.getName());
-        aMap.put(DisplayBlock.class.getSimpleName(), DisplayBlock.class.getName());
-        aMap.put(ArbitraryBlock.class.getSimpleName(), ArbitraryBlock.class.getName());
-        aMap.put(SliderBlock.class.getSimpleName(), SliderBlock.class.getName());
-        aMap.put(ConstantBlock.class.getSimpleName(), ConstantBlock.class.getName());
         blockClassMap = Collections.unmodifiableMap(aMap);
     }
 
@@ -109,7 +98,7 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         }
 
         this.dragContext = new DragContext(this);
-        this.dragContext.setSecondaryClickAction((p, byMouse) -> CircleMenu.showFor(this, this.localToParent(p), byMouse));
+//        this.dragContext.setSecondaryClickAction((p, byMouse) -> CircleMenu.showFor(this, this.localToParent(p), byMouse));
         this.dragContext.setDragFinishAction(event -> refreshContainer());
         this.dragContext.setContactAction(x -> this.getStyleClass().add("activated"));
         this.dragContext.setReleaseAction(x -> this.getStyleClass().removeAll("activated"));

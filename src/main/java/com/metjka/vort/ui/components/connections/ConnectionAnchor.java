@@ -1,9 +1,10 @@
-package com.metjka.vort.ui.components;
+package com.metjka.vort.ui.components.connections;
 
 import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.BlockContainer;
 import com.metjka.vort.ui.ComponentLoader;
 import com.metjka.vort.ui.ToplevelPane;
+import com.metjka.vort.ui.components.blocks.Block;
 import com.metjka.vort.ui.serialize.Bundleable;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
@@ -97,12 +98,10 @@ public abstract class ConnectionAnchor extends StackPane implements ComponentLoa
      * Handle the Connection changes for the Block this anchor is attached to.
      * @param finalPhase whether the change propagation is in the second (final) phase.
      */
-    protected void handleConnectionChanges(boolean finalPhase) {
+    public void handleConnectionChanges(boolean finalPhase) {
         this.block.handleConnectionChanges(finalPhase);
     }
 
-    public abstract Type getFreshType();
-    
     private void handleMousePress(MouseEvent event) {
         if (this.wireInProgress == null && this.eventRedirectionTarget == null && !event.isSynthesized()) {
             this.eventRedirectionTarget = DrawWire.initiate(this, null);
