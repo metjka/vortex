@@ -47,28 +47,15 @@ public class OutputAnchor extends ConnectionAnchor implements Target {
     protected List<Connection> connections;
 
     /**
-     * The variable binder attached to the expression corresponding to this anchor
-     */
-    protected final Binder binder;
-
-    /**
      * @param block  The block this Anchor is connected to
-     * @param binder The binder to use for this
      */
-    public OutputAnchor(Block block, Binder binder) {
+    public OutputAnchor(Block block) {
         super(block);
         this.loadFXML("OutputAnchor");
         this.connections = new ArrayList<>();
-        this.binder = binder;
     }
 
-    /**
-     * @param targetConnection optionally which special connection the type associated with.
-     * @return the local type of this anchor
-     */
-    public Type getType(Optional<Connection> targetConnection) {
-        return this.binder.getBoundType();
-    }
+
 
     @Override
     public ConnectionAnchor getAssociatedAnchor() {
@@ -76,10 +63,16 @@ public class OutputAnchor extends ConnectionAnchor implements Target {
     }
 
     /**
-     * @return the string representation of the in- or output type.
+     * Get the input anchors on the other side of the Connection from this anchor.
+     *
+     * @return A list of each input anchor for each Connection this anchor has.
      */
-    public final String getStringType() {
-        return this.getType(Optional.empty()).prettyPrint();
+    public List<InputAnchor> getOppositeAnchors() {
+        List<InputAnchor> list = new ArrayList<>();
+        for (Connection c : this.connections) {
+            list.add(c.getEndAnchor());
+        }
+        return list;
     }
 
     @Override
@@ -141,42 +134,6 @@ public class OutputAnchor extends ConnectionAnchor implements Target {
         this.block.prepareConnectionChanges();
     }
 
-    /**
-     * @return The variable referring to the expression belong to this anchor.
-     */
-    public Variable getVariable() {
-        return new LocalVar(this.binder);
-    }
-
-    /**
-     * Extends the expression graph to include all subexpression required
-     *
-     * @param exprGraph      the let expression representing the current expression graph
-     * @param container      the container to which this expression graph is constrained
-     * @param outsideAnchors a mutable set of required OutputAnchors from a surrounding container
-     */
-    protected void extendExprGraph(LetExpression exprGraph, BlockContainer container, Set<OutputAnchor> outsideAnchors) {
-        if (block.getContainer().equals(container)) {
-            boolean added = false;
-            Expression expr = block.getLocalExpr(outsideAnchors);
-
-            if (block instanceof MatchBlock) {
-                added = exprGraph.addLetBinding(((MatchBlock) block).getPrimaryBinder(), expr);
-            } else if (block instanceof ConstantMatchBlock) {
-                added = exprGraph.addLetBinding(new ConstantBinder(((ConstantMatchBlock) block).getValue()), expr);
-            } else if (block instanceof SplitterBlock) {
-                added = exprGraph.addLetBinding(((SplitterBlock) block).getPrimaryBinder(), expr);
-            } else {
-                added = exprGraph.addLetBinding(binder, expr);
-            }
-
-            if (added) {
-                // for a new let binding everything from the subexpression in this block needs to be included
-                block.extendExprGraph(exprGraph, container, outsideAnchors);
-            }
-        }
-    }
-
     @Override
     protected void setNearbyWireReaction(int goodness) {
         if (goodness > 2) {
@@ -206,23 +163,11 @@ public class OutputAnchor extends ConnectionAnchor implements Target {
     public void setWireInProgress(DrawWire wire) {
         super.setWireInProgress(wire);
         if (wire == null) {
-            this.invalidateVisualState();
             this.invisibleAnchor.setMouseTransparent(false);
         } else {
             this.openWire.setVisible(false);
             this.guardMarker.setVisible(false);
             this.invisibleAnchor.setMouseTransparent(true);
-        }
-    }
-
-    public void invalidateVisualState() {
-        if ("Bool".equals(this.getStringType()) && this.getContainer() instanceof Lane) {
-            this.guardMarker.setVisible(!this.hasConnection());
-            this.openWire.setVisible(false);
-
-        } else {
-            this.openWire.setVisible(!this.hasConnection());
-            this.guardMarker.setVisible(false);
         }
     }
 

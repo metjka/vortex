@@ -42,27 +42,12 @@ public class WireMenu extends TilePane {
 
         if (wire.getAnchor() instanceof InputAnchor) {
 
-            Button arbitraryBlockButton = new Button("Arbitrary");
-            arbitraryBlockButton.setOnAction(event -> addBlockWithOutput(new ArbitraryBlock(this.toplevel)));
-            arbitraryBlockButton.setOnTouchPressed(event -> addBlockWithOutput(new ArbitraryBlock(this.toplevel)));
 
-            Button rationalBlockButton = new Button("Rational");
-            rationalBlockButton.setOnAction(event -> addBlockWithOutput(new SliderBlock(this.toplevel, false)));
-            rationalBlockButton.setOnTouchPressed(event -> addBlockWithOutput(new SliderBlock(this.toplevel, false)));
-
-            Button IntegerBlockButton = new Button("Integer");
-            IntegerBlockButton.setOnAction(event -> addBlockWithOutput(new SliderBlock(this.toplevel, true)));
-            IntegerBlockButton.setOnTouchPressed(event -> addBlockWithOutput(new SliderBlock(this.toplevel, true)));
-
-            this.getChildren().addAll(cancelButton, arbitraryBlockButton, rationalBlockButton, IntegerBlockButton);
+            this.getChildren().addAll(cancelButton);
 
         } else {
 
-            Button disBlockButton = new Button("Observe");
-            disBlockButton.setOnAction(event -> addBlockWithInput(new DisplayBlock(this.toplevel)));
-            disBlockButton.setOnTouchPressed(event -> addBlockWithInput(new DisplayBlock(this.toplevel)));
-
-            this.getChildren().addAll(cancelButton, disBlockButton);
+            this.getChildren().addAll(cancelButton);
         }
 
         // opening animation

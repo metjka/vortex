@@ -84,12 +84,6 @@ public class Connection extends CubicCurve implements
         this.endAnchor.localToSceneTransformProperty().addListener(this);
 
         // typecheck the new connection to mark potential errors at the best location
-        try {
-            TypeChecker.unify("new connection", this.startAnchor.getType(Optional.of(this)), this.endAnchor.getType());
-        } catch (HaskellTypeError e) {
-            this.endAnchor.setErrorState(true);
-            this.errorState = true;
-        }
     }
 
     /**
@@ -120,18 +114,6 @@ public class Connection extends CubicCurve implements
 
         // for connections in error state typechecking is delayed to the final phase to keep error locations stable
         if (finalPhase == this.errorState) {
-            try {
-                // first a trial unification on a copy of the types to minimize error propagation
-                TypeScope scope = new TypeScope();
-                TypeChecker.unify("trial connection", this.startAnchor.getType(Optional.of(this)).getFresh(scope), this.endAnchor.getType().getFresh(scope));
-                // unify the actual types
-                TypeChecker.unify("connection", this.startAnchor.getType(Optional.of(this)), this.endAnchor.getType());
-                this.endAnchor.setErrorState(false);
-                this.errorState = false;
-            } catch (HaskellTypeError e) {
-                this.endAnchor.setErrorState(true);
-                this.errorState = true;
-            }
         }
 
         // continue with propagating connections changes in the output anchor block 
@@ -256,21 +238,6 @@ public class Connection extends CubicCurve implements
         return diffX * diffX + diffY * diffY;
     }
 
-    /**
-     * Extends the expression graph to include all subexpression required
-     *
-     * @param exprGraph      the let expression representing the current expression graph
-     * @param container      the container to which this expression graph is constrained
-     * @param outsideAnchors a mutable set of required OutputAnchors from a surrounding container
-     */
-    protected void extendExprGraph(LetExpression exprGraph, BlockContainer container, Set<OutputAnchor> outsideAnchors) {
-        OutputAnchor anchor = this.getStartAnchor();
-        if (container == anchor.getContainer())
-            anchor.extendExprGraph(exprGraph, container, outsideAnchors);
-        else
-            outsideAnchors.add(anchor);
-    }
-
     public void invalidateVisualState() {
         this.scopeError = !this.endAnchor.getContainer().isContainedWithin(this.startAnchor.getContainer());
 
@@ -289,34 +256,7 @@ public class Connection extends CubicCurve implements
         } else {
             this.setStroke(Color.BLACK);
             this.getStrokeDashArray().clear();
-            this.setStrokeWidth(calculateTypeWidth(this.endAnchor.getType()));
         }
-    }
-
-    private static int calculateTypeWidth(Type wireType) {
-        Type type = wireType.getConcrete();
-
-        int fcount = 0;
-        while (type instanceof FunType) {
-            fcount++;
-            type = ((FunType) type).getResult();
-        }
-
-        if (fcount > 0) {
-            return 4 + 2 * fcount;
-        }
-
-        int arity = 0;
-        while (type instanceof TypeApp) {
-            arity++;
-            type = ((TypeApp) type).getTypeFun();
-        }
-
-        if (type instanceof ListTypeCon) {
-            return 5;
-        }
-
-        return 3 + arity;
     }
 
     public boolean hasTypeError() {

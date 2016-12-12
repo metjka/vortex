@@ -1,5 +1,6 @@
 package com.metjka.vort.ui.components.blocks;
 
+import com.google.common.collect.ImmutableList;
 import com.metjka.vort.ui.ToplevelPane;
 import com.metjka.vort.ui.components.Target;
 import com.metjka.vort.ui.components.connections.ConnectionAnchor;
@@ -30,22 +31,22 @@ public class OutputBlock extends Block implements Target {
         loadFXML("OutputBlock");
 
         inputAnchor = new InputAnchor(this);
-        inputAnchor.getChildren().add(0, inputAnchor);
+        inputSpace.getChildren().add(0, inputAnchor);
     }
 
     @Override
     public ConnectionAnchor getAssociatedAnchor() {
-        return null;
+        return inputAnchor;
     }
 
     @Override
     public List<InputAnchor> getAllInputs() {
-        return null;
+        return ImmutableList.of(inputAnchor);
     }
 
     @Override
     public List<OutputAnchor> getAllOutputs() {
-        return null;
+        return ImmutableList.of();
     }
 
     @Override
@@ -60,6 +61,6 @@ public class OutputBlock extends Block implements Target {
 
     @Override
     public Optional<Block> getNewCopy() {
-        return null;
+        return Optional.of(new OutputBlock(this.getToplevel()));
     }
 }

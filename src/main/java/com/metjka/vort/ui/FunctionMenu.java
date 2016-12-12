@@ -1,9 +1,8 @@
 package com.metjka.vort.ui;
 
 import com.metjka.vort.ui.components.blocks.Block;
-import javafx.animation.KeyFrame;
+import com.metjka.vort.ui.components.blocks.OutputBlock;
 import javafx.animation.ScaleTransition;
-import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -20,8 +19,6 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * FunctionMenu is a viskell specific menu implementation. A FunctionMenu is an
@@ -87,7 +84,9 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button closeButton = new MenuButton("Close", bm -> close(bm));
         closeButton.getStyleClass().add("escape");
 
-        utilSpace.getChildren().addAll(closeButton);
+        Button outputBlock = new MenuButton("OutputBlock", bm -> addBlock(new OutputBlock(parent)));
+
+        utilSpace.getChildren().addAll(closeButton, outputBlock);
 
         // with an odd number of block buttons fill the last spot with a close button
         if (utilSpace.getChildren().size() % 2 == 1) {
@@ -109,30 +108,6 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         opening.setToY(1);
         opening.setOnFinished(e -> this.setMouseTransparent(false));
         opening.play();
-    }
-
-    /**
-     * Specialized Button that behaves better in a many touch environment.
-     */
-    private static class MenuButton extends Button {
-
-        private int touchDragCounter;
-
-        private MenuButton(String text, Consumer<Boolean> action) {
-            super(text);
-            this.touchDragCounter = 0;
-            this.getStyleClass().add("menuButton");
-            this.setOnMouseClicked(event -> {
-                if (!event.isSynthesized()) action.accept(true);
-            });
-
-            Timeline dragReset = new Timeline(new KeyFrame(Duration.millis(500), e -> this.touchDragCounter = 0));
-            this.setOnTouchReleased(event -> {
-                if (this.touchDragCounter < 7) action.accept(false);
-            });
-            this.setOnTouchPressed(event -> dragReset.play());
-            this.setOnTouchMoved(event -> this.touchDragCounter++);
-        }
     }
 
     private void addBlock(Block block) {

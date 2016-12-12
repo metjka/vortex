@@ -201,7 +201,7 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         }
 
         // propagate changes down from the output anchor to connected inputs
-        this.getAllOutputs().stream().forEach(output -> output.getOppositeAnchors().forEach(input -> input.handleConnectionChanges(finalPhase)));
+        this.getAllOutputs().forEach(output -> output.getOppositeAnchors().forEach(input -> input.handleConnectionChanges(finalPhase)));
 
         if (finalPhase) {
             // Now that the expressions and types are fully updated, initiate a visual refresh.

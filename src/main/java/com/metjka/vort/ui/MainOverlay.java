@@ -79,13 +79,8 @@ public class MainOverlay extends StackPane {
     private Region getMenu(MenuActions menuActions) {
         Region menu;
         final String os = System.getProperty("os.name");
-        if ((os != null) && os.startsWith("Mac")) {
-            menu = new MacTopMenu(menuActions);
-        } else {
-            menu = makeMenuPane(menuActions);
-            StackPane.setAlignment(menu, Pos.TOP_LEFT);
-        }
-
+        menu = makeMenuPane(menuActions);
+        StackPane.setAlignment(menu, Pos.TOP_LEFT);
         return menu;
     }
 
@@ -117,7 +112,6 @@ public class MainOverlay extends StackPane {
      * Make a Pane that contains a Context menu that can be displayed on-screen
      *
      * @param menuActions that can be performed
-     *
      * @return Menu Pane
      */
     private Pane makeMenuPane(MenuActions menuActions) {
@@ -141,7 +135,6 @@ public class MainOverlay extends StackPane {
      * Make a Pane that contains buttons for zoom in and zoom out
      *
      * @param menuActions that can be performed, including Zoom In and Zoom Out actions
-     *
      * @return Zoom Pane
      */
     private Pane makeZoomPane(MenuActions menuActions) {
