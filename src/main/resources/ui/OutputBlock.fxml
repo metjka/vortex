@@ -3,10 +3,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root
-        xmlns:fx="http://javafx.com/fxml/"
-        type="StackPane"
->
+<fx:root xmlns:fx="http://javafx.com/fxml/"
+         type="StackPane">
 
     <BorderPane styleClass="display, block" pickOnBounds="false">
         <center>

@@ -508,7 +508,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
             }
 
             try {
-                return 3;
+                return 1;
             } catch (Exception e) {
                 return -1;
             }

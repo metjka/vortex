@@ -78,9 +78,6 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         blockClassMap = Collections.unmodifiableMap(aMap);
     }
 
-    /**
-     * @param pane The pane this block belongs to.
-     */
     public Block(ToplevelPane pane) {
         this.toplevel = pane;
         this.freshAnchorTypes = false;
