@@ -164,6 +164,17 @@ public class InputAnchor extends ConnectionAnchor implements Target {
         return type.toString();
     }
 
+    public void setExactRequiredType(Type type) {
+        this.type = type;
+    }
+
+    /**
+     * @return Optional of the connection's opposite output anchor.
+     */
+    public Optional<OutputAnchor> getOppositeAnchor() {
+        return this.connection.map(c -> c.getStartAnchor());
+    }
+
     /**
      * ChangeListener that will set the error state if isConnected().
      */
@@ -212,7 +223,7 @@ public class InputAnchor extends ConnectionAnchor implements Target {
      * Called when the VisualState changed.
      */
     public void invalidateVisualState() {
-        this.connection.ifPresent(c -> c.invalidateVisualState());
+        this.connection.ifPresent(connection -> connection.invalidateVisualState());
     }
 
     @Override

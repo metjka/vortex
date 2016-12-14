@@ -56,7 +56,7 @@ public class OutputBlock extends Block implements Target {
 
     @Override
     public void invalidateVisualState() {
-
+        inputAnchor.invalidateVisualState();
     }
 
     @Override

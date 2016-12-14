@@ -83,7 +83,6 @@ public class Connection extends CubicCurve implements
         this.endAnchor.setConnection(this);
         this.endAnchor.localToSceneTransformProperty().addListener(this);
 
-        // typecheck the new connection to mark potential errors at the best location
     }
 
     /**
@@ -256,6 +255,7 @@ public class Connection extends CubicCurve implements
         } else {
             this.setStroke(Color.BLACK);
             this.getStrokeDashArray().clear();
+            this.setStrokeWidth(3);
         }
     }
 
