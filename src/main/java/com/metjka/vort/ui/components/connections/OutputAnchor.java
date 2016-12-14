@@ -2,7 +2,6 @@ package com.metjka.vort.ui.components.connections;
 
 import com.google.common.collect.ImmutableMap;
 import com.metjka.vort.ui.BlockContainer;
-import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.components.Target;
 import com.metjka.vort.ui.components.blocks.Block;
 import javafx.fxml.FXML;
@@ -10,7 +9,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Anchor that specifically functions as an output.
@@ -47,14 +48,13 @@ public class OutputAnchor extends ConnectionAnchor implements Target {
     protected List<Connection> connections;
 
     /**
-     * @param block  The block this Anchor is connected to
+     * @param block The block this Anchor is connected to
      */
     public OutputAnchor(Block block) {
         super(block);
         this.loadFXML("OutputAnchor");
         this.connections = new ArrayList<>();
     }
-
 
 
     @Override
@@ -163,12 +163,18 @@ public class OutputAnchor extends ConnectionAnchor implements Target {
     public void setWireInProgress(DrawWire wire) {
         super.setWireInProgress(wire);
         if (wire == null) {
+            this.invalidateVisualState();
             this.invisibleAnchor.setMouseTransparent(false);
         } else {
             this.openWire.setVisible(false);
             this.guardMarker.setVisible(false);
             this.invisibleAnchor.setMouseTransparent(true);
         }
+    }
+
+    public void invalidateVisualState() {
+        this.openWire.setVisible(!this.hasConnection());
+        this.guardMarker.setVisible(false);
     }
 
     @Override
