@@ -30,8 +30,9 @@ public class MathBlock extends Block {
     }
 
     @Override
-    protected void refreshAnchorTypes() {
+    protected Integer getValue() {
 
+        return null;
     }
 
     @Override

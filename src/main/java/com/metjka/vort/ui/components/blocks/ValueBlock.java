@@ -10,16 +10,15 @@ import javafx.scene.layout.Pane;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ValueBlock extends Block {
+public abstract class ValueBlock<T> extends Block {
+
+    T value;
 
     private OutputAnchor output;
 
     @FXML
-    Pane outputSpace;
+    private Pane outputSpace;
 
-    /**
-     * @param pane The pane this block belongs to.
-     */
     public ValueBlock(ToplevelPane pane, String fxml) {
         super(pane);
         loadFXML(fxml);
@@ -39,13 +38,8 @@ public abstract class ValueBlock extends Block {
     }
 
     @Override
-    protected void refreshAnchorTypes() {
-
-    }
-
-    @Override
     public void invalidateVisualState() {
-
+        output.invalidateVisualState();
     }
 
 }

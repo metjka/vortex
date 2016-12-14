@@ -157,7 +157,7 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
             return; // refresh anchor types in each block only once
         }
         this.freshAnchorTypes = true;
-        this.refreshAnchorTypes();
+        this.getValue();
 
         this.inValidContext = this.checkValidInCurrentContainer();
         if (this.inValidContext) {
@@ -171,7 +171,7 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
     /**
      * Set fresh types in all anchors of this block for the next typechecking cycle.
      */
-    protected abstract void refreshAnchorTypes();
+    protected abstract Integer getValue();
 
     /**
      * Handle the expression and types changes caused by modified connections or values.
@@ -271,14 +271,6 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
      */
     public boolean checkValidInCurrentContainer() {
         return !(this.container instanceof TrashContainer);
-    }
-
-    public boolean canAlterAnchors() {
-        return false;
-    }
-
-    public void alterAnchorCount(boolean isRemove) {
-        // does not if not supported
     }
 
     @Override
