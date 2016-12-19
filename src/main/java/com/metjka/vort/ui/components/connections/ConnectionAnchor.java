@@ -13,20 +13,26 @@ import javafx.scene.layout.StackPane;
 
 /**
  * Represents an anchor of a Block that can connect to (1 or more) Connections.
- * 
+ * <p>
  * A ConnectionAnchor has an invisible part that acts as an enlargement of the touch zone.
  */
 public abstract class ConnectionAnchor extends StackPane implements ComponentLoader, Bundleable {
     protected static final String BLOCK_LABEL = "block";
     protected static final String ANCHOR_LABEL = "anchor";
 
-    /** The connection being drawn starting from this anchor, or null if none. */
+    /**
+     * The connection being drawn starting from this anchor, or null if none.
+     */
     private DrawWire wireInProgress;
 
-    /** The wire we temporarily redirect mouse events to, or null if that isn't required */
+    /**
+     * The wire we temporarily redirect mouse events to, or null if that isn't required
+     */
     private DrawWire eventRedirectionTarget;
-    
-    /** The block this ConnectionAnchor belongs to. */
+
+    /**
+     * The block this ConnectionAnchor belongs to.
+     */
     protected Block block;
 
     /**
@@ -66,11 +72,14 @@ public abstract class ConnectionAnchor extends StackPane implements ComponentLoa
     public abstract boolean hasConnection();
 
 
-    /** @return the location of where to attach wire in the coordinates of the toplevel pane. */
-    public abstract Point2D getAttachmentPoint();
-    
     /**
-     * Make this anchor visually react to a draw wire getting nearby.  
+     * @return the location of where to attach wire in the coordinates of the toplevel pane.
+     */
+    public abstract Point2D getAttachmentPoint();
+
+    /**
+     * Make this anchor visually react to a draw wire getting nearby.
+     *
      * @param goodness 0 is neutral, negative is error causing, and positive is an connectable wire.
      */
     protected abstract void setNearbyWireReaction(int goodness);
@@ -94,12 +103,11 @@ public abstract class ConnectionAnchor extends StackPane implements ComponentLoa
      */
     public abstract BlockContainer getContainer();
 
-    /** 
+    /**
      * Handle the Connection changes for the Block this anchor is attached to.
-     * @param finalPhase whether the change propagation is in the second (final) phase.
      */
-    public void handleConnectionChanges(boolean finalPhase) {
-        this.block.handleConnectionChanges(finalPhase);
+    public void handleConnectionChanges() {
+        this.block.handleConnectionChanges();
     }
 
     private void handleMousePress(MouseEvent event) {
@@ -121,7 +129,9 @@ public abstract class ConnectionAnchor extends StackPane implements ComponentLoa
         return String.format("%s belonging to %s", this.getClass().getSimpleName(), this.block);
     }
 
-    /** @return the UIPane of the attached block. */
+    /**
+     * @return the UIPane of the attached block.
+     */
     public ToplevelPane getPane() {
         return this.block.getToplevel();
     }

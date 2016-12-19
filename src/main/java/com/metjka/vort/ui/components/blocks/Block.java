@@ -141,12 +141,8 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         return true;
     }
 
-    /**
-     * Starts a new (2 phase) change propagation process from this block.
-     */
     public final void initiateConnectionChanges() {
-        this.handleConnectionChanges(false);
-        this.handleConnectionChanges(true);
+        this.handleConnectionChanges();
     }
 
     /**
@@ -157,7 +153,6 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
             return; // refresh anchor types in each block only once
         }
         this.freshAnchorTypes = true;
-        this.getValue();
 
         this.inValidContext = this.checkValidInCurrentContainer();
         if (this.inValidContext) {
@@ -168,42 +163,21 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         }
     }
 
-    /**
-     * Set fresh types in all anchors of this block for the next typechecking cycle.
-     */
-    protected abstract Integer getValue();
 
     /**
      * Handle the expression and types changes caused by modified connections or values.
      * Propagate the changes through connected blocks, and if final phase trigger a visual update.
-     *
-     * @param finalPhase whether the change propagation is in the second (final) phase.
      */
-    public void handleConnectionChanges(boolean finalPhase) {
-        if (this.updateInProgress != finalPhase) {
-            return; // avoid doing extra work and infinite recursion
-        }
-
-        if (!finalPhase) {
-            // in first phase ensure that anchor types are refreshed
-            this.prepareConnectionChanges();
-        }
-
-        this.updateInProgress = !finalPhase;
-        this.freshAnchorTypes = false;
-
-        // First make sure that all connected inputs will be updated too.        
-        for (InputAnchor input : this.getAllInputs()) {
-            input.getConnection().ifPresent(c -> c.handleConnectionChangesUpwards(finalPhase));
-        }
+    public void handleConnectionChanges() {
 
         // propagate changes down from the output anchor to connected inputs
-        this.getAllOutputs().forEach(output -> output.getOppositeAnchors().forEach(input -> input.handleConnectionChanges(finalPhase)));
+        this.getAllOutputs().forEach(output -> output
+                .getOppositeAnchors()
+                .forEach(input -> input.handleConnectionChanges()));
 
-        if (finalPhase) {
-            // Now that the expressions and types are fully updated, initiate a visual refresh.
-            Platform.runLater(this::invalidateVisualState);
-        }
+        // Now that the expressions and types are fully updated, initiate a visual refresh.
+        Platform.runLater(this::invalidateVisualState);
+
     }
 
     /**

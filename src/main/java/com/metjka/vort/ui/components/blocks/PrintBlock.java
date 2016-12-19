@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
 import java.util.List;
 import java.util.Optional;
 
-public class OutputBlock extends Block implements Target {
+public class PrintBlock extends Block implements Target {
 
     protected InputAnchor inputAnchor;
 
@@ -26,7 +26,7 @@ public class OutputBlock extends Block implements Target {
     /**
      * @param pane The pane this block belongs to.
      */
-    public OutputBlock(ToplevelPane pane) {
+    public PrintBlock(ToplevelPane pane) {
         super(pane);
         loadFXML("OutputBlock");
 
@@ -50,18 +50,12 @@ public class OutputBlock extends Block implements Target {
     }
 
     @Override
-    protected Integer getValue() {
-
-        return null;
-    }
-
-    @Override
     public void invalidateVisualState() {
         inputAnchor.invalidateVisualState();
     }
 
     @Override
     public Optional<Block> getNewCopy() {
-        return Optional.of(new OutputBlock(this.getToplevel()));
+        return Optional.of(new PrintBlock(this.getToplevel()));
     }
 }

@@ -116,7 +116,7 @@ public class Connection extends CubicCurve implements
         }
 
         // continue with propagating connections changes in the output anchor block 
-        this.startAnchor.handleConnectionChanges(finalPhase);
+        this.startAnchor.handleConnectionChanges();
     }
 
     /**
@@ -129,10 +129,10 @@ public class Connection extends CubicCurve implements
         this.endAnchor.removeConnections();
         this.startAnchor.getPane().removeConnection(this);
         // propagate the connection changes of both anchors simultaneously in two phases to avoid duplicate work 
-        this.startAnchor.handleConnectionChanges(false);
-        this.endAnchor.handleConnectionChanges(false);
-        this.startAnchor.handleConnectionChanges(true);
-        this.endAnchor.handleConnectionChanges(true);
+        this.startAnchor.handleConnectionChanges();
+        this.endAnchor.handleConnectionChanges();
+        this.startAnchor.handleConnectionChanges();
+        this.endAnchor.handleConnectionChanges();
     }
 
     @Override

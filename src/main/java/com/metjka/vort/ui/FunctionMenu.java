@@ -2,7 +2,7 @@ package com.metjka.vort.ui;
 
 import com.metjka.vort.ui.components.blocks.Block;
 import com.metjka.vort.ui.components.blocks.ConstantBlock;
-import com.metjka.vort.ui.components.blocks.OutputBlock;
+import com.metjka.vort.ui.components.blocks.PrintBlock;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -85,7 +85,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button closeButton = new MenuButton("Close", bm -> close(bm));
         closeButton.getStyleClass().add("escape");
 
-        Button outputBlock = new MenuButton("Output", bm -> addBlock(new OutputBlock(parent)));
+        Button outputBlock = new MenuButton("Output", bm -> addBlock(new PrintBlock(parent)));
         Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ConstantBlock(parent)));
         utilSpace.getChildren().addAll(closeButton, outputBlock, constantBlock);
 

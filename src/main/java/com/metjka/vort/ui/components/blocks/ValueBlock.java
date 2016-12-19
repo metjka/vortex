@@ -42,4 +42,6 @@ public abstract class ValueBlock<T> extends Block {
         output.invalidateVisualState();
     }
 
+    protected abstract Integer getValue();
+
 }
