@@ -2,6 +2,7 @@ package com.metjka.vort.ui.components.connections;
 
 import com.google.common.collect.ImmutableMap;
 import com.metjka.vort.ui.BlockContainer;
+import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.components.Target;
 import com.metjka.vort.ui.components.blocks.Block;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * Anchor that specifically functions as an output.
@@ -46,14 +48,23 @@ public class OutputAnchor extends ConnectionAnchor implements Target {
      * The connections this anchor has, can be empty for no connections.
      */
     protected List<Connection> connections;
+    private final Type type;
+    private final int position;
+
+
+    public int getPosition() {
+        return position;
+    }
 
     /**
      * @param block The block this Anchor is connected to
      */
-    public OutputAnchor(Block block) {
+    public OutputAnchor(Block block, int position, Type type) {
         super(block);
+        this.type = type;
         this.loadFXML("OutputAnchor");
         this.connections = new ArrayList<>();
+        this.position = position;
     }
 
 
@@ -190,4 +201,7 @@ public class OutputAnchor extends ConnectionAnchor implements Target {
         return bundle.build();
     }
 
+    public Type getType() {
+        return type;
+    }
 }

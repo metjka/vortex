@@ -171,9 +171,9 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
     public void handleConnectionChanges() {
 
         // propagate changes down from the output anchor to connected inputs
-        this.getAllOutputs().forEach(output -> output
-                .getOppositeAnchors()
-                .forEach(input -> input.handleConnectionChanges()));
+        this.getAllOutputs().forEach(output ->
+                output.getOppositeAnchors()
+                        .forEach(input -> input.handleConnectionChanges()));
 
         // Now that the expressions and types are fully updated, initiate a visual refresh.
         Platform.runLater(this::invalidateVisualState);

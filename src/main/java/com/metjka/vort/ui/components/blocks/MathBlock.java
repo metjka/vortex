@@ -7,9 +7,6 @@ import com.metjka.vort.ui.components.connections.OutputAnchor;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by isalnikov on 12/12/2016.
- */
 public class MathBlock extends Block {
     /**
      * @param pane The pane this block belongs to.
@@ -29,7 +26,6 @@ public class MathBlock extends Block {
         return null;
     }
 
-    @Override
     protected Integer getValue() {
 
         return null;

@@ -1,13 +1,14 @@
 package com.metjka.vort.ui;
 
-/**
- * Created by isalnikov on 12/7/2016.
- */
 public enum Type {
 
     ARRAY,
     IMAGE,
-    INT,
-    COLOR
+    NUMBER,
+    COLOR;
+
+    public static <T extends Number> String NumberToString(T numer){
+        return numer.toString();
+    }
 
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class ConstantBlock extends ValueBlock<Integer> {
 
-    @FXML()
+    @FXML
     private TextField textField;
 
     public ConstantBlock(ToplevelPane pane) {
@@ -16,15 +16,19 @@ public class ConstantBlock extends ValueBlock<Integer> {
         textField.setText("0");
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            value = Integer.parseInt(newValue);
-            updateValue();
+            if (!"".equals(newValue)) {
+                value1 = Integer.parseInt(newValue);
+                updateValue();
+            } else {
+                value1 = 0;
+                updateValue();
+            }
         });
 
     }
 
-    @Override
     protected Integer getValue() {
-        return value;
+        return value1;
     }
 
     private void updateValue() {
@@ -37,4 +41,8 @@ public class ConstantBlock extends ValueBlock<Integer> {
     }
 
 
+    @Override
+    public Integer getFirstValue() {
+        return value1;
+    }
 }

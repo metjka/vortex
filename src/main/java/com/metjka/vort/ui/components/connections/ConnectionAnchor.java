@@ -30,6 +30,10 @@ public abstract class ConnectionAnchor extends StackPane implements ComponentLoa
      */
     private DrawWire eventRedirectionTarget;
 
+    public Block getBlock() {
+        return block;
+    }
+
     /**
      * The block this ConnectionAnchor belongs to.
      */

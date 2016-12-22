@@ -8,7 +8,7 @@
 
     <BorderPane styleClass="display, block" pickOnBounds="false">
         <center>
-            <Label fx:id="value" styleClass="content" maxWidth="400" alignment="CENTER"/>
+            <Label fx:id="printValue" styleClass="content" maxWidth="400" alignment="CENTER"/>
         </center>
         <top>
             <VBox fx:id="inputSpace" pickOnBounds="false"/>

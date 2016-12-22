@@ -35,7 +35,6 @@ public class BiOpBlock extends Block {
         return null;
     }
 
-    @Override
     protected Integer getValue() {
 
         return null;

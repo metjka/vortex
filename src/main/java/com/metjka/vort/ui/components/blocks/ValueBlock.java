@@ -2,19 +2,19 @@ package com.metjka.vort.ui.components.blocks;
 
 import com.google.common.collect.ImmutableList;
 import com.metjka.vort.ui.ToplevelPane;
+import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.components.connections.InputAnchor;
 import com.metjka.vort.ui.components.connections.OutputAnchor;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 
 import java.util.List;
-import java.util.Optional;
 
-public abstract class ValueBlock<T> extends Block {
+public abstract class ValueBlock<T> extends Block implements OneOutputBlock<T> {
 
-    T value;
+    T value1;
 
-    private OutputAnchor output;
+    private OutputAnchor outputAnchor;
 
     @FXML
     private Pane outputSpace;
@@ -22,9 +22,8 @@ public abstract class ValueBlock<T> extends Block {
     public ValueBlock(ToplevelPane pane, String fxml) {
         super(pane);
         loadFXML(fxml);
-        output = new OutputAnchor(this);
-        outputSpace.getChildren().add(output);
-
+        outputAnchor = new OutputAnchor(this, 1, Type.NUMBER);
+        outputSpace.getChildren().add(outputAnchor);
     }
 
     @Override
@@ -34,14 +33,13 @@ public abstract class ValueBlock<T> extends Block {
 
     @Override
     public List<OutputAnchor> getAllOutputs() {
-        return ImmutableList.of(output);
+        return ImmutableList.of(outputAnchor);
     }
 
     @Override
     public void invalidateVisualState() {
-        output.invalidateVisualState();
+        outputAnchor.invalidateVisualState();
     }
 
-    protected abstract Integer getValue();
 
 }
