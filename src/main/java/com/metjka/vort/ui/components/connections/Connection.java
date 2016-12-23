@@ -1,8 +1,6 @@
 package com.metjka.vort.ui.components.connections;
 
 import com.google.common.collect.ImmutableMap;
-import com.metjka.vort.ui.Type;
-import com.metjka.vort.ui.BlockContainer;
 import com.metjka.vort.ui.ComponentLoader;
 import com.metjka.vort.ui.components.blocks.Block;
 import com.metjka.vort.ui.serialize.Bundleable;
@@ -15,7 +13,6 @@ import javafx.scene.transform.Transform;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 
 /**
@@ -176,7 +173,7 @@ public class Connection extends CubicCurve implements
 
         Connection connection = new Connection(sourceAnchor, sinkAnchor);
         connection.invalidateVisualState();
-        sinkBlock.invalidateVisualState();
+        sinkBlock.update();
     }
 
     /**

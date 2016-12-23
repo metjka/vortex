@@ -13,8 +13,6 @@ import javafx.scene.layout.Pane;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class PrintBlock extends Block implements Target {
 
@@ -53,7 +51,7 @@ public class PrintBlock extends Block implements Target {
     }
 
     @Override
-    public void invalidateVisualState() {
+    public void update() {
         inputAnchor.invalidateVisualState();
         if (inputAnchor.getOppositeAnchor().isPresent()) {
 
@@ -74,11 +72,8 @@ public class PrintBlock extends Block implements Target {
                     break;
 
                 }
-                case 2 :{
-                    Lele2(block, ()->{
 
-                    });
-                }
+                default:
             }
         }
 
@@ -88,7 +83,7 @@ public class PrintBlock extends Block implements Target {
     private void Lele2(Block block, Runnable consumer) {
         if (block instanceof OneOutputBlock) {
             consumer.run();
-        } else if (block instanceof TwoOutputBlock){
+        } else if (block instanceof TwoOutputBlock) {
             consumer.run();
         }
     }
@@ -97,4 +92,5 @@ public class PrintBlock extends Block implements Target {
     public Optional<Block> getNewCopy() {
         return Optional.of(new PrintBlock(this.getToplevel()));
     }
+
 }

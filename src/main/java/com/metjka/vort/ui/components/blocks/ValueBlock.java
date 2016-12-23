@@ -37,7 +37,7 @@ public abstract class ValueBlock<T> extends Block implements OneOutputBlock<T> {
     }
 
     @Override
-    public void invalidateVisualState() {
+    public void update() {
         outputAnchor.invalidateVisualState();
     }
 

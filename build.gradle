@@ -22,9 +22,10 @@ repositories {
 }
 
 dependencies {
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.12'
     compile 'com.google.code.gson:gson:2.8.0'
     compile group: 'org.jfxtras', name: 'jfxtras-common', version: '8.0-r3'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.22'
     compile 'no.tornado:tornadofx:1.5.8'
     compile 'com.google.guava:guava:20.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

@@ -41,7 +41,7 @@ public class BiOpBlock extends Block {
     }
 
     @Override
-    public void invalidateVisualState() {
+    public void update() {
 
     }
 

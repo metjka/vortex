@@ -176,14 +176,14 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
                         .forEach(input -> input.handleConnectionChanges()));
 
         // Now that the expressions and types are fully updated, initiate a visual refresh.
-        Platform.runLater(this::invalidateVisualState);
+        Platform.runLater(this::update);
 
     }
 
     /**
      * Called when the VisualState changed.
      */
-    public abstract void invalidateVisualState();
+    public abstract void update();
 
     /**
      * @return whether this block is visually shown below common blocks (is constant per instance).
