@@ -78,8 +78,15 @@ public class MathBlock extends Block implements TwoOutputBlock<Integer> {
             case 1: {
                 if (block1 instanceof OneOutputBlock){
                     return (Integer) ((OneOutputBlock) block1).getFirstValue();
-                }
+                } else throw new IllegalArgumentException();
             }
+            case 2: {
+                if (block1 instanceof TwoOutputBlock){
+                    return (Integer) ((OneOutputBlock) block1).getFirstValue();
+                } else throw new IllegalArgumentException();
+            }
+            default:
+                break;
         }
         return null;
     }
