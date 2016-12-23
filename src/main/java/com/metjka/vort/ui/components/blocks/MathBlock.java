@@ -73,11 +73,11 @@ public class MathBlock extends Block implements TwoOutputBlock<Integer> {
 
     }
 
-    private OneOutputBlock getValueFromBlock(Block block1, int position1) {
+    private Integer getValueFromBlock(Block block1, int position1) {
         switch (position1){
             case 1: {
                 if (block1 instanceof OneOutputBlock){
-                    return (OneOutputBlock) ((OneOutputBlock) block1).getFirstValue();
+                    return (Integer) ((OneOutputBlock) block1).getFirstValue();
                 }
             }
         }
