@@ -1,17 +1,27 @@
+<?import javafx.scene.layout.*?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.*?>
 <fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
-    <BorderPane styleClass="value, block" pickOnBounds="false">
+
+    <BorderPane styleClass="value, block" pickOnBounds="false" minHeight="40" minWidth="40">
+        <top>
+            <VBox alignment="CENTER">
+                <VBox fx:id="inputSpace1" pickOnBounds="false" styleClass="inSpace, left"/>
+                <VBox fx:id="inputSpace2" pickOnBounds="false" styleClass="inSpace, right"/>
+            </VBox>
+        </top>
+
         <center>
             <VBox alignment="CENTER" minHeight="100" minWidth="100">
-                <TextField fx:id="textField" maxWidth="120">
+                <TextField fx:id="textField" maxWidth="120" editable="false">
                     <padding>
                         <Insets bottom="4" left="4" right="4"/>
                     </padding>
                 </TextField>
             </VBox>
         </center>
+
         <bottom>
             <VBox fx:id="outputSpace" pickOnBounds="false"/>
         </bottom>

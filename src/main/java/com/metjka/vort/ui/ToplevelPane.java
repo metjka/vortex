@@ -91,7 +91,7 @@ public class ToplevelPane extends Region implements BlockContainer, Bundleable {
         block.getNewCopy().ifPresent(copy -> {
             this.addBlock(copy);
             copy.relocate(block.getLayoutX() + 20, block.getLayoutY() + 20);
-            copy.initiateConnectionChanges();
+            copy.handleConnectionChanges();
         });
     }
 

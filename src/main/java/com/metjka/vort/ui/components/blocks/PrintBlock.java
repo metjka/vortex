@@ -19,10 +19,10 @@ public class PrintBlock extends Block implements Target {
     protected InputAnchor inputAnchor;
 
     @FXML
-    Pane inputSpace;
+    private Pane inputSpace;
 
     @FXML
-    Label printValue;
+    private Label printValue;
 
     /**
      * @param pane The pane this block belongs to.
@@ -66,7 +66,7 @@ public class PrintBlock extends Block implements Target {
                         Type type = outputAnchor.getType();
                         switch (type) {
                             case NUMBER:
-                                printValue.setText(Type.NumberToString((Number) ((OneOutputBlock) block).getFirstValue()));
+                                printValue.setText(Type.NumberToString((Number) ((OneOutputBlock) block).getValue1()));
                         }
                     });
                     break;
@@ -76,7 +76,6 @@ public class PrintBlock extends Block implements Target {
                 default:
             }
         }
-
 
     }
 

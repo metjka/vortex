@@ -14,7 +14,7 @@ public abstract class ValueBlock<T> extends Block implements OneOutputBlock<T> {
 
     T value1;
 
-    private OutputAnchor outputAnchor;
+    protected OutputAnchor outputAnchor;
 
     @FXML
     private Pane outputSpace;

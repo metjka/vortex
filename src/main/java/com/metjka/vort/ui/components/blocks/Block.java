@@ -141,10 +141,6 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         return true;
     }
 
-    public final void initiateConnectionChanges() {
-        this.handleConnectionChanges();
-    }
-
     /**
      * Connection change preparation; set fresh types in all anchors.
      */
@@ -175,9 +171,7 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
                 output.getOppositeAnchors()
                         .forEach(input -> input.handleConnectionChanges()));
 
-        // Now that the expressions and types are fully updated, initiate a visual refresh.
         Platform.runLater(this::update);
-
     }
 
     /**
@@ -274,7 +268,7 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         blockLookupTable.put(((Double) blockBundle.get(Block.BLOCK_ID_PARAMETER)).intValue(), block);
 
         // Ensure initialization of types related to the block
-        block.initiateConnectionChanges();
+        block.handleConnectionChanges();
         return block;
     }
 }

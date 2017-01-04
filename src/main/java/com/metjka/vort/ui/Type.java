@@ -7,7 +7,7 @@ public enum Type {
     NUMBER,
     COLOR;
 
-    public static <T extends Number> String NumberToString(T numer){
+    public static <T extends Number> String NumberToString(T numer) {
         return numer.toString();
     }
 

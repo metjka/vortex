@@ -6,6 +6,7 @@ import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.components.connections.InputAnchor;
 import com.metjka.vort.ui.components.connections.OutputAnchor;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,32 +14,34 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-public class MathBlock extends Block implements TwoOutputBlock<Integer> {
+public class MathBlock extends ValueBlock<Integer> {
 
-
-    private Integer firstValue;
-    private Integer secondValue;
+    private Integer inValue1;
+    private Integer inValue2;
 
     private InputAnchor inputAnchor1;
     private InputAnchor inputAnchor2;
 
-    private OutputAnchor outputAnchor;
+    @FXML
+    private Pane inputSpace1;
 
     @FXML
-    Pane inpitSpace;
+    private Pane inputSpace2;
 
     @FXML
-    Pane outputSpace;
+    private Pane outputSpace;
+
+    @FXML
+    TextField textField;
 
     public MathBlock(ToplevelPane pane) {
-        super(pane);
-        loadFXML("MathBlock");
+        super(pane, "MathBlock");
+
         inputAnchor1 = new InputAnchor(this, Type.NUMBER);
         inputAnchor2 = new InputAnchor(this, Type.NUMBER);
 
-        outputAnchor = new OutputAnchor(this, 1, Type.NUMBER);
-
-
+        inputSpace1.getChildren().add(0 , inputAnchor1);
+        inputSpace2.getChildren().add(0 , inputAnchor2);
     }
 
     @Override
@@ -55,34 +58,37 @@ public class MathBlock extends Block implements TwoOutputBlock<Integer> {
     public void update() {
         inputAnchor1.invalidateVisualState();
         inputAnchor2.invalidateVisualState();
-        OutputAnchor outputAnchor1 = inputAnchor1.getOppositeAnchor().get();
-        OutputAnchor outputAnchor2 = inputAnchor1.getOppositeAnchor().get();
 
+        OutputAnchor outputAnchor1 = inputAnchor1.getOppositeAnchor().get();
+        OutputAnchor outputAnchor2 = inputAnchor2.getOppositeAnchor().get();
 
         Block block1 = outputAnchor1.getBlock();
         int position1 = outputAnchor2.getPosition();
 
-        Block block2 = outputAnchor1.getBlock();
+        Block block2 = outputAnchor2.getBlock();
         int position2 = outputAnchor2.getPosition();
 
-        Integer inValue1;
-        Integer inValue2;
+        inValue1 = getValueFromBlock(block1, position1);
+        inValue2 = getValueFromBlock(block2, position2);
 
-        getValueFromBlock(block1, position1);
-        initiateConnectionChanges();
+        value1 = inValue1 + inValue2;
+
+        textField.setText(value1.toString());
+
+        outputAnchor.initiateConnectionChanges();
 
     }
 
     private Integer getValueFromBlock(Block block1, int position1) {
-        switch (position1){
+        switch (position1) {
             case 1: {
-                if (block1 instanceof OneOutputBlock){
-                    return (Integer) ((OneOutputBlock) block1).getFirstValue();
+                if (block1 instanceof OneOutputBlock) {
+                    return (Integer) ((OneOutputBlock) block1).getValue1();
                 } else throw new IllegalArgumentException();
             }
             case 2: {
-                if (block1 instanceof TwoOutputBlock){
-                    return (Integer) ((OneOutputBlock) block1).getFirstValue();
+                if (block1 instanceof TwoOutputBlock) {
+                    return (Integer) ((OneOutputBlock) block1).getValue1();
                 } else throw new IllegalArgumentException();
             }
             default:
@@ -96,13 +102,8 @@ public class MathBlock extends Block implements TwoOutputBlock<Integer> {
         return null;
     }
 
-    @Override
-    public Integer getFirstValue() {
-        return firstValue;
+    public Integer getValue1() {
+        return value1;
     }
 
-    @Override
-    public Integer getSecondValue() {
-        return secondValue;
-    }
 }

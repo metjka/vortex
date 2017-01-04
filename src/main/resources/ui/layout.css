@@ -82,8 +82,8 @@ MatchBlock #name {
 }
 
 MatchBlock #outputSpace {
-	-fx-min-height: 15px;
-	-fx-spacing: 30px;
+    -fx-min-height: 15px;
+    -fx-spacing: 30px;
 }
 
 MatchBlock {
@@ -91,7 +91,7 @@ MatchBlock {
 }
 
 .lifting.block {
-	-fx-padding: 0 10 0 10;
+    -fx-padding: 0 10 0 10;
 }
 
 .display.block {
@@ -115,7 +115,7 @@ MatchBlock {
 }
 
 SliderBlock Slider.inactive .track {
-	-fx-opacity: 0.6;
+    -fx-opacity: 0.6;
 }
 
 .block.constantMatch {
@@ -156,14 +156,26 @@ SliderBlock Slider.inactive .track {
 }
 
 .curryArrow {
-	-fx-padding: 0 2 0 2;
+    -fx-padding: 0 2 0 2;
     -fx-font-size: 14px;
     -fx-font-weight: normal;
- }
- 
+}
+
 #inputSpace, #outputSpace {
     -fx-max-height: 0px;
     -fx-alignment: center;
+}
+
+.inSpace{
+    -fx-max-height: 0px;
+    -fx-alignment: center;
+}
+.right{
+    -fx-alignment: center-right;
+}
+
+.left{
+    -fx-alignment: center-left;
 }
 
 .defName {
@@ -188,16 +200,16 @@ DrawWire {
 }
 
 .lambdaBorder, .choiceBorder {
-     -fx-pref-height: 25px;
+    -fx-pref-height: 25px;
 }
 
 Lane #guardSpace {
-	-fx-pref-width: 240px;
-	-fx-pref-height: 320px;
+    -fx-pref-width: 240px;
+    -fx-pref-height: 320px;
 }
 
 Lane #resultSpace {
-	-fx-alignment: center;
+    -fx-alignment: center;
 }
 
 Lane .padding {
@@ -205,8 +217,8 @@ Lane .padding {
 }
 
 #argSpace {
-	-fx-spacing: 100;
-	-fx-alignment: center;
+    -fx-spacing: 100;
+    -fx-alignment: center;
 }
 
 .subtle {

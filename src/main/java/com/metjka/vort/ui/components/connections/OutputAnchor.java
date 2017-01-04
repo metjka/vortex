@@ -135,7 +135,7 @@ public class OutputAnchor extends ConnectionAnchor implements Target {
      * Initiate connection changes at the Block this anchor is attached to.
      */
     public void initiateConnectionChanges() {
-        this.block.initiateConnectionChanges();
+        this.block.handleConnectionChanges();
     }
 
     /**

@@ -69,7 +69,7 @@ public class WireMenu extends TilePane {
             block.refreshContainer();
         }
 
-        block.initiateConnectionChanges();
+        block.handleConnectionChanges();
         InputAnchor input = block.getAllInputs().get(0);
         Connection connection = this.attachedWire.buildConnectionTo(input);
         if (connection != null) {
@@ -87,7 +87,7 @@ public class WireMenu extends TilePane {
             block.refreshContainer();
         }
 
-        block.initiateConnectionChanges();
+        block.handleConnectionChanges();
         OutputAnchor output = block.getAllOutputs().get(0);
         Connection connection = this.attachedWire.buildConnectionTo(output);
         if (connection != null) {

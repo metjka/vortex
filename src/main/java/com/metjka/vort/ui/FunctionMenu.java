@@ -2,6 +2,7 @@ package com.metjka.vort.ui;
 
 import com.metjka.vort.ui.components.blocks.Block;
 import com.metjka.vort.ui.components.blocks.ConstantBlock;
+import com.metjka.vort.ui.components.blocks.MathBlock;
 import com.metjka.vort.ui.components.blocks.PrintBlock;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
@@ -86,8 +87,10 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         closeButton.getStyleClass().add("escape");
 
         Button outputBlock = new MenuButton("Output", bm -> addBlock(new PrintBlock(parent)));
+        Button mathBlock = new MenuButton("Math", bm -> addBlock(new MathBlock(parent)));
         Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ConstantBlock(parent)));
-        utilSpace.getChildren().addAll(closeButton, outputBlock, constantBlock);
+
+        utilSpace.getChildren().addAll(closeButton, outputBlock, constantBlock, mathBlock);
 
         // with an odd number of block buttons fill the last spot with a close button
         if (utilSpace.getChildren().size() % 2 == 1) {
@@ -128,7 +131,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
             block.refreshContainer();
         }
 
-        block.initiateConnectionChanges();
+        block.handleConnectionChanges();
         this.blockCounter++;
     }
 
@@ -137,7 +140,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         parent.addBlock(block);
         block.relocate(pos.getX(), pos.getY());
         touchPoint.grab(block);
-        block.initiateConnectionChanges();
+        block.handleConnectionChanges();
     }
 
     /**
