@@ -41,5 +41,9 @@ public abstract class ValueBlock<T> extends Block implements OneOutputBlock<T> {
         outputAnchor.invalidateVisualState();
     }
 
+    T getValue(){
+        return value1;
+    }
+
 
 }

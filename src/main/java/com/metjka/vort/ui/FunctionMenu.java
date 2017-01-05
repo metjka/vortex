@@ -131,7 +131,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
             block.refreshContainer();
         }
 
-        block.handleConnectionChanges();
+        block.update();
         this.blockCounter++;
     }
 

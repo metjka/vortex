@@ -204,4 +204,8 @@ public class OutputAnchor extends ConnectionAnchor implements Target {
     public Type getType() {
         return type;
     }
+
+    public void sendUpdateDownSteam() {
+        block.sendUpdateDownSteam();
+    }
 }

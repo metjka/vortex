@@ -114,6 +114,10 @@ public abstract class ConnectionAnchor extends StackPane implements ComponentLoa
         this.block.handleConnectionChanges();
     }
 
+    public void receiveUpdate(){
+        block.update();
+    }
+
     private void handleMousePress(MouseEvent event) {
         if (this.wireInProgress == null && this.eventRedirectionTarget == null && !event.isSynthesized()) {
             this.eventRedirectionTarget = DrawWire.initiate(this, null);

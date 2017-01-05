@@ -174,9 +174,13 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         Platform.runLater(this::update);
     }
 
-    /**
-     * Called when the VisualState changed.
-     */
+    public void sendUpdateDownSteam() {
+        this.getAllOutputs().forEach(
+                output -> output
+                        .getOppositeAnchors()
+                        .forEach(input -> input.receiveUpdate()));
+    }
+
     public abstract void update();
 
     /**
@@ -271,4 +275,6 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         block.handleConnectionChanges();
         return block;
     }
+
+
 }

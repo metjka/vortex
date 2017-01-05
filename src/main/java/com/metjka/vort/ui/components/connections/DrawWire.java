@@ -129,7 +129,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
         } else if (target != null && target.getWireInProgress() == null) {
             Connection connection = this.buildConnectionTo(target);
             if (connection != null) {
-                connection.getStartAnchor().initiateConnectionChanges();
+                connection.getStartAnchor().receiveUpdate();
                 this.remove();
             } else {
                 this.toucharea.handleReleaseOnNothing();

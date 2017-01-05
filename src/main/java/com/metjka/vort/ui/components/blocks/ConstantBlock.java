@@ -17,14 +17,13 @@ public class ConstantBlock extends ValueBlock<Integer> {
         textField.setText("0");
         value1 = 0;
 
-
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!"".equals(newValue)) {
                 value1 = Integer.parseInt(newValue);
-                updateValue();
+                sendUpdateDownSteam();
             } else {
                 value1 = 0;
-                updateValue();
+                sendUpdateDownSteam();
             }
         });
 
@@ -34,15 +33,10 @@ public class ConstantBlock extends ValueBlock<Integer> {
         return value1;
     }
 
-    private void updateValue() {
-        this.handleConnectionChanges();
-    }
-
     @Override
     public Optional<Block> getNewCopy() {
         return null;
     }
-
 
     public Integer getValue1() {
         return value1;

@@ -58,7 +58,7 @@ public class PrintBlock extends Block implements Target {
             OutputAnchor outputAnchor = inputAnchor.getOppositeAnchor().get();
             Block block = outputAnchor.getBlock();
 
-            int position = inputAnchor.getOppositeAnchor().get().getPosition();
+            int position = outputAnchor.getPosition();
 
             switch (position) {
                 case 1: {
