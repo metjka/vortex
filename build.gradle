@@ -1,14 +1,14 @@
-group 'com.metjka'
-version '1.0-SNAPSHOT'
-
-
+group 'io.neuro'
+version '1.1'
 
 buildscript {
-    ext.kotlin_version = '1.0.3'
+
+    ext.kotlin_version = '1.0.5-3'
 
     repositories {
         mavenCentral()
     }
+
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -17,6 +17,8 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'kotlin'
 
+
+
 sourceCompatibility = 1.8
 
 repositories {
@@ -24,6 +26,13 @@ repositories {
 }
 
 dependencies {
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.12'
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile group: 'org.jfxtras', name: 'jfxtras-common', version: '8.0-r3'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.22'
+    compile 'no.tornado:tornadofx:1.5.8'
+    compile 'com.google.guava:guava:20.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }

@@ -1,15 +1,25 @@
 import org.junit.Test
 import java.awt.Color
 
-/**
- * Created by metka on 14.8.2016.
- */
-class Test{
+class Test {
 
     @Test
-    fun basicTest(){
+    fun basicTest() {
         val rgbInt = Color.CYAN.rgb
-        print(rgbInt)
+        println(rgbInt)
+    }
+
+    @Test
+    fun fore() {
+        for (i: Int in 0..10 - 1) {
+            println(i)
+        }
+    }
+
+    @Test
+    fun arra() {
+        val listOf = listOf<String>("colorRoof", "b")
+        println(listOf.size)
     }
 
 }

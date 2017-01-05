@@ -1,0 +1,15 @@
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<fx:root type="StackPane">
+    <BorderPane styleClass="value, block" pickOnBounds="false">
+        <padding>
+            <Insets top="5" bottom="5"/>
+        </padding>
+        <Pane fx:id="bodySpace" pickOnBounds="false"/>
+    </BorderPane>
+
+</fx:root>

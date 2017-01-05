@@ -1,0 +1,20 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.*?>
+<fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
+    <BorderPane styleClass="value, block" pickOnBounds="false">
+        <center>
+            <VBox alignment="CENTER" minHeight="100" minWidth="100">
+                <TextField fx:id="textField" maxWidth="120">
+                    <padding>
+                        <Insets bottom="4" left="4" right="4"/>
+                    </padding>
+                </TextField>
+            </VBox>
+        </center>
+        <bottom>
+            <VBox fx:id="outputSpace" pickOnBounds="false"/>
+        </bottom>
+    </BorderPane>
+
+</fx:root>
