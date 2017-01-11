@@ -13,7 +13,10 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
+
+import static com.metjka.vort.ui.components.connections.DrawWire.NEUTRAL_TYPE_REACTION;
+import static com.metjka.vort.ui.components.connections.DrawWire.GOOD_TYPE_REACTION;
+import static com.metjka.vort.ui.components.connections.DrawWire.WRONG_TYPE_REACTION;
 
 /**
  * Anchor that specifically functions as an output.
@@ -147,27 +150,38 @@ public class OutputAnchor extends ConnectionAnchor implements Target {
 
     @Override
     protected void setNearbyWireReaction(int goodness) {
-        if (goodness > 2) {
-            this.openWire.setStroke(Color.DODGERBLUE);
-            this.openWire.setStrokeWidth(5);
-            this.visibleAnchor.setFill(Color.DODGERBLUE);
-            this.guardMarker.setStroke(Color.DODGERBLUE);
-        } else if (goodness > 0) {
-            this.openWire.setStroke(Color.DARKGREEN);
-            this.openWire.setStrokeWidth(5);
-            this.visibleAnchor.setFill(Color.DARKGREEN);
-            this.guardMarker.setStroke(Color.DARKGREEN);
-        } else if (goodness < 0) {
-            this.openWire.setStroke(Color.RED);
-            this.openWire.setStrokeWidth(3);
-            this.visibleAnchor.setFill(Color.RED);
-            this.guardMarker.setStroke(Color.RED);
-        } else {
-            this.openWire.setStroke(Color.BLACK);
-            this.openWire.setStrokeWidth(3);
-            this.visibleAnchor.setFill(Color.BLACK);
-            this.guardMarker.setStroke(Color.BLACK);
+
+        switch (goodness) {
+            case GOOD_TYPE_REACTION: {
+                this.openWire.setStroke(Color.DARKGREEN);
+                this.openWire.setStrokeWidth(5);
+                this.visibleAnchor.setFill(Color.DARKGREEN);
+                this.guardMarker.setStroke(Color.DARKGREEN);
+                break;
+            }
+            case NEUTRAL_TYPE_REACTION: {
+                this.openWire.setStroke(Color.DODGERBLUE);
+                this.openWire.setStrokeWidth(5);
+                this.visibleAnchor.setFill(Color.DODGERBLUE);
+                this.guardMarker.setStroke(Color.DODGERBLUE);
+                break;
+            }
+            case WRONG_TYPE_REACTION: {
+                this.openWire.setStroke(Color.RED);
+                this.openWire.setStrokeWidth(3);
+                this.visibleAnchor.setFill(Color.RED);
+                this.guardMarker.setStroke(Color.RED);
+                break;
+            }
+            default: {
+                this.openWire.setStroke(Color.BLACK);
+                this.openWire.setStrokeWidth(3);
+                this.visibleAnchor.setFill(Color.BLACK);
+                this.guardMarker.setStroke(Color.BLACK);
+                break;
+            }
         }
+
     }
 
     @Override

@@ -30,6 +30,9 @@ import java.util.List;
  */
 public class DrawWire extends CubicCurve implements ChangeListener<Transform>, ComponentLoader {
 
+    static final int GOOD_TYPE_REACTION = 1;
+    static final int NEUTRAL_TYPE_REACTION = 0;
+    static final int WRONG_TYPE_REACTION = -1;
     /**
      * The Anchor this wire is connected to
      */
@@ -467,7 +470,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
 
                     for (ConnectionAnchor target : targetAnchors) {
                         if (target instanceof OutputAnchor) {
-                            target.setNearbyWireReaction(determineWireReaction((OutputAnchor) target, anchor, releaseAnchor));
+                            target.setNearbyWireReaction(determineWireReaction((OutputAnchor) target, anchor));
                             newNearby.add(target);
                         }
                     }
@@ -481,7 +484,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
                     for (ConnectionAnchor target : targetAnchors) {
                         if (target instanceof InputAnchor) {
                             newNearby.add(target);
-                            target.setNearbyWireReaction(determineWireReaction(anchor, (InputAnchor) target, releaseAnchor));
+                                target.setNearbyWireReaction(determineWireReaction(anchor, (InputAnchor) target));
                         }
                     }
                 }
@@ -489,7 +492,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
                 // reset all anchors that are not nearby anymore
                 for (ConnectionAnchor oldNear : this.nearbyAnchors) {
                     if (!newNearby.contains(oldNear)) {
-                        oldNear.setNearbyWireReaction(0);
+                        oldNear.setNearbyWireReaction(GOOD_TYPE_REACTION);
                     }
                 }
 
@@ -497,16 +500,16 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
             }
         }
 
-        private int determineWireReaction(OutputAnchor source, InputAnchor sink, ConnectionAnchor releaseAnchor) {
-            if (sink.block == source.block) {
-                return 0;
-            }
+        private int determineWireReaction(OutputAnchor source, InputAnchor sink) {
 
-            try {
-                return 3;
-            } catch (Exception e) {
-                return -1;
+            if(source.getType() == sink.getType()){
+                if(source.getBlock() == sink.getBlock()){
+                    return NEUTRAL_TYPE_REACTION;
+                }
+                return GOOD_TYPE_REACTION;
             }
+            else return WRONG_TYPE_REACTION;
+
         }
 
         private void handleDragStart() {

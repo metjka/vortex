@@ -31,7 +31,7 @@ public class PrintBlock extends Block implements Target {
         super(pane);
         loadFXML("PrintBlock");
 
-        inputAnchor = new InputAnchor(this);
+        inputAnchor = new InputAnchor(this, Type.NUMBER);
         inputSpace.getChildren().add(0, inputAnchor);
     }
 
