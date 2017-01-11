@@ -1,6 +1,5 @@
 package com.metjka.vort.ui.components.connections;
 
-import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.BlockContainer;
 import com.metjka.vort.ui.ComponentLoader;
 import com.metjka.vort.ui.ToplevelPane;

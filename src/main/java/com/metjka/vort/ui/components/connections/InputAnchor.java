@@ -1,8 +1,8 @@
 package com.metjka.vort.ui.components.connections;
 
 import com.google.common.collect.ImmutableMap;
-import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.BlockContainer;
+import com.metjka.vort.ui.Type;
 import com.metjka.vort.ui.components.Target;
 import com.metjka.vort.ui.components.blocks.Block;
 import javafx.beans.property.BooleanProperty;
@@ -14,14 +14,10 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
-import static com.metjka.vort.ui.components.connections.DrawWire.GOOD_TYPE_REACTION;
-import static com.metjka.vort.ui.components.connections.DrawWire.NEUTRAL_TYPE_REACTION;
-import static com.metjka.vort.ui.components.connections.DrawWire.WRONG_TYPE_REACTION;
+import static com.metjka.vort.ui.components.connections.DrawWire.*;
 
 /**
  * ConnectionAnchor that specifically functions as an input.

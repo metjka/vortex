@@ -20,7 +20,7 @@ public class MathBlock extends ValueBlock<Integer> {
     private static final Integer DEFAULT_VALUE = 0;
 
     enum Method {
-        ADD, EXT, MIX, MIN, MAX, MULL;
+        ADD, EXT, MIX, MIN, MAX, MULL
     }
 
     private Integer inValue1;
