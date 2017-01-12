@@ -1,18 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root xmlns:fx="http://javafx.com/fxml/"
-         type="StackPane">
-
-    <BorderPane styleClass="display, block" pickOnBounds="false">
-        <center>
-            <Label fx:id="printValue" styleClass="content" maxWidth="400" alignment="CENTER"/>
-        </center>
+<fx:root xmlns:fx="http://javafx.com/fxml/" type="StackPane">
+    <BorderPane>
         <top>
-            <VBox fx:id="inputSpace" pickOnBounds="false"/>
+            <VBox fx:id="inputSpace" pickOnBounds="false" alignment="CENTER">
+                <Label styleClass="inputType">Int</Label>
+            </VBox>
         </top>
-    </BorderPane>
 
+        <center>
+            <BorderPane styleClass="value, block" pickOnBounds="false">
+                <center>
+                    <Label fx:id="printValue" styleClass="output" maxWidth="400" alignment="TOP_CENTER"/>
+                </center>
+            </BorderPane>
+        </center>
+    </BorderPane>
 </fx:root>

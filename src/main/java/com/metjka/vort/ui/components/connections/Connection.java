@@ -77,6 +77,7 @@ public class Connection extends CubicCurve implements
         this.invalidateAnchorPositions();
         this.startAnchor.addConnection(this);
         this.startAnchor.localToSceneTransformProperty().addListener(this);
+
         this.endAnchor.setConnection(this);
         this.endAnchor.localToSceneTransformProperty().addListener(this);
         this.endAnchor.handleConnectionChanges();

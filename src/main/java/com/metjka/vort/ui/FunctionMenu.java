@@ -1,9 +1,6 @@
 package com.metjka.vort.ui;
 
-import com.metjka.vort.ui.components.blocks.Block;
-import com.metjka.vort.ui.components.blocks.ConstantBlock;
-import com.metjka.vort.ui.components.blocks.MathBlock;
-import com.metjka.vort.ui.components.blocks.PrintBlock;
+import com.metjka.vort.ui.components.blocks.*;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -89,15 +86,9 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button outputBlock = new MenuButton("Output", bm -> addBlock(new PrintBlock(parent)));
         Button mathBlock = new MenuButton("Math", bm -> addBlock(new MathBlock(parent)));
         Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ConstantBlock(parent)));
+        Button imageBlock = new MenuButton("Image", bm -> addBlock(new ImageBlock(parent)));
 
-        utilSpace.getChildren().addAll(closeButton, outputBlock, constantBlock, mathBlock);
-
-        // with an odd number of block buttons fill the last spot with a close button
-        if (utilSpace.getChildren().size() % 2 == 1) {
-            Button extraCloseButton = new MenuButton("Close", bm -> close(bm));
-            utilSpace.getChildren().add(extraCloseButton);
-        }
-
+        utilSpace.getChildren().addAll(closeButton, outputBlock, constantBlock, mathBlock, imageBlock);
 
         for (Node button : utilSpace.getChildren()) {
             ((Region) button).setMaxWidth(Double.MAX_VALUE);

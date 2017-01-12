@@ -26,8 +26,8 @@ public class MathBlock extends ValueBlock<Integer> {
     private Integer inValue1;
     private Integer inValue2;
 
-    private InputAnchor inputAnchor1;
-    private InputAnchor inputAnchor2;
+    private InputAnchor inputAnchor1 = new InputAnchor(this, Type.NUMBER);
+    private InputAnchor inputAnchor2 = new InputAnchor(this, Type.NUMBER);
 
     @FXML
     private Pane inputSpace1;
@@ -49,9 +49,6 @@ public class MathBlock extends ValueBlock<Integer> {
     public MathBlock(ToplevelPane pane) {
         super(pane, "MathBlock");
         value1 = DEFAULT_VALUE;
-
-        inputAnchor1 = new InputAnchor(this, Type.NUMBER);
-        inputAnchor2 = new InputAnchor(this, Type.NUMBER);
 
         inputSpace1.getChildren().add(0, inputAnchor1);
         inputSpace2.getChildren().add(0, inputAnchor2);

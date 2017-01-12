@@ -1,6 +1,21 @@
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<fx:root type="StackPane">
-
-
-
+<fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
+    <BorderPane>
+        <top>
+            <BorderPane styleClass="value, block" pickOnBounds="false">
+                <center>
+                    <VBox alignment="TOP_CENTER">
+                        <Button fx:id="fileButton">Image</Button>
+                        <VBox minHeight="5"/>
+                        <ImageView fx:id="imageView" fitWidth="130" fitHeight="130" preserveRatio="true"/>
+                    </VBox>
+                </center>
+            </BorderPane>
+        </top>
+        <bottom>
+            <VBox fx:id="outputSpace" pickOnBounds="false" styleClass="space"/>
+        </bottom>
+    </BorderPane>
 </fx:root>

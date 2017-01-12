@@ -1,7 +1,7 @@
 .block {
     -fx-text-fill: black;
     -fx-border-color: black;
-    -fx-effect: dropshadow(two-pass-box, rgba(0,0,0,0.8), 10, 0.0, 3, 3)
+    -fx-effect: dropshadow(two-pass-box, rgba(0, 0, 0, 0.8), 10, 0.0, 3, 3)
 }
 
 .activated .block {
@@ -42,23 +42,18 @@
 }
 
 .value.block {
-    -fx-background-color: #BD1550;
+    -fx-background-color: rgba(87, 85, 85, 0.5);
     -fx-background-radius: 7px;
-	-fx-border-radius: 9px;
+    -fx-border-radius: 7px;
 }
 
 .value.nested {
     -fx-background-color: #BD1550;
 }
 
-.value.block Button {
-    -fx-background-color: royalblue;
-    -fx-effect: dropshadow(two-pass-box, black, 3, 0.0, 1, 1)
-}
-
 .block.lifting {
-	-fx-background-color: burlywood;
-	-fx-background-radius: 7px;
+    -fx-background-color: burlywood;
+    -fx-background-radius: 7px;
     -fx-border-radius: 9px;
 }
 
@@ -159,9 +154,9 @@
 }
 
 .defName {
-	-fx-text-fill: black;
-	-fx-background-color: #E97F02;
-	-fx-border-color: black;
+    -fx-text-fill: black;
+    -fx-background-color: #E97F02;
+    -fx-border-color: black;
 }
 
 DrawWire {
@@ -169,8 +164,8 @@ DrawWire {
     -fx-fill: null;
 }
 
-.invisTouchZone { 
-    -fx-fill: rgba(0,255,0,0);
+.invisTouchZone {
+    -fx-fill: rgba(0, 255, 0, 0);
 }
 
 .anchorPoint {
@@ -204,7 +199,7 @@ ImageView.hoverMenu {
 }
 
 .lambdaBorder {
-	-fx-background-color: darkslategrey;
+    -fx-background-color: darkslategrey;
 }
 
 .lambdalambda {

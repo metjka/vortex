@@ -44,186 +44,48 @@ ToplevelPane, ToplevelPane > Pane > Pane > Pane {
 }
 
 .block {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-font-family: Titillium;
-    -fx-alignment: center-left;
-    -fx-border-width: 2px;
-    -fx-border-style: solid outside;
-}
-
-.nested {
-    -fx-padding: 3 0 3 0;
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-border-width: 1px;
-    -fx-border-style: solid outside;
-}
-
-.block .header {
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-font-family: fantasy;
-}
-
-.block .title {
-    -fx-padding: 0 10px 0 10px;
-    -fx-font-size: 20px;
-    -fx-font-weight: bolder;
-}
-
-.block .content {
-    -fx-font-size: 25px;
-    -fx-font-weight: normal;
-}
-
-MatchBlock #name {
-    -fx-padding: -7 7 -7 7;
-}
-
-MatchBlock #outputSpace {
-    -fx-min-height: 15px;
-    -fx-spacing: 30px;
-}
-
-MatchBlock {
-    -fx-min-width: 50px;
-}
-
-.lifting.block {
-    -fx-padding: 0 10 0 10;
-}
-
-.display.block {
-    -fx-padding: 0 10 5 10;
-    -fx-min-width: 100px;
-}
-
-.value.block {
-    -fx-padding: 3 6 -9 6;
-    -fx-min-width: 60px;
-}
-
-.value.nested {
-    -fx-min-width: 60px;
-}
-
-.value.block Button {
     -fx-font-size: 15px;
-    -fx-font-weight: normal;
-    -fx-padding: 1 8 1 8;
-}
-
-SliderBlock Slider.inactive .track {
-    -fx-opacity: 0.6;
-}
-
-.block.constantMatch {
-    -fx-padding: -9 6 3 6;
-    -fx-min-width: 50px;
-}
-
-.graph.block LineChart {
-    -fx-font-size: 14px;
-}
-
-.argumentSpace {
-    -fx-alignment: center;
-}
-
-.argumentSpace Label, .argumentLabel {
-    -fx-padding: 0 5 0 5;
-    -fx-font-size: 14px;
-    -fx-font-weight: normal;
-}
-
-.operator {
-    -fx-font-size: 32px;
-    -fx-font-weight: bolder;
-    -fx-padding: -2 0 2 0;
-}
-
-.resultType {
-    -fx-padding: 0 5 0 5;
-    -fx-font-size: 14px;
-    -fx-font-weight: normal;
-}
-
-.inputType {
-    -fx-padding: 0 5 0 5;
-    -fx-font-size: 14px;
-    -fx-font-weight: normal;
-}
-
-.curryArrow {
-    -fx-padding: 0 2 0 2;
-    -fx-font-size: 14px;
-    -fx-font-weight: normal;
-}
-
-#inputSpace, #outputSpace {
-    -fx-max-height: 0px;
-    -fx-alignment: center;
-}
-
-.inSpace{
-    -fx-max-height: 0px;
-    -fx-alignment: center;
-}
-.right{
-    -fx-alignment: center-right;
-}
-
-.left{
-    -fx-alignment: center-left;
-}
-
-.defName {
-    -fx-padding: 0 5 0 5;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
+    -fx-font-weight: lighter;
+    -fx-font-family: Titillium;
     -fx-border-width: 1px;
     -fx-border-style: solid outside;
+    -fx-alignment: center;
+}
+.value.block Button{
+    -fx-background-color: #777777;
+    -fx-label-padding: 0px;
+}
+.value.block {
+    -fx-padding: 10 5 10 5;
+    -fx-pref-width: 150px;
+
+    -fx-max-width: 150px;
+    -fx-max-height: 200px;
+}
+
+.display.block{
+    -fx-padding: 10 5 10 5;
+    -fx-pref-width: 100px;
+
+}
+.output {
+    -fx-font-size: 20px;
+    -fx-text-fill: darkorange;
+    -fx-font-weight: bold;
+
 }
 
 DrawWire {
     -fx-stroke-width: 5px;
 }
 
-.overlayButtons Button {
-    -fx-font-family: monospace;
+.space {
+    -fx-max-height: 0px;
+    -fx-alignment: center;
+}
+
+.inputType {
+    -fx-padding: 0 5 0 5;
     -fx-font-size: 14px;
-}
-
-.context-menu .menu-item .label {
-    -fx-font-family: Titillium;
-}
-
-.lambdaBorder, .choiceBorder {
-    -fx-pref-height: 25px;
-}
-
-Lane #guardSpace {
-    -fx-pref-width: 240px;
-    -fx-pref-height: 320px;
-}
-
-Lane #resultSpace {
-    -fx-alignment: center;
-}
-
-Lane .padding {
-    -fx-pref-width: 5px;
-}
-
-#argSpace {
-    -fx-spacing: 100;
-    -fx-alignment: center;
-}
-
-.subtle {
-    -fx-background-color: rgba(0, 0, 0, 0);
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
+    -fx-font-weight: normal;
 }

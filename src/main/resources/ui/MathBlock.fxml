@@ -4,41 +4,47 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
+<?import javafx.scene.control.Label?>
 <fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
 
-    <BorderPane styleClass="value, block" pickOnBounds="false" minHeight="40" minWidth="60">
+    <BorderPane>
         <top>
-            <VBox alignment="CENTER">
-                <VBox fx:id="inputSpace1" pickOnBounds="false" styleClass="inSpace, left"/>
-                <VBox fx:id="inputSpace2" pickOnBounds="false" styleClass="inSpace, right"/>
-            </VBox>
+            <HBox alignment="CENTER" spacing="50">
+                <VBox fx:id="inputSpace1" pickOnBounds="false" alignment="CENTER">
+                    <Label styleClass="inputType" >Int</Label>
+                </VBox>
+                <VBox fx:id="inputSpace2" pickOnBounds="false" alignment="CENTER">
+                    <Label styleClass="inputType" alignment="CENTER">Int</Label>
+                </VBox>
+            </HBox>
         </top>
-
         <center>
-            <VBox alignment="CENTER" minHeight="100" minWidth="100" spacing="10">
-                <ComboBox fx:id="methodComboBox" layoutX="15.0" layoutY="33.0" prefWidth="150.0">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="ADD"/>
-                            <String fx:value="EXT"/>
-                            <String fx:value="MIX"/>
-                            <String fx:value="MIN"/>
-                            <String fx:value="MAX"/>
-                            <String fx:value="MULL"/>
-                        </FXCollections>
-                    </items>
-                </ComboBox>
-
-                <TextField fx:id="textField" maxWidth="120" editable="false">
-                    <padding>
-                        <Insets bottom="4" left="4" right="4"/>
-                    </padding>
-                </TextField>
-            </VBox>
+            <BorderPane styleClass="block, value" pickOnBounds="false">
+                <center>
+                    <VBox alignment="TOP_CENTER">
+                        <ComboBox fx:id="methodComboBox">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="ADD"/>
+                                    <String fx:value="EXT"/>
+                                    <String fx:value="MIX"/>
+                                    <String fx:value="MIN"/>
+                                    <String fx:value="MAX"/>
+                                    <String fx:value="MULL"/>
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                        <VBox minHeight="5"/>
+                        <TextField fx:id="textField" maxWidth="120" editable="false"/>
+                    </VBox>
+                </center>
+            </BorderPane>
         </center>
 
         <bottom>
-            <VBox fx:id="outputSpace" pickOnBounds="false"/>
+            <VBox fx:id="outputSpace" pickOnBounds="false" alignment="CENTER">
+                <Label fx:id="outType" styleClass="inputType">Int</Label>
+            </VBox>
         </bottom>
     </BorderPane>
 
