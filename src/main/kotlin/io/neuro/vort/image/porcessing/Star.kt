@@ -2,7 +2,7 @@ package io.neuro.vort.image.porcessing
 
 import java.util.concurrent.ThreadLocalRandom
 
-class Star(fastABGRRGB: FastABGRImage) : ProcessingFilter(fastABGRRGB) {
+class Star(fastABGRRGB: FastImage) : ProcessingFilter(fastABGRRGB) {
 
    val random: ThreadLocalRandom = ThreadLocalRandom.current()
 

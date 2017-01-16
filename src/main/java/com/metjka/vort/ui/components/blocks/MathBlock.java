@@ -128,8 +128,8 @@ public class MathBlock extends ValueBlock<Integer> {
             Block block2 = outputAnchor2.getBlock();
             int position2 = outputAnchor2.getPosition();
 
-            inValue1 = getValueFromBlock(block1, position1);
-            inValue2 = getValueFromBlock(block2, position2);
+            inValue1 = (Integer) block1.getValueFromBlock(position1);
+            inValue2 = (Integer) block2.getValueFromBlock(position2);
 
             if (inValue1 != null && inValue2 != null) {
                 value1 = calculate(inValue1, inValue2);
@@ -144,22 +144,15 @@ public class MathBlock extends ValueBlock<Integer> {
 
     }
 
-    private Integer getValueFromBlock(Block block1, int position1) {
-        switch (position1) {
-            case 1: {
-                if (block1 instanceof OneOutputBlock) {
-                    return (Integer) ((OneOutputBlock) block1).getValue1();
-                } else throw new IllegalArgumentException();
-            }
-            case 2: {
-                if (block1 instanceof TwoOutputBlock) {
-                    return (Integer) ((OneOutputBlock) block1).getValue1();
-                } else throw new IllegalArgumentException();
-            }
+    @Override
+    Integer getValue(int position) {
+        switch (position) {
+            case 0:
+                return value1;
             default:
-                break;
+                throw new IllegalArgumentException("Wrong position!");
         }
-        return null;
+
     }
 
     @Override

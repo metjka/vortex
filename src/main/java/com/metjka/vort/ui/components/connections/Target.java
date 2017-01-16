@@ -1,4 +1,4 @@
-package com.metjka.vort.ui.components;
+package com.metjka.vort.ui.components.connections;
 
 import com.metjka.vort.ui.components.connections.ConnectionAnchor;
 

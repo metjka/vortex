@@ -2,9 +2,9 @@ package io.neuro.vort.image.porcessing
 
 import java.awt.Color
 
-class Filters(fastABGRImage: FastABGRImage) : ProcessingFilter(fastABGRImage) {
+class Filters(fastImage: FastImage) : ProcessingFilter(fastImage) {
 
-    val fast = fastABGRImage
+    val fast = fastImage
 
     var bias = 0.0
 
@@ -18,11 +18,14 @@ class Filters(fastABGRImage: FastABGRImage) : ProcessingFilter(fastABGRImage) {
                 var g = 0
                 var b = 0
 
+                val offsetX = x - kernel.with / 2 + width
+                val offsetY = y - kernel.height / 2 + height
+
                 for (filterX in 0..kernel.with - 1) {
                     for (filterY in 0..kernel.height - 1) {
 
-                        val imageX: Int = (x - kernel.with / 2 + filterX + width) % width
-                        val imageY: Int = (y - kernel.height / 2 + filterY + height) % height
+                        val imageX: Int = (offsetX + filterX) % width
+                        val imageY: Int = (offsetY + filterY) % height
 
                         val color = Color(fast.getARGB(imageX, imageY)!!)
 

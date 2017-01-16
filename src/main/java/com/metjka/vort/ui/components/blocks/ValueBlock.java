@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.List;
 
-public abstract class ValueBlock<T> extends Block implements OneOutputBlock<T> {
+public abstract class ValueBlock<T> extends Block {
 
     T value1;
 
@@ -22,7 +22,7 @@ public abstract class ValueBlock<T> extends Block implements OneOutputBlock<T> {
     public ValueBlock(ToplevelPane pane, String fxml) {
         super(pane);
         loadFXML(fxml);
-        outputAnchor = new OutputAnchor(this, 1, Type.NUMBER);
+        outputAnchor = new OutputAnchor(this, 0, Type.NUMBER);
         outputSpace.getChildren().add(outputAnchor);
     }
 
@@ -41,9 +41,6 @@ public abstract class ValueBlock<T> extends Block implements OneOutputBlock<T> {
         outputAnchor.invalidateVisualState();
     }
 
-    T getValue(){
-        return value1;
-    }
-
+    abstract T getValue(int position);
 
 }

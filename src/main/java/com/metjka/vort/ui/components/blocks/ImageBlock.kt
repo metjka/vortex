@@ -5,7 +5,7 @@ import com.metjka.vort.ui.ToplevelPane
 import com.metjka.vort.ui.Type
 import com.metjka.vort.ui.components.connections.InputAnchor
 import com.metjka.vort.ui.components.connections.OutputAnchor
-import io.neuro.vort.image.porcessing.FastABGRImage
+import io.neuro.vort.image.porcessing.FastImage
 import javafx.embed.swing.SwingFXUtils
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -47,7 +47,7 @@ class ImageBlock(val toplevelPane: ToplevelPane) : Block(toplevelPane) {
             val file: File? = fileChooser.showOpenDialog(toplevelPane.scene.window)
             try {
                 val bufferedImage = ImageIO.read(file)
-                val fastABGRImage = FastABGRImage(bufferedImage)
+                val fastABGRImage = FastImage(bufferedImage)
                 imageView?.image = SwingFXUtils.toFXImage(fastABGRImage.image, null)
             } catch (ex: IOException) {
                 log.error("Read image error!", ex)

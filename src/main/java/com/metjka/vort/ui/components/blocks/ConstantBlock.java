@@ -38,7 +38,8 @@ public class ConstantBlock extends ValueBlock<Integer> {
         return null;
     }
 
-    public Integer getValue1() {
+    @Override
+    Integer getValue(int position) {
         return value1;
     }
 }

@@ -4,7 +4,6 @@ import com.metjka.vort.ui.BlockContainer;
 import com.metjka.vort.ui.ComponentLoader;
 import com.metjka.vort.ui.ToplevelPane;
 import com.metjka.vort.ui.WireMenu;
-import com.metjka.vort.ui.components.Target;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

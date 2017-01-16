@@ -16,6 +16,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
+import static java.util.stream.Collectors.toList;
+
 /**
  * Base block shaped UI Component that other visual elements will extend from.
  * Blocks can add input and output values by implementing the InputBlock and
@@ -175,10 +177,15 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
     }
 
     public void sendUpdateDownSteam() {
-        this.getAllOutputs().forEach(
-                output -> output
-                        .getOppositeAnchors()
-                        .forEach(input -> input.receiveUpdate()));
+        this.getAllOutputs().stream().flatMap(
+                output ->  output
+                        .getOppositeAnchors().stream())
+                .collect(toList())
+                .stream()
+                .distinct()
+                .forEach(inputAnchor -> inputAnchor.receiveUpdate());
+
+
     }
 
     public abstract void update();
@@ -276,5 +283,9 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
         return block;
     }
 
-
+    Object getValueFromBlock(int position1) {
+        if (this instanceof ValueBlock) {
+            return ((ValueBlock<Integer>) this).getValue(position1);
+        } else throw new IllegalArgumentException("Can`t get position from block"+ hashCode());
+    }
 }

@@ -18,6 +18,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * FunctionMenu is a viskell specific menu implementation. A FunctionMenu is an
@@ -132,7 +133,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         block.relocate(pos.getX(), pos.getY());
         touchPoint.grab(block);
         block.handleConnectionChanges();
-    }
+      }
 
     /**
      * Closes this menu by removing it from it's parent.

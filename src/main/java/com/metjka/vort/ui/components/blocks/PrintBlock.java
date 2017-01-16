@@ -3,7 +3,7 @@ package com.metjka.vort.ui.components.blocks;
 import com.google.common.collect.ImmutableList;
 import com.metjka.vort.ui.ToplevelPane;
 import com.metjka.vort.ui.Type;
-import com.metjka.vort.ui.components.Target;
+import com.metjka.vort.ui.components.connections.Target;
 import com.metjka.vort.ui.components.connections.ConnectionAnchor;
 import com.metjka.vort.ui.components.connections.InputAnchor;
 import com.metjka.vort.ui.components.connections.OutputAnchor;
@@ -56,36 +56,18 @@ public class PrintBlock extends Block implements Target {
         if (inputAnchor.getOppositeAnchor().isPresent()) {
 
             OutputAnchor outputAnchor = inputAnchor.getOppositeAnchor().get();
-            Block block = outputAnchor.getBlock();
 
+            Block block = outputAnchor.getBlock();
             int position = outputAnchor.getPosition();
 
-            switch (position) {
-                case 1: {
-                    Lele2(block, () -> {
-                        Type type = outputAnchor.getType();
-                        switch (type) {
-                            case NUMBER:
-                                printValue.setText(Type.NumberToString((Number) ((OneOutputBlock) block).getValue1()));
-                        }
-                    });
-                    break;
+            printValue.setText(Type.NumberToString((Number) block.getValueFromBlock(position)));
 
-                }
 
-                default:
-            }
         }
+
 
     }
 
-    private void Lele2(Block block, Runnable consumer) {
-        if (block instanceof OneOutputBlock) {
-            consumer.run();
-        } else if (block instanceof TwoOutputBlock) {
-            consumer.run();
-        }
-    }
 
     @Override
     public Optional<Block> getNewCopy() {

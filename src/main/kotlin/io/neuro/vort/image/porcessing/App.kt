@@ -73,19 +73,19 @@ val kernelLaplace = Kernel(3, 3, laplace)
 fun main(args: Array<String>) {
     val file: File = File(path, "te/lena.png")
     val bufferedImage: BufferedImage = ImageIO.read(file)
-    val fastABGRImage: FastABGRImage = FastABGRImage(bufferedImage)
+    val fastImage: FastImage = FastImage(bufferedImage)
 
-    val dest = BufferedImage(fastABGRImage.width, fastABGRImage.height, BufferedImage.TYPE_3BYTE_BGR)
+    val dest = BufferedImage(fastImage.width, fastImage.height, BufferedImage.TYPE_3BYTE_BGR)
     val convolveOp = ConvolveOp(java.awt.image.Kernel(3, 3, hardMotionBlur))
     val startOP = System.currentTimeMillis()
     val filter: BufferedImage = convolveOp.filter(bufferedImage, dest)
     val endOP = System.currentTimeMillis()
     ImageIO.write(filter, "PNG" , File(path, "te/base.png"))
 
-    val image = BufferedImage(fastABGRImage.width, fastABGRImage.height, BufferedImage.TYPE_INT_ARGB)
+    val image = BufferedImage(fastImage.width, fastImage.height, BufferedImage.TYPE_INT_ARGB)
 
     val startMY = System.currentTimeMillis()
-    val pix: IntArray = blur(fastABGRImage)
+    val pix: IntArray = blur(fastImage)
     val endMY = System.currentTimeMillis()
     image.data = Raster.createRaster(image.sampleModel, DataBufferInt(pix, pix.size), Point())
     ImageIO.write(image, "PNG", File(path, "te/5.png"))
@@ -96,22 +96,22 @@ fun main(args: Array<String>) {
     println(endMY - startMY)
 }
 
-fun blur(fastABGRGRB: FastABGRImage): IntArray {
+fun blur(fastABGRGRB: FastImage): IntArray {
     val blur = Filters(fastABGRGRB)
-    val blur1 = blur.blur(kernel3)
+    val blur1 = blur.blur(kernel2)
     return blur1
 }
 
-fun processStar(fastABGRImage1: FastABGRImage): IntArray {
-    val star = Star(fastABGRImage1)
-    star.spiralGalaxy(200, fastABGRImage1.width / 2, fastABGRImage1.height / 2, 4, 7, 2, 4, 5, 6, 4, 5)
+fun processStar(fastImage1: FastImage): IntArray {
+    val star = Star(fastImage1)
+    star.spiralGalaxy(200, fastImage1.width / 2, fastImage1.height / 2, 4, 7, 2, 4, 5, 6, 4, 5)
     star.starfield(400, 5, 10, 5, 10)
 
     val gray = star.color(arrayListOf(Color.CYAN, Color.BLACK))
     return gray
 }
 
-private fun processGreyscale(bufferedImage: BufferedImage, fastABGRGRB: FastABGRImage): IntArray {
+private fun processGreyscale(bufferedImage: BufferedImage, fastABGRGRB: FastImage): IntArray {
     val pix = IntArray(bufferedImage.width * bufferedImage.height)
 
     for (x: Int in 0..fastABGRGRB.width - 1) {

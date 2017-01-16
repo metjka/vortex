@@ -3,7 +3,7 @@ package io.neuro.vort.image.porcessing
 import java.awt.image.BufferedImage
 import java.awt.image.DataBufferInt
 
-class FastABGRImage {
+class FastImage {
 
     var image: BufferedImage
     val pixels: IntArray?

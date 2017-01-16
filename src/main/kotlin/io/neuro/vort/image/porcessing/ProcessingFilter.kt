@@ -2,12 +2,12 @@ package io.neuro.vort.image.porcessing
 
 import java.awt.Color
 
-abstract class ProcessingFilter(fastABGRImage: FastABGRImage) {
+abstract class ProcessingFilter(fastImage: FastImage) {
 
-    val width = fastABGRImage.width
-    val height = fastABGRImage.height
+    val width = fastImage.width
+    val height = fastImage.height
 
-    val fa = fastABGRImage
+    val fa = fastImage
 
     val pixels = DoubleArray(width * height)
 

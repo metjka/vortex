@@ -3,7 +3,6 @@ package com.metjka.vort.ui.components.connections;
 import com.google.common.collect.ImmutableMap;
 import com.metjka.vort.ui.BlockContainer;
 import com.metjka.vort.ui.Type;
-import com.metjka.vort.ui.components.Target;
 import com.metjka.vort.ui.components.blocks.Block;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
