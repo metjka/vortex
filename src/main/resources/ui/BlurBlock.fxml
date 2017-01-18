@@ -1,0 +1,33 @@
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.control.TextField?>
+<fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
+    <BorderPane>
+        <center>
+            <BorderPane styleClass="block, value" pickOnBounds="false">
+                <center>
+                    <VBox alignment="TOP_CENTER">
+                        <ComboBox fx:id="methodComboBox">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="ADD"/>
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                        <VBox minHeight="5"/>
+                        <TextField fx:id="textField" maxWidth="120" editable="false"/>
+                    </VBox>
+                </center>
+            </BorderPane>
+        </center>
+
+        <bottom>
+            <VBox fx:id="outputSpace" pickOnBounds="false" alignment="CENTER">
+                <Label fx:id="outType" styleClass="inputType">Int</Label>
+            </VBox>
+        </bottom>
+    </BorderPane>
+</fx:root>

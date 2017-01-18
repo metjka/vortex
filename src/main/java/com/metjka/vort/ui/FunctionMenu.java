@@ -88,6 +88,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button mathBlock = new MenuButton("Math", bm -> addBlock(new MathBlock(parent)));
         Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ConstantBlock(parent)));
         Button imageBlock = new MenuButton("Image", bm -> addBlock(new ImageBlock(parent)));
+        Button blurBlock = new MenuButton("Blur", bm -> addBlock(new BlurBlock(parent)));
 
         utilSpace.getChildren().addAll(closeButton, outputBlock, constantBlock, mathBlock, imageBlock);
 

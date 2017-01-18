@@ -1,4 +1,4 @@
-package io.neuro.vort.image.porcessing
+package com.metjka.vort.precessing
 
 data class Kernel(val with: Int, val height: Int, val array: FloatArray) {
 

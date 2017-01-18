@@ -5,7 +5,7 @@ import com.metjka.vort.ui.ToplevelPane
 import com.metjka.vort.ui.Type
 import com.metjka.vort.ui.components.connections.InputAnchor
 import com.metjka.vort.ui.components.connections.OutputAnchor
-import io.neuro.vort.image.porcessing.FastImage
+import com.metjka.vort.precessing.FastImage
 import javafx.embed.swing.SwingFXUtils
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -18,11 +18,11 @@ import java.io.IOException
 import java.util.*
 import javax.imageio.ImageIO
 
-class ImageBlock(val toplevelPane: ToplevelPane) : Block(toplevelPane) {
-
+class ImageBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "ImageBlock") {
     val log = KotlinLogging.logger { }
 
     val outputAnchore1: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
+
     val fileChooser = FileChooser()
     val extensionFilter = FileChooser.ExtensionFilter("Image (*.PNG)", "*.PNG")
 
@@ -36,7 +36,6 @@ class ImageBlock(val toplevelPane: ToplevelPane) : Block(toplevelPane) {
     var imageView: ImageView? = null
 
     init {
-        loadFXML("ImageBlock")
 
         fileChooser.title = "Open PNG file!"
         fileChooser.extensionFilters.add(extensionFilter)
@@ -45,26 +44,30 @@ class ImageBlock(val toplevelPane: ToplevelPane) : Block(toplevelPane) {
 
         fileButton?.setOnMouseClicked {
             val file: File? = fileChooser.showOpenDialog(toplevelPane.scene.window)
-            try {
-                val bufferedImage = ImageIO.read(file)
-                val fastABGRImage = FastImage(bufferedImage)
-                imageView?.image = SwingFXUtils.toFXImage(fastABGRImage.image, null)
-            } catch (ex: IOException) {
-                log.error("Read image error!", ex)
+            if (file != null) {
+                try {
+                    val bufferedImage = ImageIO.read(file)
+                    val fastABGRImage = FastImage(bufferedImage)
+                    imageView?.image = SwingFXUtils.toFXImage(fastABGRImage.image, null)
+                } catch (ex: IOException) {
+                    log.error("Read image error!", ex)
+                }
             }
         }
     }
 
-    override fun getAllInputs(): MutableList<InputAnchor> {
-        return ImmutableList.of()
+    override fun getValue(position: Int): FastImage {
+        when (position) {
+            0 -> return value1
+            else -> {
+                throw IllegalArgumentException("Wrong position!")
+            }
+        }
+
     }
 
     override fun getAllOutputs(): MutableList<OutputAnchor> {
         return ImmutableList.of(outputAnchore1)
-    }
-
-    override fun update() {
-
     }
 
     override fun getNewCopy(): Optional<Block> {
