@@ -50,7 +50,7 @@ public class MenuActions {
      */
     private void newFile() {
         this.currentFile = Optional.empty();
-        Main.getStage().setTitle("New file");
+        VortApplication.getStage().setTitle("New file");
     }
 
     /**
@@ -60,7 +60,7 @@ public class MenuActions {
      */
     private void setFile(final File currentFile) {
         this.currentFile = Optional.of(currentFile);
-        Main.getStage().setTitle(currentFile.getName());
+        VortApplication.getStage().setTitle(currentFile.getName());
     }
 
     protected List<MenuItem> fileMenuItems() {
@@ -163,7 +163,7 @@ public class MenuActions {
 
     @SuppressWarnings("UnusedParameters")
     protected void toggleFullScreen(ActionEvent actionEvent) {
-        Stage stage = Main.getStage();
+        Stage stage = VortApplication.getStage();
         if (stage.isFullScreen()) {
             stage.setFullScreen(false);
         } else {

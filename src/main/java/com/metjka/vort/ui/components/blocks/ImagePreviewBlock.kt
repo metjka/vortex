@@ -10,6 +10,7 @@ import javafx.embed.swing.SwingFXUtils
 import javafx.fxml.FXML
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
+import javafx.stage.Stage
 import mu.KotlinLogging
 import java.util.*
 
@@ -26,9 +27,12 @@ class ImagePreviewBlock(toplevelPane: ToplevelPane) : Block(toplevelPane) {
     val inputAnchor = InputAnchor(this, Type.IMAGE)
 
     init {
+        log.info("ImagePreviewBlck creating! : {}", this.hashCode())
         loadFXML("ImagePreviewBlock")
         inputSpace?.children?.add(0, inputAnchor)
-        log.info("ImagePreview block was created: {}", this.hashCode())
+        imageView?.setOnMouseClicked {
+            val stage: Stage = Stage()
+        }
     }
 
     override fun update() {

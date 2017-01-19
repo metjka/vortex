@@ -8,9 +8,9 @@ import javafx.stage.Stage;
 import java.util.prefs.Preferences;
 
 /**
- * Main application class for the GUI.
+ * VortApplication application class for the GUI.
  */
-public class Main extends Application {
+public class VortApplication extends Application {
     /** A reference to the main window */
     private static Stage primaryStage;
 
@@ -23,7 +23,7 @@ public class Main extends Application {
         ToplevelPane toplevelPane = new ToplevelPane();
         MainOverlay overlay = new MainOverlay(toplevelPane);
         Scene scene = new Scene(overlay);
-        Preferences prefs = Preferences.userNodeForPackage(Main.class);
+        Preferences prefs = Preferences.userNodeForPackage(VortApplication.class);
         String backGroundImage = prefs.get("background", "/ui/grid.png");
         toplevelPane.setStyle("-fx-background-image: url('" + backGroundImage + "');");
         String theme = prefs.get("theme", "/ui/colours.css");

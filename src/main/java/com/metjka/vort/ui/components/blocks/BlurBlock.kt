@@ -2,7 +2,6 @@ package com.metjka.vort.ui.components.blocks
 
 import com.google.common.collect.ImmutableList
 import com.metjka.vort.precessing.BlurProcessing
-import com.metjka.vort.precessing.BlurProcessing.Companion.GAUSSIAN5_BLUR
 import com.metjka.vort.precessing.FastImage
 import com.metjka.vort.ui.ToplevelPane
 import com.metjka.vort.ui.Type
@@ -27,7 +26,6 @@ class BlurBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane
 
     @FXML
     var outputSpace: VBox? = null
-
 
     init {
         inputSpace?.children?.add(0, inputAnchor)

@@ -18,7 +18,7 @@ import java.util.prefs.Preferences;
  */
 public class TouchContext {
 
-    private static Preferences preferences = Preferences.userNodeForPackage(Main.class);
+    private static Preferences preferences = Preferences.userNodeForPackage(VortApplication.class);
     
     /** The container this context handling events for. */
     private final BlockContainer container;
