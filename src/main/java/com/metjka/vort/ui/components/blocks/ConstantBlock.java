@@ -1,18 +1,31 @@
 package com.metjka.vort.ui.components.blocks;
 
+import com.google.common.collect.ImmutableList;
 import com.metjka.vort.ui.ToplevelPane;
+import com.metjka.vort.ui.Type;
+import com.metjka.vort.ui.components.connections.InputAnchor;
+import com.metjka.vort.ui.components.connections.OutputAnchor;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ConstantBlock extends ValueBlock<Integer> {
 
+    private final OutputAnchor outputAnchor = new OutputAnchor(this, 0, Type.NUMBER);
     @FXML
     private TextField textField;
 
+    @FXML
+    private Pane outputSpace;
+
     public ConstantBlock(ToplevelPane pane) {
         super(pane, "ConstantBlock");
+
+        outputSpace.getChildren().add(0, outputAnchor);
 
         textField.setText("0");
         value1 = 0;
@@ -29,8 +42,14 @@ public class ConstantBlock extends ValueBlock<Integer> {
 
     }
 
-    protected Integer getValue() {
-        return value1;
+    @Override
+    public void update() {
+        outputAnchor.invalidateVisualState();
+    }
+
+    @Override
+    public List<OutputAnchor> getAllOutputs() {
+        return ImmutableList.of(outputAnchor);
     }
 
     @Override

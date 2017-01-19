@@ -6,6 +6,12 @@
 <?import javafx.scene.control.TextField?>
 <fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
     <BorderPane>
+
+        <top>
+            <VBox fx:id="inputSpace"  pickOnBounds="false" alignment="CENTER">
+                <Label styleClass="inputType">Image</Label>
+            </VBox>
+        </top>
         <center>
             <BorderPane styleClass="block, value" pickOnBounds="false">
                 <center>
@@ -17,8 +23,6 @@
                                 </FXCollections>
                             </items>
                         </ComboBox>
-                        <VBox minHeight="5"/>
-                        <TextField fx:id="textField" maxWidth="120" editable="false"/>
                     </VBox>
                 </center>
             </BorderPane>
@@ -26,7 +30,7 @@
 
         <bottom>
             <VBox fx:id="outputSpace" pickOnBounds="false" alignment="CENTER">
-                <Label fx:id="outType" styleClass="inputType">Int</Label>
+                <Label fx:id="outType" styleClass="inputType">Image</Label>
             </VBox>
         </bottom>
     </BorderPane>

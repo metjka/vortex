@@ -177,15 +177,11 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
     }
 
     public void sendUpdateDownSteam() {
-        this.getAllOutputs().stream().flatMap(
-                output ->  output
-                        .getOppositeAnchors().stream())
+        this.getAllOutputs().stream().flatMap(output -> output.getOppositeAnchors().stream())
                 .collect(toList())
                 .stream()
                 .distinct()
                 .forEach(inputAnchor -> inputAnchor.receiveUpdate());
-
-
     }
 
     public abstract void update();
@@ -286,6 +282,6 @@ public abstract class Block extends StackPane implements Bundleable, ComponentLo
     Object getValueFromBlock(int position1) {
         if (this instanceof ValueBlock) {
             return ((ValueBlock<Integer>) this).getValue(position1);
-        } else throw new IllegalArgumentException("Can`t get position from block"+ hashCode());
+        } else throw new IllegalArgumentException("Can`t get position from block" + hashCode());
     }
 }

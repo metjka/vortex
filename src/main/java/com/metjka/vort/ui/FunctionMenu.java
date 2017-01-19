@@ -16,25 +16,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-/**
- * FunctionMenu is a viskell specific menu implementation. A FunctionMenu is an
- * always present menu, once called it will remain open until the
- * {@linkplain #close() } method is called. An application can have multiple
- * instances of FunctionMenu where each menu maintains it's own state.
- * <p>
- * FunctionMenu is constructed out of three different spaces:
- * {@code searchSpace}, {@code categorySpace} and {@code utilSpace}. The
- * {@code searchSpace} should be used to display search components that can be
- * used to find stored functions more quickly, {@code categorySpace} contains an
- * {@linkplain Accordion} where each category of functions is displayed in their
- * own {@linkplain TitledPane}. {@code utilSpace} can then contain any form of
- * utility methods or components that might need quick accessing.
- * </p>
- */
 public class FunctionMenu extends StackPane implements ComponentLoader {
 
     /**
@@ -89,8 +75,9 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ConstantBlock(parent)));
         Button imageBlock = new MenuButton("Image", bm -> addBlock(new ImageBlock(parent)));
         Button blurBlock = new MenuButton("Blur", bm -> addBlock(new BlurBlock(parent)));
+        Button imagePreviewBlock = new MenuButton("ImagePreview", bm -> addBlock(new ImagePreviewBlock(parent)));
 
-        utilSpace.getChildren().addAll(closeButton, outputBlock, constantBlock, mathBlock, imageBlock);
+        utilSpace.getChildren().addAll(closeButton, outputBlock, constantBlock, mathBlock, imageBlock, blurBlock, imagePreviewBlock);
 
         for (Node button : utilSpace.getChildren()) {
             ((Region) button).setMaxWidth(Double.MAX_VALUE);
@@ -134,7 +121,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         block.relocate(pos.getX(), pos.getY());
         touchPoint.grab(block);
         block.handleConnectionChanges();
-      }
+    }
 
     /**
      * Closes this menu by removing it from it's parent.

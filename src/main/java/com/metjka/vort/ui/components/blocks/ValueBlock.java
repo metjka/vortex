@@ -14,16 +14,9 @@ public abstract class ValueBlock<T> extends Block {
 
     T value1;
 
-    protected OutputAnchor outputAnchor;
-
-    @FXML
-    private Pane outputSpace;
-
     public ValueBlock(ToplevelPane pane, String fxml) {
         super(pane);
         loadFXML(fxml);
-        outputAnchor = new OutputAnchor(this, 0, Type.NUMBER);
-        outputSpace.getChildren().add(outputAnchor);
     }
 
     @Override
@@ -33,12 +26,7 @@ public abstract class ValueBlock<T> extends Block {
 
     @Override
     public List<OutputAnchor> getAllOutputs() {
-        return ImmutableList.of(outputAnchor);
-    }
-
-    @Override
-    public void update() {
-        outputAnchor.invalidateVisualState();
+        return ImmutableList.of();
     }
 
     abstract T getValue(int position);

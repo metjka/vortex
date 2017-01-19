@@ -5,6 +5,7 @@ import com.metjka.vort.ui.ComponentLoader;
 import com.metjka.vort.ui.ToplevelPane;
 import com.metjka.vort.ui.components.blocks.Block;
 import com.metjka.vort.ui.serialize.Bundleable;
+import javafx.application.Platform;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;

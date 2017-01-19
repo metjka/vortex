@@ -10,6 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import lombok.extern.slf4j.Slf4j;
+import rx.Observable;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,7 @@ public class MathBlock extends ValueBlock<Integer> {
 
     private InputAnchor inputAnchor1 = new InputAnchor(this, Type.NUMBER);
     private InputAnchor inputAnchor2 = new InputAnchor(this, Type.NUMBER);
+    private OutputAnchor outputAnchor = new OutputAnchor(this, 0, Type.NUMBER);
 
     @FXML
     private Pane inputSpace1;
@@ -53,6 +55,8 @@ public class MathBlock extends ValueBlock<Integer> {
         inputSpace1.getChildren().add(0, inputAnchor1);
         inputSpace2.getChildren().add(0, inputAnchor2);
 
+        outputSpace.getChildren().add(0, outputAnchor);
+
         methodComboBox.getSelectionModel().select(0);
         method = Method.ADD;
 
@@ -66,6 +70,7 @@ public class MathBlock extends ValueBlock<Integer> {
     }
 
     private Method getMethod(String methodString) {
+
         switch (methodString) {
             case "ADD":
                 return Method.ADD;

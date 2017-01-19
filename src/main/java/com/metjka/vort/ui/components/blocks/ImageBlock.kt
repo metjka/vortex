@@ -21,7 +21,7 @@ import javax.imageio.ImageIO
 class ImageBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "ImageBlock") {
     val log = KotlinLogging.logger { }
 
-    val outputAnchore1: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
+    val outputAnchor: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
 
     val fileChooser = FileChooser()
     val extensionFilter = FileChooser.ExtensionFilter("Image (*.PNG)", "*.PNG")
@@ -40,7 +40,7 @@ class ImageBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topleve
         fileChooser.title = "Open PNG file!"
         fileChooser.extensionFilters.add(extensionFilter)
 
-        outputSpace?.children?.add(0, outputAnchore1)
+        outputSpace?.children?.add(0, outputAnchor)
 
         fileButton?.setOnMouseClicked {
             val file: File? = fileChooser.showOpenDialog(toplevelPane.scene.window)
@@ -48,12 +48,19 @@ class ImageBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topleve
                 try {
                     val bufferedImage = ImageIO.read(file)
                     val fastABGRImage = FastImage(bufferedImage)
-                    imageView?.image = SwingFXUtils.toFXImage(fastABGRImage.image, null)
+                    value1 = fastABGRImage
+                    log.info("Sent message downstream!")
+                    sendUpdateDownSteam()
+                    imageView?.image = SwingFXUtils.toFXImage(fastABGRImage.toBufferedImage(), null)
                 } catch (ex: IOException) {
                     log.error("Read image error!", ex)
                 }
             }
         }
+    }
+
+    override fun update() {
+        outputAnchor.invalidateVisualState()
     }
 
     override fun getValue(position: Int): FastImage {
@@ -67,7 +74,7 @@ class ImageBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topleve
     }
 
     override fun getAllOutputs(): MutableList<OutputAnchor> {
-        return ImmutableList.of(outputAnchore1)
+        return ImmutableList.of(outputAnchor)
     }
 
     override fun getNewCopy(): Optional<Block> {
