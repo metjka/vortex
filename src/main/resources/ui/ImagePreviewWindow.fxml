@@ -1,0 +1,8 @@
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
+
+    <ImageView fx:id="imageView"/>
+
+
+</fx:root>

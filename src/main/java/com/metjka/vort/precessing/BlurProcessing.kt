@@ -46,13 +46,12 @@ class BlurProcessing(val fastImage: FastImage) {
                 0f, 0f, 0f, 0f, 1f
         )
 
-
-
         val sobel = floatArrayOf(
                 2f, 1f, 0f,
                 1f, 0f, -1f,
                 0f, -1f, -2f
         )
+        val SOBEL = Kernel(3,3, sobel)
 
         val kernel7 = floatArrayOf(
                 0f, 0f, 0f, 5f, 0f, 0f, 0f,
@@ -69,6 +68,7 @@ class BlurProcessing(val fastImage: FastImage) {
                 -1f, 9f, -1f,
                 -1f, -1f, -1f
         )
+        val SHARPEN = Kernel(3,3, sharpen)
 
         val laplace = floatArrayOf(
                 -1f, -1f, -1f,

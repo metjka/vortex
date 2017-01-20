@@ -5,18 +5,16 @@ import javafx.fxml.FXML
 import javafx.scene.Parent
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.scene.layout.StackPane
 
-class ImagePreviewWindow(image: Image) : Parent(), ComponentLoader {
+class ImagePreviewWindow(image: Image) : StackPane(), ComponentLoader {
 
     @FXML
     var imageView: ImageView? = null
 
     init {
         loadFXML("ImagePreviewWindow")
-        if (image != null) {
-            imageView?.image = image
-        }
-
+        imageView?.image = image
     }
 
 
