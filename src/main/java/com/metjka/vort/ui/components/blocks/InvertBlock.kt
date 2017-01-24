@@ -1,10 +1,12 @@
 package com.metjka.vort.ui.components.blocks
 
+import com.google.common.collect.ImmutableList
 import com.metjka.vort.precessing.BlurProcessing
 import com.metjka.vort.precessing.FastImage
 import com.metjka.vort.precessing.InvertFilter
 import com.metjka.vort.ui.ToplevelPane
 import com.metjka.vort.ui.Type
+import com.metjka.vort.ui.components.connections.ConnectionAnchor
 import com.metjka.vort.ui.components.connections.InputAnchor
 import com.metjka.vort.ui.components.connections.OutputAnchor
 import javafx.fxml.FXML
@@ -30,6 +32,15 @@ class InvertBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPa
     init {
         inputSpace?.children?.add(0, inputAnchor)
         outputSpace?.children?.add(outputAnchor)
+    }
+
+
+    override fun getAllOutputs(): MutableList<OutputAnchor> {
+        return ImmutableList.of(outputAnchor)
+    }
+
+    override fun getAllInputs(): MutableList<InputAnchor> {
+        return ImmutableList.of(inputAnchor)
     }
 
     override fun update() {

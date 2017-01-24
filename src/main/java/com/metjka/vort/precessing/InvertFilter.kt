@@ -7,10 +7,6 @@ class InvertFilter(val fastImage: FastImage) : Filter {
     val width = fastImage.width
     val height = fastImage.height
 
-    init {
-        fastImage
-    }
-
     override fun filter(): FastImage {
         val image = FastImage(width, height)
         for (x in 0..width - 1) {

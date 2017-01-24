@@ -53,6 +53,11 @@ public class ConstantBlock extends ValueBlock<Integer> {
     }
 
     @Override
+    public List<InputAnchor> getAllInputs() {
+        return ImmutableList.of();
+    }
+
+    @Override
     public Optional<Block> getNewCopy() {
         return null;
     }

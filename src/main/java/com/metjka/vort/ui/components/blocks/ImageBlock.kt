@@ -24,8 +24,8 @@ class ImageBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topleve
     val outputAnchor: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
 
     val fileChooser = FileChooser()
-    val extensionFilter = FileChooser.ExtensionFilter("Image (*.PNG)", "*.PNG")
 
+    val extensionFilter = FileChooser.ExtensionFilter("Image (*.PNG)", "*.PNG")
     @FXML
     var fileButton: Button? = null
 
@@ -70,11 +70,14 @@ class ImageBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topleve
                 throw IllegalArgumentException("Wrong position!")
             }
         }
-
     }
 
     override fun getAllOutputs(): MutableList<OutputAnchor> {
         return ImmutableList.of(outputAnchor)
+    }
+
+    override fun getAllInputs(): MutableList<InputAnchor> {
+        return ImmutableList.of()
     }
 
     override fun getNewCopy(): Optional<Block> {

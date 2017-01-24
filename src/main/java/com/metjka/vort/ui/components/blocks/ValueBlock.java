@@ -19,16 +19,6 @@ public abstract class ValueBlock<T> extends Block {
         loadFXML(fxml);
     }
 
-    @Override
-    public List<InputAnchor> getAllInputs() {
-        return ImmutableList.of();
-    }
-
-    @Override
-    public List<OutputAnchor> getAllOutputs() {
-        return ImmutableList.of();
-    }
-
     abstract T getValue(int position);
 
 }
