@@ -76,8 +76,9 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button imageBlock = new MenuButton("Image", bm -> addBlock(new ImageBlock(parent)));
         Button blurBlock = new MenuButton("Blur", bm -> addBlock(new BlurBlock(parent)));
         Button imagePreviewBlock = new MenuButton("ImagePreview", bm -> addBlock(new ImagePreviewBlock(parent)));
+        Button invertBlock = new MenuButton("InvertBlock", bm -> addBlock(new InvertBlock(parent)));
 
-        utilSpace.getChildren().addAll(closeButton, outputBlock, constantBlock, mathBlock, imageBlock, blurBlock, imagePreviewBlock);
+        utilSpace.getChildren().addAll(closeButton, outputBlock, constantBlock, mathBlock, imageBlock, blurBlock, imagePreviewBlock, invertBlock);
 
         for (Node button : utilSpace.getChildren()) {
             ((Region) button).setMaxWidth(Double.MAX_VALUE);

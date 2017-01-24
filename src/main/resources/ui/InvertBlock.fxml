@@ -1,9 +1,5 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<?import javafx.scene.control.TextField?>
 <fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
     <BorderPane>
 
@@ -16,17 +12,6 @@
             <BorderPane styleClass="block, value" pickOnBounds="false">
                 <center>
                     <VBox alignment="TOP_CENTER">
-                        <ComboBox fx:id="methodComboBox">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="BOX BLUR"/>
-                                    <String fx:value="GAUSSIAN3"/>
-                                    <String fx:value="GAUSSIAN5"/>
-                                    <String fx:value="SHARPEN"/>
-                                    <String fx:value="SOBEL"/>
-                                </FXCollections>
-                            </items>
-                        </ComboBox>
                     </VBox>
                 </center>
             </BorderPane>

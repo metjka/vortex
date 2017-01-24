@@ -3,6 +3,7 @@ package com.metjka.vort.ui.components.blocks
 import com.google.common.collect.ImmutableList
 import com.metjka.vort.precessing.BlurProcessing
 import com.metjka.vort.precessing.FastImage
+import com.metjka.vort.precessing.Kernel
 import com.metjka.vort.ui.ToplevelPane
 import com.metjka.vort.ui.Type
 import com.metjka.vort.ui.components.connections.InputAnchor
@@ -13,10 +14,7 @@ import javafx.scene.layout.VBox
 import mu.KotlinLogging
 import rx.Single
 import rx.schedulers.Schedulers
-import tornadofx.ellipse
 import java.util.*
-import java.util.function.Predicate
-import java.util.function.Supplier
 
 class BlurBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "BlurBlock") {
 
@@ -25,12 +23,14 @@ class BlurBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane
     val inputAnchor: InputAnchor = InputAnchor(this, Type.IMAGE)
     val outputAnchor: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
 
+    var method: Method? = null
+
     enum class Method {
         BOX_BLUR, GAUSSIAN_3, GAUSSIAN_5, SOBEL, SHARPEN
     }
 
     @FXML
-    private val methodComboBox: ComboBox<String>? = null
+    var methodComboBox: ComboBox<String>? = null
 
     @FXML
     var inputSpace: VBox? = null
@@ -43,22 +43,35 @@ class BlurBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane
         outputSpace?.children?.add(outputAnchor)
 
         methodComboBox?.selectionModel?.select(0)
+        method = Method.BOX_BLUR
 
         methodComboBox?.selectionModel?.selectedItemProperty()?.addListener { observableValue, oldValue, newValue ->
-            getMethod(newValue)
-            newValue.map {  }
+            method = getMethod(newValue)
+            update()
         }
 
     }
 
     private fun getMethod(method: String): Method {
-
         when (method) {
             "BOX BLUR" -> return Method.BOX_BLUR
+            "GAUSSIAN3" -> return Method.GAUSSIAN_3
+            "GAUSSIAN5" -> return Method.GAUSSIAN_5
+            "SHARPEN" -> return Method.SHARPEN
+            "SOBEL" -> return Method.SOBEL
             else -> throw IllegalArgumentException("Wrong method name!")
         }
+    }
 
-
+    fun getKernel(): Kernel {
+        when (method) {
+            Method.BOX_BLUR -> return BlurProcessing.BOX_BLUR
+            Method.GAUSSIAN_3 -> return BlurProcessing.GAUSSIAN3_BLUR
+            Method.GAUSSIAN_5 -> return BlurProcessing.GAUSSIAN5_BLUR
+            Method.SHARPEN -> return BlurProcessing.SHARPEN
+            Method.SOBEL -> return BlurProcessing.SOBEL
+            else -> throw IllegalArgumentException("Wrong method!")
+        }
     }
 
     override fun update() {
@@ -73,7 +86,7 @@ class BlurBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane
             if (block is ValueBlock<*>) {
                 val value = block.getValue(oppositeAnchor.position) as FastImage
                 val blurProcessing = BlurProcessing(value)
-                Single.fromCallable { blurProcessing.blur(BlurProcessing.GAUSSIAN5_BLUR) }
+                Single.fromCallable { blurProcessing.blur(getKernel()) }
                         .subscribeOn(Schedulers.computation())
                         .observeOn(Schedulers.trampoline())
                         .subscribe(
