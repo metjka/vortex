@@ -20,7 +20,7 @@ class BlurProcessing(val fastImage: FastImage) {
                 1f, 1f, 1f,
                 0f, 1f, 0f
         )
-        val BOX_BLUR = Kernel(3,3, boxBlur)
+        val BOX_BLUR = Kernel(3, 3, boxBlur)
 
         val gaussian3Blur = floatArrayOf(
                 1f, 2f, 1f,
@@ -36,7 +36,7 @@ class BlurProcessing(val fastImage: FastImage) {
                 0f, 1f, 1f, 1f, 0f,
                 0f, 0f, 1f, 0f, 0f
         )
-        val GAUSSIAN5_BLUR = Kernel(5,5, gaussian5Blur)
+        val GAUSSIAN5_BLUR = Kernel(5, 5, gaussian5Blur)
 
         val motionBlur = floatArrayOf(
                 1f, 0f, 0f, 0f, 0f,
@@ -46,12 +46,18 @@ class BlurProcessing(val fastImage: FastImage) {
                 0f, 0f, 0f, 0f, 1f
         )
 
+        val sobel2 = floatArrayOf(
+                1f, 2f, 1f,
+                0f, 0f, 0f,
+                -1f, -2f, -1f
+        )
+
         val sobel = floatArrayOf(
                 2f, 1f, 0f,
                 1f, 0f, -1f,
                 0f, -1f, -2f
         )
-        val SOBEL = Kernel(3,3, sobel)
+        val SOBEL = Kernel(3, 3, sobel2)
 
         val kernel7 = floatArrayOf(
                 0f, 0f, 0f, 5f, 0f, 0f, 0f,
@@ -68,7 +74,15 @@ class BlurProcessing(val fastImage: FastImage) {
                 -1f, 9f, -1f,
                 -1f, -1f, -1f
         )
-        val SHARPEN = Kernel(3,3, sharpen)
+        val SHARPEN = Kernel(3, 3, sharpen)
+
+        val sepia = floatArrayOf(
+                0.272f, 0.534f, 0.131f, 0f,
+                0.349f, 0.686f, 0.168f, 0f,
+                0.393f, 0.769f, 0.189f, 0f,
+                0f, 0f, 0f, 1f
+        )
+        val SEPIA = Kernel(3, 3, sepia)
 
         val laplace = floatArrayOf(
                 -1f, -1f, -1f,
@@ -113,9 +127,9 @@ class BlurProcessing(val fastImage: FastImage) {
                     }
                 }
                 val rgb = Color(
-                        (kernel.factor * r + bias).toInt().clamp(),
-                        (kernel.factor * g + bias).toInt().clamp(),
-                        (kernel.factor * b + bias).toInt().clamp())
+                        (kernel.factor * r).toInt().clamp(),
+                        (kernel.factor * g).toInt().clamp(),
+                        (kernel.factor * b).toInt().clamp())
                         .rgb
 
                 array[x + y * width] = rgb

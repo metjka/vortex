@@ -24,6 +24,7 @@
                                     <String fx:value="GAUSSIAN5"/>
                                     <String fx:value="SHARPEN"/>
                                     <String fx:value="SOBEL"/>
+                                    <String fx:value="SEPIA"/>
                                 </FXCollections>
                             </items>
                         </ComboBox>

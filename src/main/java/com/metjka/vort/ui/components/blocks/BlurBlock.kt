@@ -26,7 +26,7 @@ class BlurBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane
     var method: Method? = null
 
     enum class Method {
-        BOX_BLUR, GAUSSIAN_3, GAUSSIAN_5, SOBEL, SHARPEN
+        BOX_BLUR, GAUSSIAN_3, GAUSSIAN_5, SOBEL, SHARPEN, SEPIA
     }
 
     @FXML
@@ -59,6 +59,7 @@ class BlurBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane
             "GAUSSIAN5" -> return Method.GAUSSIAN_5
             "SHARPEN" -> return Method.SHARPEN
             "SOBEL" -> return Method.SOBEL
+            "SEPIA" -> return Method.SEPIA
             else -> throw IllegalArgumentException("Wrong method name!")
         }
     }
@@ -70,6 +71,7 @@ class BlurBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane
             Method.GAUSSIAN_5 -> return BlurProcessing.GAUSSIAN5_BLUR
             Method.SHARPEN -> return BlurProcessing.SHARPEN
             Method.SOBEL -> return BlurProcessing.SOBEL
+            Method.SEPIA -> return BlurProcessing.SEPIA
             else -> throw IllegalArgumentException("Wrong method!")
         }
     }

@@ -7,7 +7,9 @@ data class Kernel(val with: Int, val height: Int, val array: FloatArray) {
     init {
         val sum = array.sum()
 
-        if (sum.toInt() == 0) {
+        if (sum.toInt() == 1) {
+            factor = 1f
+        } else if (sum.toInt() == 0) {
             factor = 1f
         } else {
             factor = 1f / sum
