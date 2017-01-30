@@ -142,7 +142,7 @@ class BlurProcessing(val fastImage: FastImage) {
 
 }
 
-public fun Int.clamp(): Int {
+fun Int.clamp(): Int {
     when {
         this > 255 -> return 255
         this < 0 -> return 0
