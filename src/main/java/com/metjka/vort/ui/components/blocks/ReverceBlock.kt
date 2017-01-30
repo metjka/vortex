@@ -18,6 +18,7 @@ import java.util.*
 class ReverceBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "ReverseBlock") {
 
     val log = KotlinLogging.logger { }
+    //todo clean!!
 
     val inputAnchor: InputAnchor = InputAnchor(this, Type.IMAGE)
     val outputAnchor: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
