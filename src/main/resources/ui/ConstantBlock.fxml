@@ -2,11 +2,13 @@
 
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
 <fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
     <BorderPane>
         <top>
             <BorderPane styleClass="value, block" pickOnBounds="false">
                 <center>
+                    <Label styleClass="labra">Constant</Label>
                     <TextField fx:id="textField" maxWidth="120"/>
                 </center>
             </BorderPane>

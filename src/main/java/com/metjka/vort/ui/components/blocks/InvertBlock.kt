@@ -1,7 +1,7 @@
 package com.metjka.vort.ui.components.blocks
 
 import com.google.common.collect.ImmutableList
-import com.metjka.vort.precessing.BlurProcessing
+import com.metjka.vort.precessing.Convolation
 import com.metjka.vort.precessing.FastImage
 import com.metjka.vort.precessing.InvertFilter
 import com.metjka.vort.ui.ToplevelPane
@@ -59,7 +59,7 @@ class InvertBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPa
                         .observeOn(Schedulers.trampoline())
                         .subscribe(
                                 { image ->
-                                    log.info("Sending message downstream from BlurBlock: {}", hashCode())
+                                    log.info("Sending message downstream from ConvolutionBlock: {}", hashCode())
                                     value1 = image
                                     sendUpdateDownSteam()
 

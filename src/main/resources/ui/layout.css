@@ -51,10 +51,12 @@ ToplevelPane, ToplevelPane > Pane > Pane > Pane {
     -fx-border-style: solid outside;
     -fx-alignment: center;
 }
-.value.block Button{
+
+.value.block Button {
     -fx-background-color: #777777;
     -fx-label-padding: 0px;
 }
+
 .value.block {
     -fx-padding: 10 5 10 5;
     -fx-pref-width: 150px;
@@ -63,16 +65,22 @@ ToplevelPane, ToplevelPane > Pane > Pane > Pane {
     -fx-max-height: 200px;
 }
 
-.display.block{
+.display.block {
     -fx-padding: 10 5 10 5;
     -fx-pref-width: 100px;
 
 }
+
 .output {
     -fx-font-size: 20px;
     -fx-text-fill: darkorange;
     -fx-font-weight: bold;
+}
 
+.labra {
+    -fx-font-size: 20px;
+    -fx-text-fill:darkorange ;
+    -fx-font-weight: bold;
 }
 
 DrawWire {

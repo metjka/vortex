@@ -3,7 +3,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<?import javafx.scene.control.TextField?>
 <fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
     <BorderPane>
 
@@ -16,6 +15,7 @@
             <BorderPane styleClass="block, value" pickOnBounds="false">
                 <center>
                     <VBox alignment="TOP_CENTER">
+                        <Label styleClass="labra">Convolution</Label>
                         <ComboBox fx:id="methodComboBox">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
@@ -23,8 +23,10 @@
                                     <String fx:value="GAUSSIAN3"/>
                                     <String fx:value="GAUSSIAN5"/>
                                     <String fx:value="SHARPEN"/>
-                                    <String fx:value="SOBEL"/>
-                                    <String fx:value="SEPIA"/>
+                                    <String fx:value="SOBEL_HORIZONTAL"/>
+                                    <String fx:value="SOBEL_VERTICAL"/>
+                                    <String fx:value="LAPLACE"/>
+                                    <String fx:value="LAP"/>
                                 </FXCollections>
                             </items>
                         </ComboBox>

@@ -12,6 +12,7 @@
             <BorderPane styleClass="block, value" pickOnBounds="false">
                 <center>
                     <VBox alignment="TOP_CENTER">
+                        <Label styleClass="labra">Invert</Label>
                     </VBox>
                 </center>
             </BorderPane>

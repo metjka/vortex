@@ -1,7 +1,7 @@
 package com.metjka.vort.ui.components.blocks
 
 import com.google.common.collect.ImmutableList
-import com.metjka.vort.precessing.BlurProcessing
+import com.metjka.vort.precessing.Convolation
 import com.metjka.vort.precessing.FastImage
 import com.metjka.vort.precessing.Reverce
 import com.metjka.vort.ui.ToplevelPane
@@ -15,10 +15,9 @@ import rx.Single
 import rx.schedulers.Schedulers
 import java.util.*
 
-class ReverceBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "ReverseBlock") {
+class ReverseBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "ReverseBlock") {
 
     val log = KotlinLogging.logger { }
-    //todo clean!!
 
     val inputAnchor: InputAnchor = InputAnchor(this, Type.IMAGE)
     val outputAnchor: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
@@ -35,6 +34,9 @@ class ReverceBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelP
     }
 
     override fun update() {
+        inputAnchor.invalidateVisualState()
+        outputAnchor.invalidateVisualState()
+
         if (inputAnchor.oppositeAnchor.isPresent) {
             val oppositeAnchor = inputAnchor.oppositeAnchor.get()
             val block = oppositeAnchor.block
@@ -46,7 +48,7 @@ class ReverceBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelP
                         .observeOn(Schedulers.trampoline())
                         .subscribe(
                                 { image ->
-                                    log.info("Sending message downstream from BlurBlock: {}", hashCode())
+                                    log.info("Sending message downstream from ConvolutionBlock: {}", hashCode())
                                     value1 = image
                                     sendUpdateDownSteam()
 

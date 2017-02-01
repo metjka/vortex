@@ -11,7 +11,7 @@
         <top>
             <HBox alignment="CENTER" spacing="50">
                 <VBox fx:id="inputSpace1" pickOnBounds="false" alignment="CENTER">
-                    <Label styleClass="inputType" >Int</Label>
+                    <Label styleClass="inputType">Int</Label>
                 </VBox>
                 <VBox fx:id="inputSpace2" pickOnBounds="false" alignment="CENTER">
                     <Label styleClass="inputType" alignment="CENTER">Int</Label>
@@ -22,6 +22,7 @@
             <BorderPane styleClass="block, value" pickOnBounds="false">
                 <center>
                     <VBox alignment="TOP_CENTER">
+                        <Label styleClass="labra">Math</Label>
                         <ComboBox fx:id="methodComboBox">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">

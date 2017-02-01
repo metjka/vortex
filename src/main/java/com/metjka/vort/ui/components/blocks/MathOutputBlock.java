@@ -14,7 +14,7 @@ import javafx.scene.layout.Pane;
 import java.util.List;
 import java.util.Optional;
 
-public class PrintBlock extends Block implements Target {
+public class MathOutputBlock extends Block implements Target {
 
     protected InputAnchor inputAnchor;
 
@@ -27,9 +27,9 @@ public class PrintBlock extends Block implements Target {
     /**
      * @param pane The pane this block belongs to.
      */
-    public PrintBlock(ToplevelPane pane) {
+    public MathOutputBlock(ToplevelPane pane) {
         super(pane);
-        loadFXML("PrintBlock");
+        loadFXML("MathOutputBlock");
 
         inputAnchor = new InputAnchor(this, Type.NUMBER);
         inputSpace.getChildren().add(0, inputAnchor);
@@ -71,7 +71,7 @@ public class PrintBlock extends Block implements Target {
 
     @Override
     public Optional<Block> getNewCopy() {
-        return Optional.of(new PrintBlock(this.getToplevel()));
+        return Optional.of(new MathOutputBlock(this.getToplevel()));
     }
 
 }

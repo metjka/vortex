@@ -1,7 +1,7 @@
 package com.metjka.vort.ui.components.blocks
 
 import com.google.common.collect.ImmutableList
-import com.metjka.vort.precessing.BlurProcessing
+import com.metjka.vort.precessing.Convolation
 import com.metjka.vort.precessing.FastImage
 import com.metjka.vort.precessing.Kernel
 import com.metjka.vort.ui.ToplevelPane
@@ -16,7 +16,7 @@ import rx.Single
 import rx.schedulers.Schedulers
 import java.util.*
 
-class BlurBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "BlurBlock") {
+class ConvolutionBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "ConvolutionBlock") {
 
     val log = KotlinLogging.logger { }
 
@@ -26,7 +26,7 @@ class BlurBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane
     var method: Method? = null
 
     enum class Method {
-        BOX_BLUR, GAUSSIAN_3, GAUSSIAN_5, SOBEL, SHARPEN, SEPIA
+        BOX_BLUR, GAUSSIAN_3, GAUSSIAN_5, SOBEL_HORIZONTAL, SOBEL_VERTICAL, SHARPEN, SEPIA, LAPLACE, LAP
     }
 
     @FXML
@@ -58,20 +58,24 @@ class BlurBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane
             "GAUSSIAN3" -> return Method.GAUSSIAN_3
             "GAUSSIAN5" -> return Method.GAUSSIAN_5
             "SHARPEN" -> return Method.SHARPEN
-            "SOBEL" -> return Method.SOBEL
-            "SEPIA" -> return Method.SEPIA
+            "SOBEL_HORIZONTAL" -> return Method.SOBEL_HORIZONTAL
+            "SOBEL_VERTICAL" -> return Method.SOBEL_VERTICAL
+            "LAPLACE"-> return Method.LAPLACE
+            "LAP"-> return Method.LAP
             else -> throw IllegalArgumentException("Wrong method name!")
         }
     }
 
     fun getKernel(): Kernel {
         when (method) {
-            Method.BOX_BLUR -> return BlurProcessing.BOX_BLUR
-            Method.GAUSSIAN_3 -> return BlurProcessing.GAUSSIAN3_BLUR
-            Method.GAUSSIAN_5 -> return BlurProcessing.GAUSSIAN5_BLUR
-            Method.SHARPEN -> return BlurProcessing.SHARPEN
-            Method.SOBEL -> return BlurProcessing.SOBEL
-            Method.SEPIA -> return BlurProcessing.SEPIA
+            Method.BOX_BLUR -> return Convolation.BOX_BLUR
+            Method.GAUSSIAN_3 -> return Convolation.GAUSSIAN3_BLUR
+            Method.GAUSSIAN_5 -> return Convolation.GAUSSIAN5_BLUR
+            Method.SHARPEN -> return Convolation.SHARPEN
+            Method.SOBEL_HORIZONTAL -> return Convolation.SOBEL_HORIZONTAL
+            Method.SOBEL_VERTICAL -> return Convolation.SOBEL_VERTICAL
+            Method.LAPLACE ->  return Convolation.LAPLACE
+            Method.LAP ->  return Convolation.LAP
             else -> throw IllegalArgumentException("Wrong method!")
         }
     }
@@ -87,13 +91,13 @@ class BlurBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane
             val block = oppositeAnchor.block
             if (block is ValueBlock<*>) {
                 val value = block.getValue(oppositeAnchor.position) as FastImage
-                val blurProcessing = BlurProcessing(value)
+                val blurProcessing = Convolation(value)
                 Single.fromCallable { blurProcessing.blur(getKernel()) }
                         .subscribeOn(Schedulers.computation())
                         .observeOn(Schedulers.trampoline())
                         .subscribe(
                                 { image ->
-                                    log.info("Sending message downstream from BlurBlock: {}", hashCode())
+                                    log.info("Sending message downstream from ConvolutionBlock: {}", hashCode())
                                     value1 = image
                                     sendUpdateDownSteam()
 

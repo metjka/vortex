@@ -16,10 +16,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class FunctionMenu extends StackPane implements ComponentLoader {
 
@@ -70,18 +68,18 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button closeButton = new MenuButton("Close", bm -> close(bm));
         closeButton.getStyleClass().add("escape");
 
-        Button outputBlock = new MenuButton("Output", bm -> addBlock(new PrintBlock(parent)));
+        Button outputBlock = new MenuButton("Output", bm -> addBlock(new MathOutputBlock(parent)));
         Button mathBlock = new MenuButton("Math", bm -> addBlock(new MathBlock(parent)));
         Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ConstantBlock(parent)));
         Button imageBlock = new MenuButton("Image", bm -> addBlock(new ImageBlock(parent)));
-        Button blurBlock = new MenuButton("Blur", bm -> addBlock(new BlurBlock(parent)));
-        Button imagePreviewBlock = new MenuButton("ImagePreview", bm -> addBlock(new ImagePreviewBlock(parent)));
-        Button invertBlock = new MenuButton("InvertBlock", bm -> addBlock(new InvertBlock(parent)));
-        Button grayscaleBlock = new MenuButton("Gray", bm -> addBlock(new GrayScaleBlock(parent)));
-        Button reverse = new MenuButton("reverse", bm -> addBlock(new ReverceBlock(parent)));
+        Button blurBlock = new MenuButton("Convolution", bm -> addBlock(new ConvolutionBlock(parent)));
+        Button imagePreviewBlock = new MenuButton("Image Output", bm -> addBlock(new ImageOutputBlock(parent)));
+        Button invertBlock = new MenuButton("Invert", bm -> addBlock(new InvertBlock(parent)));
+        Button greyscaleBlock = new MenuButton("Greyscale", bm -> addBlock(new GrayScaleBlock(parent)));
+        Button reverse = new MenuButton("Reverse", bm -> addBlock(new ReverseBlock(parent)));
 
         utilSpace.getChildren().addAll(closeButton, outputBlock, constantBlock, mathBlock, imageBlock, blurBlock,
-                imagePreviewBlock, invertBlock, grayscaleBlock, reverse);
+                imagePreviewBlock, invertBlock, greyscaleBlock, reverse);
 
         for (Node button : utilSpace.getChildren()) {
             ((Region) button).setMaxWidth(Double.MAX_VALUE);

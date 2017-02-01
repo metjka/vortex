@@ -13,6 +13,7 @@
             <BorderPane styleClass="block, value" pickOnBounds="false">
                 <center>
                     <VBox alignment="TOP_CENTER">
+                        <Label styleClass="labra">Grayscale filter</Label>
                     </VBox>
                 </center>
             </BorderPane>

@@ -1,6 +1,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
 <fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
     <BorderPane>
         <top>
@@ -12,7 +13,9 @@
             <BorderPane styleClass="value, block" pickOnBounds="false">
                 <center>
                     <VBox alignment="TOP_CENTER">
+                        <Label styleClass="labra">Image preview</Label>
                         <ImageView fx:id="imageView" fitWidth="130" fitHeight="130" preserveRatio="true"/>
+                        <Button fx:id="buttonSave">Save image</Button>
                     </VBox>
                 </center>
             </BorderPane>

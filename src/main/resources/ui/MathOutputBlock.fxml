@@ -16,6 +16,7 @@
         <center>
             <BorderPane styleClass="value, block" pickOnBounds="false">
                 <center>
+                    <Label styleClass="labra">Reverse</Label>
                     <Label fx:id="printValue" styleClass="output" maxWidth="400" alignment="TOP_CENTER"/>
                 </center>
             </BorderPane>

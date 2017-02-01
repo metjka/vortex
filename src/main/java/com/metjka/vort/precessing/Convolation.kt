@@ -1,17 +1,11 @@
 package com.metjka.vort.precessing
 
-import tornadofx.box
 import java.awt.Color
 
-class BlurProcessing(val fastImage: FastImage) {
+class Convolation(val fastImage: FastImage) {
 
     val width = fastImage.width
     val height = fastImage.height
-    val bias = 0
-
-    init {
-        fastImage
-    }
 
     companion object {
 
@@ -46,18 +40,20 @@ class BlurProcessing(val fastImage: FastImage) {
                 0f, 0f, 0f, 0f, 1f
         )
 
-        val sobel2 = floatArrayOf(
+        val sobelHorizontal = floatArrayOf(
                 1f, 2f, 1f,
                 0f, 0f, 0f,
                 -1f, -2f, -1f
         )
 
-        val sobel = floatArrayOf(
-                2f, 1f, 0f,
-                1f, 0f, -1f,
-                0f, -1f, -2f
+        val sobelVertical = floatArrayOf(
+                -1f, 0f, 1f,
+                -2f, 0f, 2f,
+                -1f, 0f, 1f
         )
-        val SOBEL = Kernel(3, 3, sobel2)
+        val SOBEL_HORIZONTAL = Kernel(3, 3, sobelHorizontal)
+        val SOBEL_VERTICAL = Kernel(3, 3, sobelVertical)
+
 
         val kernel7 = floatArrayOf(
                 0f, 0f, 0f, 5f, 0f, 0f, 0f,
@@ -76,26 +72,26 @@ class BlurProcessing(val fastImage: FastImage) {
         )
         val SHARPEN = Kernel(3, 3, sharpen)
 
-        val sepia = floatArrayOf(
-                0.272f, 0.534f, 0.131f, 0f,
-                0.349f, 0.686f, 0.168f, 0f,
-                0.393f, 0.769f, 0.189f, 0f,
-                0f, 0f, 0f, 1f
-        )
-        val SEPIA = Kernel(3, 3, sepia)
-
         val laplace = floatArrayOf(
                 -1f, -1f, -1f,
                 -1f, 8f, -1f,
                 -1f, -1f, -1f
         )
+        val LAPLACE = Kernel(3, 3, laplace)
+
+        val laplaceNegative = floatArrayOf(
+                1f, 1f, 1f,
+                1f, -8f, 1f,
+                1f, 1f, 1f
+        )
+        val LAPLACE_NEGATIVE = Kernel(3,3, laplaceNegative)
 
         val lap = floatArrayOf(
                 0f, 1f, 0f,
                 1f, -5f, 1f,
                 0f, 1f, 0f
-
         )
+        val LAP = Kernel(3, 3, lap)
 
     }
 
@@ -142,10 +138,3 @@ class BlurProcessing(val fastImage: FastImage) {
 
 }
 
-fun Int.clamp(): Int {
-    when {
-        this > 255 -> return 255
-        this < 0 -> return 0
-        else -> return this
-    }
-}

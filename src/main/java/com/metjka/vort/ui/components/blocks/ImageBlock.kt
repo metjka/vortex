@@ -40,7 +40,7 @@ class ImageBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topleve
         fileChooser.title = "Open PNG file!"
         fileChooser.extensionFilters.add(extensionFilter)
 
-        outputSpace?.children?.add(0, outputAnchor)
+        outputSpace?.children?.add(outputAnchor)
 
         fileButton?.setOnMouseClicked {
             val file: File? = fileChooser.showOpenDialog(toplevelPane.scene.window)
