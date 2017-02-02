@@ -1,7 +1,7 @@
 package com.metjka.vort.ui.components.blocks
 
 import com.google.common.collect.ImmutableList
-import com.metjka.vort.precessing.Convolation
+import com.metjka.vort.precessing.Convolution
 import com.metjka.vort.precessing.FastImage
 import com.metjka.vort.precessing.Kernel
 import com.metjka.vort.ui.ToplevelPane
@@ -68,14 +68,14 @@ class ConvolutionBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(tople
 
     fun getKernel(): Kernel {
         when (method) {
-            Method.BOX_BLUR -> return Convolation.BOX_BLUR
-            Method.GAUSSIAN_3 -> return Convolation.GAUSSIAN3_BLUR
-            Method.GAUSSIAN_5 -> return Convolation.GAUSSIAN5_BLUR
-            Method.SHARPEN -> return Convolation.SHARPEN
-            Method.SOBEL_HORIZONTAL -> return Convolation.SOBEL_HORIZONTAL
-            Method.SOBEL_VERTICAL -> return Convolation.SOBEL_VERTICAL
-            Method.LAPLACE ->  return Convolation.LAPLACE
-            Method.LAP ->  return Convolation.LAP
+            Method.BOX_BLUR -> return Convolution.BOX_BLUR
+            Method.GAUSSIAN_3 -> return Convolution.GAUSSIAN3_BLUR
+            Method.GAUSSIAN_5 -> return Convolution.GAUSSIAN5_BLUR
+            Method.SHARPEN -> return Convolution.SHARPEN
+            Method.SOBEL_HORIZONTAL -> return Convolution.SOBEL_HORIZONTAL
+            Method.SOBEL_VERTICAL -> return Convolution.SOBEL_VERTICAL
+            Method.LAPLACE ->  return Convolution.LAPLACE
+            Method.LAP ->  return Convolution.LAP
             else -> throw IllegalArgumentException("Wrong method!")
         }
     }
@@ -91,8 +91,8 @@ class ConvolutionBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(tople
             val block = oppositeAnchor.block
             if (block is ValueBlock<*>) {
                 val value = block.getValue(oppositeAnchor.position) as FastImage
-                val blurProcessing = Convolation(value)
-                Single.fromCallable { blurProcessing.blur(getKernel()) }
+                val blurProcessing = Convolution(value)
+                Single.fromCallable { blurProcessing.convolve(getKernel()) }
                         .subscribeOn(Schedulers.computation())
                         .observeOn(Schedulers.trampoline())
                         .subscribe(

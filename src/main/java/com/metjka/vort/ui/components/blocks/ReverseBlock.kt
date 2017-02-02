@@ -1,7 +1,6 @@
 package com.metjka.vort.ui.components.blocks
 
 import com.google.common.collect.ImmutableList
-import com.metjka.vort.precessing.Convolation
 import com.metjka.vort.precessing.FastImage
 import com.metjka.vort.precessing.Reverce
 import com.metjka.vort.ui.ToplevelPane
@@ -43,7 +42,7 @@ class ReverseBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelP
             if (block is ValueBlock<*>) {
                 val value = block.getValue(oppositeAnchor.position) as FastImage
                 val reverce = Reverce(value)
-                Single.fromCallable {reverce.filter() }
+                Single.fromCallable { reverce.filter() }
                         .subscribeOn(Schedulers.computation())
                         .observeOn(Schedulers.trampoline())
                         .subscribe(

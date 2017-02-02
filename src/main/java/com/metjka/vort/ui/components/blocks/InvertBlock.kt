@@ -1,12 +1,10 @@
 package com.metjka.vort.ui.components.blocks
 
 import com.google.common.collect.ImmutableList
-import com.metjka.vort.precessing.Convolation
 import com.metjka.vort.precessing.FastImage
 import com.metjka.vort.precessing.InvertFilter
 import com.metjka.vort.ui.ToplevelPane
 import com.metjka.vort.ui.Type
-import com.metjka.vort.ui.components.connections.ConnectionAnchor
 import com.metjka.vort.ui.components.connections.InputAnchor
 import com.metjka.vort.ui.components.connections.OutputAnchor
 import javafx.fxml.FXML

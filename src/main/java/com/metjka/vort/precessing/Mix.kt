@@ -7,6 +7,8 @@ class Mix(val fastImage: FastImage, val color: Color, val ratio: Float) : Filter
     val width = fastImage.width
     val height = fastImage.height
 
+    //TODO
+
     override fun filter(): FastImage {
         val image = FastImage(width, height)
         for (x in 0..width - 1) {

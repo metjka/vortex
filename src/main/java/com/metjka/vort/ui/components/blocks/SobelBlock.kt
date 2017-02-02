@@ -2,7 +2,8 @@ package com.metjka.vort.ui.components.blocks
 
 import com.google.common.collect.ImmutableList
 import com.metjka.vort.precessing.FastImage
-import com.metjka.vort.precessing.GrayFilter
+import com.metjka.vort.precessing.Reverce
+import com.metjka.vort.precessing.SobelFilter
 import com.metjka.vort.ui.ToplevelPane
 import com.metjka.vort.ui.Type
 import com.metjka.vort.ui.components.connections.InputAnchor
@@ -14,7 +15,7 @@ import rx.Single
 import rx.schedulers.Schedulers
 import java.util.*
 
-class GrayScaleBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "GrayScaleBlock") {
+class SobelBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "SobelBlock") {
 
     val log = KotlinLogging.logger { }
 
@@ -32,38 +33,40 @@ class GrayScaleBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(top
         outputSpace?.children?.add(outputAnchor)
     }
 
-    override fun getAllInputs(): MutableList<InputAnchor> {
-        return ImmutableList.of(inputAnchor)
-    }
-
-    override fun getAllOutputs(): MutableList<OutputAnchor> {
-        return ImmutableList.of(outputAnchor)
-    }
-
     override fun update() {
         inputAnchor.invalidateVisualState()
         outputAnchor.invalidateVisualState()
+
         if (inputAnchor.oppositeAnchor.isPresent) {
             val oppositeAnchor = inputAnchor.oppositeAnchor.get()
-            val position = oppositeAnchor.position
             val block = oppositeAnchor.block
             if (block is ValueBlock<*>) {
-                val value = block.getValue(position) as FastImage
-                val grayFilter = GrayFilter(value)
-                Single.fromCallable { grayFilter.filter() }
+                val value = block.getValue(oppositeAnchor.position) as FastImage
+                val reverce = SobelFilter(value)
+                Single.fromCallable { reverce.filter() }
                         .subscribeOn(Schedulers.computation())
                         .observeOn(Schedulers.trampoline())
                         .subscribe(
                                 { image ->
-                                    log.info("Sending message downstream from GrayScaleBlock: {}", hashCode())
+                                    log.info("Sending message downstream from SobelBlock: {}", hashCode())
                                     value1 = image
                                     sendUpdateDownSteam()
 
                                 },
                                 { log.error("Can`t process image!", it) }
                         )
+
             }
+
         }
+    }
+
+    override fun getAllOutputs(): MutableList<OutputAnchor> {
+        return ImmutableList.of(outputAnchor)
+    }
+
+    override fun getAllInputs(): MutableList<InputAnchor> {
+        return ImmutableList.of(inputAnchor)
     }
 
     override fun getValue(position: Int): FastImage {

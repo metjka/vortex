@@ -85,7 +85,7 @@ fun main(args: Array<String>) {
     val image = BufferedImage(fastImage.width, fastImage.height, BufferedImage.TYPE_INT_ARGB)
 
     val startMY = System.currentTimeMillis()
-    val pix: IntArray = blur(fastImage)
+    val pix: IntArray = convolve(fastImage)
     val endMY = System.currentTimeMillis()
     image.data = Raster.createRaster(image.sampleModel, DataBufferInt(pix, pix.size), Point())
     ImageIO.write(image, "PNG", File(path, "te/5.png"))
@@ -96,7 +96,7 @@ fun main(args: Array<String>) {
     println(endMY - startMY)
 }
 
-fun blur(fastABGRGRB: FastImage): IntArray {
+fun convolve(fastABGRGRB: FastImage): IntArray {
     val blur = Filters(fastABGRGRB)
     val blur1 = blur.blur(kernel2)
     return blur1

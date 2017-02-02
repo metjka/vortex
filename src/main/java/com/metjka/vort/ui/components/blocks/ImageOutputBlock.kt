@@ -10,7 +10,6 @@ import javafx.embed.swing.SwingFXUtils
 import javafx.fxml.FXML
 import javafx.scene.Scene
 import javafx.scene.control.Button
-import javafx.scene.control.ComboBox
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.input.MouseButton
@@ -83,6 +82,7 @@ class ImageOutputBlock(toplevelPane: ToplevelPane) : Block(toplevelPane) {
             val position = inputAnchor.oppositeAnchor.get().position
             if (block is ValueBlock<*>) {
                 val fastImage: FastImage? = (block.getValue(position) as FastImage);
+                val toBufferedImage = fastImage?.toBufferedImage()
                 image = SwingFXUtils.toFXImage(fastImage?.toBufferedImage(), null)
                 imageView?.image = image
             }
@@ -98,7 +98,7 @@ class ImageOutputBlock(toplevelPane: ToplevelPane) : Block(toplevelPane) {
     }
 
     override fun getNewCopy(): Optional<Block> {
-        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+        throw UnsupportedOperationException("not implemented")
     }
 
 }

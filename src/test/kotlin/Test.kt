@@ -1,25 +1,17 @@
-import org.junit.Test
-import java.awt.Color
+import rx.Observable
 
 class Test {
 
-    @Test
-    fun basicTest() {
-        val rgbInt = Color.CYAN.rgb
-        println(rgbInt)
+
+    @org.junit.Test
+    fun test() {
+        val obs1 = Observable.just("Hello")
+        val obs2 = Observable.just("World")
+
+        Observable.zip(obs1, obs2, { s1, s2 ->  return@zip s1 + s2 })
+                .map { it.plus("da") }
+                .subscribe ({s -> print(s)},{t -> print(t)})
     }
 
-    @Test
-    fun fore() {
-        for (i: Int in 0..10 - 1) {
-            println(i)
-        }
-    }
-
-    @Test
-    fun arra() {
-        val listOf = listOf<String>("colorRoof", "b")
-        println(listOf.size)
-    }
 
 }

@@ -2,7 +2,7 @@ package com.metjka.vort.precessing
 
 import java.awt.Color
 
-class Convolation(val fastImage: FastImage) {
+class Convolution(val fastImage: FastImage) {
 
     val width = fastImage.width
     val height = fastImage.height
@@ -95,7 +95,7 @@ class Convolation(val fastImage: FastImage) {
 
     }
 
-    fun blur(kernel: Kernel): FastImage {
+    fun convolve(kernel: Kernel): FastImage {
         val array = IntArray(width * height)
 
         for (x in 0..width - 1) {
