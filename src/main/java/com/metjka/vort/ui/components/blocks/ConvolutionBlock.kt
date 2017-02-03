@@ -26,7 +26,7 @@ class ConvolutionBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(tople
     var method: Method? = null
 
     enum class Method {
-        BOX_BLUR, GAUSSIAN_3, GAUSSIAN_5, SOBEL_HORIZONTAL, SOBEL_VERTICAL, SHARPEN, SEPIA, LAPLACE, LAP
+        BOX_BLUR, GAUSSIAN_3, GAUSSIAN_5, SOBEL_HORIZONTAL, SOBEL_VERTICAL, SHARPEN, LAPLACE, LAP
     }
 
     @FXML

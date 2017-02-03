@@ -27,9 +27,8 @@ class SobelFilter(val fastImage: FastImage) : Filter {
                     val argb1: Int? = r1.getARGB(x, y)
                     val argb2: Int? = r2.getARGB(x, y)
                     if (argb1 != null && argb2 != null) {
-                        val G = sqrt(((argb1 * argb1) + (argb2 * argb2)).toDouble()).toInt().clamp()
-                        val color = Color(G)
-                        fast.setARGB(x, y, color.rgb)
+                        val g = Math.hypot(Color(argb1).rgb.toDouble(), Color(argb1).rgb.toDouble()).toInt()
+                        fast.setARGB(x, y, Color(g).rgb)
                     }
                 }
             }
