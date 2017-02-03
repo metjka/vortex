@@ -2,8 +2,6 @@ package com.metjka.vort.precessing
 
 import mu.KotlinLogging
 import rx.Observable
-import rx.Single
-import rx.schedulers.Schedulers
 import java.awt.Color
 import java.lang.Math.sqrt
 
@@ -28,10 +26,10 @@ class SobelFilter(val fastImage: FastImage) : Filter {
                 for (y in 0..height - 1) {
                     val argb1: Int? = r1.getARGB(x, y)
                     val argb2: Int? = r2.getARGB(x, y)
-
                     if (argb1 != null && argb2 != null) {
                         val G = sqrt(((argb1 * argb1) + (argb2 * argb2)).toDouble()).toInt().clamp()
-                        fast.setARGB(x, y, Color(G).rgb)
+                        val color = Color(G)
+                        fast.setARGB(x, y, color.rgb)
                     }
                 }
             }

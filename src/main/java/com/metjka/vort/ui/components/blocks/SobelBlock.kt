@@ -3,6 +3,7 @@ package com.metjka.vort.ui.components.blocks
 import com.google.common.collect.ImmutableList
 import com.metjka.vort.precessing.FastImage
 import com.metjka.vort.precessing.Reverce
+import com.metjka.vort.precessing.Sob
 import com.metjka.vort.precessing.SobelFilter
 import com.metjka.vort.ui.ToplevelPane
 import com.metjka.vort.ui.Type
@@ -42,8 +43,8 @@ class SobelBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topleve
             val block = oppositeAnchor.block
             if (block is ValueBlock<*>) {
                 val value = block.getValue(oppositeAnchor.position) as FastImage
-                val reverce = SobelFilter(value)
-                Single.fromCallable { reverce.filter() }
+                val sob = SobelFilter(value)
+                Single.fromCallable { sob.filter() }
                         .subscribeOn(Schedulers.computation())
                         .observeOn(Schedulers.trampoline())
                         .subscribe(
