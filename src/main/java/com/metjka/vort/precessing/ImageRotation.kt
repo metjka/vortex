@@ -10,7 +10,7 @@ class ImageRotation(val fastImage: FastImage) {
             90 -> return rotate90()
             -90 -> return rotateMinus90()
             180 -> return rotate180()
-            else -> throw IllegalArgumentException("Wrong angleK")
+            else -> throw IllegalArgumentException("Wrong angle")
         }
     }
 
