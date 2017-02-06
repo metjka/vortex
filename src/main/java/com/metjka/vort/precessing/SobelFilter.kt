@@ -3,11 +3,6 @@ package com.metjka.vort.precessing
 import mu.KotlinLogging
 import rx.Observable
 import java.awt.Color
-import java.lang.Math.sqrt
-import java.awt.image.BufferedImage
-import javax.swing.Spring.width
-import javax.swing.Spring.height
-
 
 class SobelFilter(val fastImage: FastImage) : Filter {
 
@@ -54,7 +49,8 @@ class SobelFilter(val fastImage: FastImage) : Filter {
             }
             return@zip fast
 
-        }).subscribe({ fastImageSobel = it }, { log.error("Can`t do sobel!", it) })
+        })
+                .subscribe({ fastImageSobel = it }, { log.error("Can`t do sobel!", it) })
 
         return fastImageSobel!!
     }
