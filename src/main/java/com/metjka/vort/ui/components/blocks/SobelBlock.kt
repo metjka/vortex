@@ -2,8 +2,6 @@ package com.metjka.vort.ui.components.blocks
 
 import com.google.common.collect.ImmutableList
 import com.metjka.vort.precessing.FastImage
-import com.metjka.vort.precessing.Reverce
-import com.metjka.vort.precessing.Sob
 import com.metjka.vort.precessing.SobelFilter
 import com.metjka.vort.ui.ToplevelPane
 import com.metjka.vort.ui.Type

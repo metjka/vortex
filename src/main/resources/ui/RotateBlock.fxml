@@ -1,11 +1,14 @@
-<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
 <fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
 
     <BorderPane>
 
         <top>
-            <VBox fx:id="inputSpace"  pickOnBounds="false" alignment="CENTER">
+            <VBox fx:id="inputSpace" pickOnBounds="false" alignment="CENTER">
                 <Label styleClass="inputType">Image</Label>
             </VBox>
         </top>
@@ -14,6 +17,15 @@
                 <center>
                     <VBox alignment="TOP_CENTER">
                         <Label styleClass="labra">Rotate</Label>
+                        <ComboBox fx:id="methodComboBox">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="90 degree"/>
+                                    <String fx:value="-90 degree"/>
+                                    <String fx:value="180 degree"/>
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
                     </VBox>
                 </center>
             </BorderPane>
