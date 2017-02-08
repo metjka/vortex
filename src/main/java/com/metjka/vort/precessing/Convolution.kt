@@ -66,9 +66,9 @@ class Convolution(val fastImage: FastImage) {
         )
 
         val sharpen = floatArrayOf(
-                -1f, -1f, -1f,
-                -1f, 9f, -1f,
-                -1f, -1f, -1f
+                0f, -2f, 0f,
+                -2f, 9f, -2f,
+                0f, -2f, 0f
         )
         val SHARPEN = Kernel(3, 3, sharpen)
 

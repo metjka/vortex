@@ -79,9 +79,13 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button sobelBlock = new MenuButton("Sobel", bm -> addBlock(new SobelBlock(parent)));
         Button sepiaBlock = new MenuButton("Sepia", bm -> addBlock(new SepiaBlock(parent)));
         Button rotateBlock = new MenuButton("Rotate", bm -> addBlock(new RotateBlock(parent)));
+        Button brightnessBlock = new MenuButton("Brihtness", bm -> addBlock(new BrightnessBlock(parent)));
+        Button gammaBlock = new MenuButton("Gamma", bm -> addBlock(new GammaBlock(parent)));
+        Button contrastBlock = new MenuButton("Contrast", bm -> addBlock(new ContrastBlock(parent)));
 
         utilSpace.getChildren().addAll(closeButton, outputBlock, constantBlock, mathBlock, imageBlock, convolutionBlock,
-                imagePreviewBlock, invertBlock, greyscaleBlock, sobelBlock, sepiaBlock, rotateBlock);
+                imagePreviewBlock, invertBlock, greyscaleBlock, sobelBlock, sepiaBlock, rotateBlock, brightnessBlock,
+                gammaBlock, contrastBlock);
 
         for (Node button : utilSpace.getChildren()) {
             ((Region) button).setMaxWidth(Double.MAX_VALUE);

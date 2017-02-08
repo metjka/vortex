@@ -1,0 +1,38 @@
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.Slider?>
+<fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
+
+    <BorderPane>
+
+        <top>
+            <VBox fx:id="inputSpace" pickOnBounds="false" alignment="CENTER">
+                <Label styleClass="inputType">Image</Label>
+            </VBox>
+        </top>
+        <center>
+            <BorderPane styleClass="block, value" pickOnBounds="false">
+                <center>
+                    <VBox alignment="TOP_CENTER">
+                        <Label styleClass="labra">Brightness</Label>
+                        <VBox minHeight="10"/>
+                        <Slider fx:id="briSlider" max="255" min="-255" minWidth="100"/>
+                        <VBox minHeight="10"/>
+                        <Label fx:id="valLavel" styleClass="labra"/>
+                    </VBox>
+                </center>
+            </BorderPane>
+        </center>
+
+        <bottom>
+            <VBox fx:id="outputSpace" pickOnBounds="false" alignment="CENTER">
+                <Label fx:id="outType" styleClass="inputType">Image</Label>
+            </VBox>
+        </bottom>
+    </BorderPane>
+
+
+</fx:root>
