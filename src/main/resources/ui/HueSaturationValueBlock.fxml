@@ -1,0 +1,48 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
+
+    <BorderPane>
+
+        <top>
+            <VBox fx:id="inputSpace" pickOnBounds="false" alignment="CENTER">
+                <Label styleClass="inputType">Image</Label>
+            </VBox>
+        </top>
+        <center>
+            <BorderPane styleClass="block, value" pickOnBounds="false">
+                <center>
+                    <VBox alignment="TOP_CENTER">
+
+                        <Label styleClass="labra">HSV</Label>
+
+                        <VBox minHeight="5"/>
+
+                        <Label styleClass="labra">HUE</Label>
+                        <Slider fx:id="hueSlider" max="100" min="0" value="0" showTickMarks="true" minWidth="100"/>
+                        <Label fx:id="hueLabel" styleClass="labra"/>
+
+                        <VBox minHeight="10"/>
+
+                        <Label styleClass="labra">Saturation</Label>
+                        <Slider fx:id="saturationSlider" showTickMarks="true" min="0" value="100" max="200"   minWidth="100"/>
+                        <Label fx:id="saturationLabel"  styleClass="labra"/>
+
+                        <VBox minHeight="10"/>
+
+                        <Label styleClass="labra">Value</Label>
+                        <Slider fx:id="valueSlider" showTickMarks="true" min="0" value="100" max="200"  minWidth="100"/>
+                        <Label fx:id="valueLabel" styleClass="labra"/>
+
+                    </VBox>
+                </center>
+            </BorderPane>
+        </center>
+
+        <bottom>
+            <VBox fx:id="outputSpace" pickOnBounds="false" alignment="CENTER">
+                <Label fx:id="outType" styleClass="inputType">Image</Label>
+            </VBox>
+        </bottom>
+    </BorderPane>
+</fx:root>

@@ -43,12 +43,15 @@ class ContrastBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topl
 
         valLavel?.text = contrastFilter.toString()
 
-        briSlider?.valueProperty()?.addListener { observable, oldValue, newValue ->
-            contrastFilter = newValue.toInt()
-            valLavel?.text = contrastFilter.toString()
-            println(contrastFilter)
-            update()
+
+        briSlider?.valueChangingProperty()?.addListener { observableValue, wasChanging, changing ->
+            if (!changing) {
+                contrastFilter = briSlider?.value?.toInt()!!
+                valLavel?.text = contrastFilter.toString()
+                update()
+            }
         }
+
     }
 
     override fun update() {

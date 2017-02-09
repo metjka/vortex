@@ -4,28 +4,26 @@ import mu.KotlinLogging
 import rx.Observable
 import java.awt.Color
 
-class SobelFilter(val fastImage: FastImage) : Filter {
+class SobelFilter(val fastImage: FastImage) {
 
     val log = KotlinLogging.logger { }
 
     val width = fastImage.width
     val height = fastImage.height
 
-    override fun filter(): FastImage {
+    fun filter(): Observable<FastImage> {
         val convolution = Convolution(fastImage)
         val obsSobelHorizontal = Observable.fromCallable { convolution.convolve(Convolution.SOBEL_HORIZONTAL) }
         val obsSobelVertical = Observable.fromCallable { convolution.convolve(Convolution.SOBEL_VERTICAL) }
 
-        var fastImageSobel: FastImage? = null
-
-        Observable.zip(obsSobelHorizontal, obsSobelVertical, { r1, r2 ->
+        val zip = Observable.zip(obsSobelHorizontal, obsSobelVertical, { r1, r2 ->
             val fast = FastImage(width, height)
             for (x in 0..width - 1) {
                 for (y in 0..height - 1) {
                     val argb1: Int? = r1.getARGB(x, y)
                     val argb2: Int? = r2.getARGB(x, y)
                     if (argb1 != null && argb2 != null) {
-                        
+
                         val cx = Color(argb1)
                         val cy = Color(argb2)
 
@@ -50,9 +48,8 @@ class SobelFilter(val fastImage: FastImage) : Filter {
             return@zip fast
 
         })
-                .subscribe({ fastImageSobel = it }, { log.error("Can`t do sobel!", it) })
 
-        return fastImageSobel!!
+        return zip
     }
 
 

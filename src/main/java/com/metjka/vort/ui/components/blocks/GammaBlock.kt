@@ -7,6 +7,8 @@ import com.metjka.vort.ui.ToplevelPane
 import com.metjka.vort.ui.Type
 import com.metjka.vort.ui.components.connections.InputAnchor
 import com.metjka.vort.ui.components.connections.OutputAnchor
+import javafx.beans.value.ChangeListener
+import javafx.beans.value.ObservableValue
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.control.Slider
@@ -43,10 +45,12 @@ class GammaBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topleve
 
         valLavel?.text = brightnessValue.toString()
 
-        briSlider?.valueProperty()?.addListener { observable, oldValue, newValue ->
-            brightnessValue = newValue.toDouble()
-            valLavel?.text = brightnessValue.toString()
-            update()
+        briSlider?.valueChangingProperty()?.addListener { observableValue, wasChanging, changing ->
+            if (!changing) {
+                brightnessValue = briSlider?.value!!
+                valLavel?.text = brightnessValue.toString()
+                update()
+            }
         }
     }
 

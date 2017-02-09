@@ -23,7 +23,7 @@ class BrightnessBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(to
     val inputAnchor: InputAnchor = InputAnchor(this, Type.IMAGE)
     val outputAnchor: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
 
-    var brightnessValue :Int = 0
+    var brightnessValue: Int = 0
 
     @FXML
     var inputSpace: VBox? = null
@@ -35,7 +35,7 @@ class BrightnessBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(to
     var briSlider: Slider? = null
 
     @FXML
-    var valLavel : Label? = null
+    var valLavel: Label? = null
 
     init {
         inputSpace?.children?.add(0, inputAnchor)
@@ -43,10 +43,12 @@ class BrightnessBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(to
 
         valLavel?.text = 0.toString()
 
-        briSlider?.valueProperty()?.addListener { observable, oldValue, newValue ->
-            brightnessValue = newValue.toInt()
-            valLavel?.text= brightnessValue.toString()
-            update()
+        briSlider?.valueChangingProperty()?.addListener { observableValue, wasChanging, changing ->
+            if (!changing) {
+                brightnessValue = briSlider?.value?.toInt()!!
+                valLavel?.text = brightnessValue.toString()
+                update()
+            }
         }
     }
 
