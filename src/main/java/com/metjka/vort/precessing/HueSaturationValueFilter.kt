@@ -1,6 +1,5 @@
 package com.metjka.vort.precessing
 
-import com.sun.javafx.util.Utils
 import java.awt.Color
 
 class HueSaturationValueFilter(val fastImage: FastImage) {
@@ -20,7 +19,6 @@ class HueSaturationValueFilter(val fastImage: FastImage) {
                 val arra = floatArrayOf(0F, 0F, 0F)
                 val hsb = Color.RGBtoHSB(r, g, b, arra)
 
-                //todo fix
                 val hue1 = hsb.get(0).plus((hue.toFloat() / 100F * 360F) / 100F).clampHue()
                 val saturation1 = hsb.get(1).times(saturation.toFloat() / 100).clampSaturation()
                 val value1 = hsb.get(2).times(value.toFloat() / 100).clampValue()
