@@ -141,7 +141,7 @@ public class MainOverlay extends StackPane {
         Button zoomIn = new Button("+");
         zoomIn.setOnAction(menuActions::zoomIn);
 
-        Button zoomOut = new Button("–");
+        Button zoomOut = new Button("-");
         zoomOut.setOnAction(menuActions::zoomOut);
 
         FlowPane zoomBar = new FlowPane(10, 0, zoomIn, zoomOut);
