@@ -43,6 +43,7 @@ dependencies {
     compile group: 'com.google.code.gson', name: 'gson', version: '2.8.0'
     compile group: 'org.jfxtras', name: 'jfxtras-common', version: '8.0-r3'
     compile group: 'com.google.guava', name: 'guava', version: '20.0'
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     compile 'io.github.microutils:kotlin-logging:1.4.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
