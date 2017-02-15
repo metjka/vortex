@@ -2,7 +2,7 @@ package com.metjka.vort.precessing
 
 import java.awt.Color
 
-class BrightnessFilter(val fastImage: FastImage, val value:Int) : Filter {
+class BrightnessFilter(val fastImage: FastImage, val value: Int) : Filter {
 
     val width = fastImage.width
     val height = fastImage.height
@@ -16,15 +16,13 @@ class BrightnessFilter(val fastImage: FastImage, val value:Int) : Filter {
                 var G = color.green
                 var B = color.blue
 
-                R = (R+ value).clamp()
-                G = (G+ value).clamp()
-                B = (B+ value).clamp()
+                R = (R + value).clamp()
+                G = (G + value).clamp()
+                B = (B + value).clamp()
 
-                image.setARGB(x, y, Color(R,G,B).rgb)
+                image.setARGB(x, y, Color(R, G, B).rgb)
             }
         }
         return image;
     }
-
-
 }
