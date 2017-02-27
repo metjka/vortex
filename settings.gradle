@@ -1,1 +1,3 @@
-rootProject.name = 'VORT'
+rootProject.name = 'Vortex'
+
+rootProject.buildFileName='build.gradle.kts'

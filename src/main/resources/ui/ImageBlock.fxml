@@ -3,23 +3,27 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Label?>
 <fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
-    <BorderPane>
-        <top>
-            <BorderPane styleClass="value, block" pickOnBounds="false">
-                <center>
-                    <VBox alignment="TOP_CENTER">
-                        <Label styleClass="labra">Image input</Label>
-                        <Button fx:id="fileButton">Image</Button>
-                        <VBox minHeight="5"/>
-                        <ImageView fx:id="imageView" fitWidth="130" fitHeight="130" preserveRatio="true"/>
-                    </VBox>
-                </center>
-            </BorderPane>
-        </top>
-        <bottom>
-            <VBox fx:id="outputSpace" pickOnBounds="false" alignment="CENTER">
-                <Label fx:id="outType" styleClass="inputType">Image</Label>
-            </VBox>
-        </bottom>
-    </BorderPane>
+ <BorderPane>
+  <top>
+   <BorderPane styleClass="value, block"
+               pickOnBounds="false">
+    <center>
+     <VBox alignment="TOP_CENTER">
+      <Label styleClass="labra">Image input</Label>
+      <Button fx:id="fileButton">Image</Button>
+      <VBox minHeight="5"/>
+      <ImageView fx:id="imageView"
+                 fitWidth="130"
+                 fitHeight="130"
+                 preserveRatio="true"/>
+     </VBox>
+    </center>
+   </BorderPane>
+  </top>
+  <bottom>
+   <VBox fx:id="outputSpace" pickOnBounds="false" alignment="CENTER">
+   <Label fx:id="outType" styleClass="inputType">Image</Label>
+   </VBox>
+  </bottom>
+ </BorderPane>
 </fx:root>
