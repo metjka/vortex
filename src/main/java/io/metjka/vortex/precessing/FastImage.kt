@@ -4,7 +4,6 @@ import java.awt.Point
 import java.awt.image.BufferedImage
 import java.awt.image.DataBufferInt
 import java.awt.image.Raster
-import java.lang.management.ManagementFactory
 
 class FastImage {
 

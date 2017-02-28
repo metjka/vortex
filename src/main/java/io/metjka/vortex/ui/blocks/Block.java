@@ -1,10 +1,10 @@
-package io.metjka.vortex.ui.components.blocks;
+package io.metjka.vortex.ui.blocks;
 
 import com.google.common.collect.ImmutableMap;
 import io.metjka.vortex.ui.*;
-import io.metjka.vortex.ui.components.connections.ConnectionAnchor;
-import io.metjka.vortex.ui.components.connections.InputAnchor;
-import io.metjka.vortex.ui.components.connections.OutputAnchor;
+import io.metjka.vortex.ui.connections.ConnectionAnchor;
+import io.metjka.vortex.ui.connections.InputAnchor;
+import io.metjka.vortex.ui.connections.OutputAnchor;
 import io.metjka.vortex.ui.serialize.Bundleable;
 import javafx.application.Platform;
 import javafx.geometry.BoundingBox;
@@ -18,20 +18,6 @@ import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
-/**
- * Base block shaped UI Component that other visual elements will extend from.
- * Blocks can add input and output values by implementing the InputBlock and
- * OutputBlock interfaces.
- * <p>
- * MouseEvents are used for setting the selection state of a block, single
- * clicks can toggle the state to selected. When a block has already been
- * selected and receives another single left click it will toggle a contextual
- * menu for the block.
- * </p>
- * <p>
- * Each block implementation should also feature it's own FXML implementation.
- * </p>
- */
 public abstract class Block extends StackPane implements Bundleable, ComponentLoader {
     private static final String BLOCK_ID_PARAMETER = "id";
     private static final String BLOCK_X_PARAMETER = "x";

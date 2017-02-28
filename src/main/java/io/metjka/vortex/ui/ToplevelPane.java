@@ -1,10 +1,10 @@
 package io.metjka.vortex.ui;
 
 import com.google.common.collect.ImmutableMap;
-import io.metjka.vortex.ui.components.blocks.Block;
-import io.metjka.vortex.ui.components.connections.Connection;
-import io.metjka.vortex.ui.components.connections.ConnectionAnchor;
-import io.metjka.vortex.ui.components.connections.DrawWire;
+import io.metjka.vortex.ui.blocks.Block;
+import io.metjka.vortex.ui.connections.Connection;
+import io.metjka.vortex.ui.connections.ConnectionAnchor;
+import io.metjka.vortex.ui.connections.DrawWire;
 import io.metjka.vortex.ui.serialize.Bundleable;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;

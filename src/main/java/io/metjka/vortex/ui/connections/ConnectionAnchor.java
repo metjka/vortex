@@ -1,9 +1,9 @@
-package io.metjka.vortex.ui.components.connections;
+package io.metjka.vortex.ui.connections;
 
 import io.metjka.vortex.ui.BlockContainer;
 import io.metjka.vortex.ui.ComponentLoader;
 import io.metjka.vortex.ui.ToplevelPane;
-import io.metjka.vortex.ui.components.blocks.Block;
+import io.metjka.vortex.ui.blocks.Block;
 import io.metjka.vortex.ui.serialize.Bundleable;
 import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;

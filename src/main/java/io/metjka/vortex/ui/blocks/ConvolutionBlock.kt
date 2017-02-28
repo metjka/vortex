@@ -1,13 +1,13 @@
-package io.metjka.vortex.ui.components.blocks
+package io.metjka.vortex.ui.blocks
 
 import com.google.common.collect.ImmutableList
 import io.metjka.vortex.precessing.Convolution
 import io.metjka.vortex.precessing.FastImage
-import com.metjka.vort.precessing.Kernel
+import io.metjka.vortex.precessing.Kernel
 import io.metjka.vortex.ui.ToplevelPane
 import io.metjka.vortex.ui.Type
-import io.metjka.vortex.ui.components.connections.InputAnchor
-import io.metjka.vortex.ui.components.connections.OutputAnchor
+import io.metjka.vortex.ui.connections.InputAnchor
+import io.metjka.vortex.ui.connections.OutputAnchor
 import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
 import javafx.scene.layout.VBox

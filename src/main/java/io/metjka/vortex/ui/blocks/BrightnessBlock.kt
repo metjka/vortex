@@ -1,12 +1,12 @@
-package io.metjka.vortex.ui.components.blocks
+package io.metjka.vortex.ui.blocks
 
 import com.google.common.collect.ImmutableList
-import io.metjka.vortex.precessing.ContrastFilter
+import io.metjka.vortex.precessing.BrightnessFilter
 import io.metjka.vortex.precessing.FastImage
 import io.metjka.vortex.ui.ToplevelPane
 import io.metjka.vortex.ui.Type
-import io.metjka.vortex.ui.components.connections.InputAnchor
-import io.metjka.vortex.ui.components.connections.OutputAnchor
+import io.metjka.vortex.ui.connections.InputAnchor
+import io.metjka.vortex.ui.connections.OutputAnchor
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.control.Slider
@@ -16,14 +16,14 @@ import rx.Single
 import rx.schedulers.Schedulers
 import java.util.*
 
-class ContrastBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, ContrastBlock::class.simpleName) {
+class BrightnessBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, BrightnessBlock::class.simpleName) {
 
     val log = KotlinLogging.logger { }
 
     val inputAnchor: InputAnchor = InputAnchor(this, Type.IMAGE)
     val outputAnchor: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
 
-    var contrastFilter: Int = 0
+    var brightnessValue: Int = 0
 
     @FXML
     var inputSpace: VBox? = null
@@ -41,17 +41,15 @@ class ContrastBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topl
         inputSpace?.children?.add(0, inputAnchor)
         outputSpace?.children?.add(outputAnchor)
 
-        valLavel?.text = contrastFilter.toString()
-
+        valLavel?.text = 0.toString()
 
         briSlider?.valueChangingProperty()?.addListener { observableValue, wasChanging, changing ->
             if (!changing) {
-                contrastFilter = briSlider?.value?.toInt()!!
-                valLavel?.text = contrastFilter.toString()
+                brightnessValue = briSlider?.value?.toInt()!!
+                valLavel?.text = brightnessValue.toString()
                 update()
             }
         }
-
     }
 
     override fun update() {
@@ -63,13 +61,13 @@ class ContrastBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topl
             val block = oppositeAnchor.block
             if (block is ValueBlock<*>) {
                 val value = block.getValue(oppositeAnchor.position) as FastImage
-                val sob = ContrastFilter(value, contrastFilter)
+                val sob = BrightnessFilter(value, brightnessValue)
                 Single.fromCallable { sob.filter() }
                         .subscribeOn(Schedulers.computation())
                         .observeOn(Schedulers.trampoline())
                         .subscribe(
                                 { image ->
-                                    log.info("Sending message downstream from ContrastBlock: {}", hashCode())
+                                    log.info("Sending message downstream from BrightnessBlock: {}", hashCode())
                                     value1 = image
                                     sendUpdateDownSteam()
 
@@ -100,5 +98,4 @@ class ContrastBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topl
     override fun getNewCopy(): Optional<Block> {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
 }

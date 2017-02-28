@@ -1,4 +1,4 @@
-package io.metjka.vortex.ui.components.connections;
+package io.metjka.vortex.ui.connections;
 
 import io.metjka.vortex.ui.BlockContainer;
 import io.metjka.vortex.ui.ComponentLoader;

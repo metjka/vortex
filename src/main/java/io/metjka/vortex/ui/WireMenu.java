@@ -1,10 +1,10 @@
 package io.metjka.vortex.ui;
 
-import io.metjka.vortex.ui.components.blocks.Block;
-import io.metjka.vortex.ui.components.connections.Connection;
-import io.metjka.vortex.ui.components.connections.DrawWire;
-import io.metjka.vortex.ui.components.connections.InputAnchor;
-import io.metjka.vortex.ui.components.connections.OutputAnchor;
+import io.metjka.vortex.ui.blocks.Block;
+import io.metjka.vortex.ui.connections.Connection;
+import io.metjka.vortex.ui.connections.DrawWire;
+import io.metjka.vortex.ui.connections.InputAnchor;
+import io.metjka.vortex.ui.connections.OutputAnchor;
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
 import javafx.scene.layout.TilePane;

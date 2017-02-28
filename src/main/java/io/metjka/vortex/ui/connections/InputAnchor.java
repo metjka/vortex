@@ -1,9 +1,9 @@
-package io.metjka.vortex.ui.components.connections;
+package io.metjka.vortex.ui.connections;
 
 import com.google.common.collect.ImmutableMap;
 import io.metjka.vortex.ui.BlockContainer;
 import io.metjka.vortex.ui.Type;
-import io.metjka.vortex.ui.components.blocks.Block;
+import io.metjka.vortex.ui.blocks.Block;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;

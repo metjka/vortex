@@ -1,9 +1,9 @@
-package io.metjka.vortex.ui.components.connections;
+package io.metjka.vortex.ui.connections;
 
 import com.google.common.collect.ImmutableMap;
 import io.metjka.vortex.ui.BlockContainer;
 import io.metjka.vortex.ui.Type;
-import io.metjka.vortex.ui.components.blocks.Block;
+import io.metjka.vortex.ui.blocks.Block;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static io.metjka.vortex.ui.components.connections.DrawWire.NEUTRAL_TYPE_REACTION;
-import static io.metjka.vortex.ui.components.connections.DrawWire.GOOD_TYPE_REACTION;
-import static io.metjka.vortex.ui.components.connections.DrawWire.WRONG_TYPE_REACTION;
+import static io.metjka.vortex.ui.connections.DrawWire.*;
 
 /**
  * Anchor that specifically functions as an output.

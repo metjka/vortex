@@ -1,8 +1,7 @@
-package io.metjka.vortex.ui.components.blocks
+package io.metjka.vortex.ui.blocks
 
 import io.metjka.vortex.ui.ComponentLoader
 import javafx.fxml.FXML
-import javafx.scene.Parent
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.layout.StackPane

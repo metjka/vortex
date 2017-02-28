@@ -1,20 +1,18 @@
-package io.metjka.vortex.ui.components.blocks;
+package io.metjka.vortex.ui.blocks;
 
 import com.google.common.collect.ImmutableList;
 import io.metjka.vortex.ui.ToplevelPane;
 import io.metjka.vortex.ui.Type;
-import io.metjka.vortex.ui.components.connections.InputAnchor;
-import io.metjka.vortex.ui.components.connections.OutputAnchor;
+import io.metjka.vortex.ui.connections.InputAnchor;
+import io.metjka.vortex.ui.connections.OutputAnchor;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 public class MathBlock extends ValueBlock<Integer> {
 
     private static final Integer DEFAULT_VALUE = 0;
@@ -60,12 +58,10 @@ public class MathBlock extends ValueBlock<Integer> {
         method = Method.ADD;
 
         methodComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            log.info(newValue);
             method = getMethod(newValue);
             update();
         });
 
-        log.info("Created new MathBlock");
     }
 
     private Method getMethod(String methodString) {
@@ -120,7 +116,6 @@ public class MathBlock extends ValueBlock<Integer> {
 
         inputAnchor1.invalidateVisualState();
         inputAnchor2.invalidateVisualState();
-        log.info("Start of update in MathBlock, hash: {}", this.hashCode());
 
         if (inputAnchor1.getOppositeAnchor().isPresent() && inputAnchor2.getOppositeAnchor().isPresent()) {
             OutputAnchor outputAnchor1 = inputAnchor1.getOppositeAnchor().get();

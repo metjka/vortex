@@ -7,10 +7,10 @@ import java.net.URL;
 
 /**
  * Provides a default method for loading FXML interface description files.
- *
+ * <p>
  * The ComponentLoader is implemented as an interface so it can be added to
  * other classes without forcing those classes to inherit from it.
- *
+ * <p>
  * loadFXML will throw a RuntimeException when loading the FXML file fails,
  * which should never happen as it will only load from resources.
  */

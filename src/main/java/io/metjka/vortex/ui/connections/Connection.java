@@ -1,8 +1,8 @@
-package io.metjka.vortex.ui.components.connections;
+package io.metjka.vortex.ui.connections;
 
 import com.google.common.collect.ImmutableMap;
 import io.metjka.vortex.ui.ComponentLoader;
-import io.metjka.vortex.ui.components.blocks.Block;
+import io.metjka.vortex.ui.blocks.Block;
 import io.metjka.vortex.ui.serialize.Bundleable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

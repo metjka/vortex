@@ -1,12 +1,12 @@
-package io.metjka.vortex.ui.components.blocks
+package io.metjka.vortex.ui.blocks
 
 import com.google.common.collect.ImmutableList
-import com.metjka.vort.precessing.BrightnessFilter
-import com.metjka.vort.precessing.FastImage
+import io.metjka.vortex.precessing.FastImage
+import io.metjka.vortex.precessing.HueSaturationValueFilter
 import io.metjka.vortex.ui.ToplevelPane
 import io.metjka.vortex.ui.Type
-import io.metjka.vortex.ui.components.connections.InputAnchor
-import io.metjka.vortex.ui.components.connections.OutputAnchor
+import io.metjka.vortex.ui.connections.InputAnchor
+import io.metjka.vortex.ui.connections.OutputAnchor
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.control.Slider
@@ -16,14 +16,16 @@ import rx.Single
 import rx.schedulers.Schedulers
 import java.util.*
 
-class BrightnessBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, BrightnessBlock::class.simpleName) {
+class HueSaturationValueBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, HueSaturationValueBlock::class.simpleName) {
 
     val log = KotlinLogging.logger { }
 
     val inputAnchor: InputAnchor = InputAnchor(this, Type.IMAGE)
     val outputAnchor: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
 
-    var brightnessValue: Int = 0
+    var hue: Int = 0
+    var saturation: Int = 100
+    var value: Int = 100
 
     @FXML
     var inputSpace: VBox? = null
@@ -32,24 +34,59 @@ class BrightnessBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(to
     var outputSpace: VBox? = null
 
     @FXML
-    var briSlider: Slider? = null
+    var hueSlider: Slider? = null
 
     @FXML
-    var valLavel: Label? = null
+    var saturationSlider: Slider? = null
+
+    @FXML
+    var valueSlider: Slider? = null
+
+    @FXML
+    var hueLabel: Label? = null
+
+    @FXML
+    var saturationLabel: Label? = null
+
+    @FXML
+    var valueLabel: Label? = null
 
     init {
         inputSpace?.children?.add(0, inputAnchor)
         outputSpace?.children?.add(outputAnchor)
 
-        valLavel?.text = 0.toString()
+        hueLabel?.text = hue.toString()
+        saturationLabel?.text = saturation.toString()
+        valueLabel?.text = value.toString()
 
-        briSlider?.valueChangingProperty()?.addListener { observableValue, wasChanging, changing ->
+        hueSlider?.value = hue.toDouble()
+        saturationSlider?.value = saturation.toDouble()
+        valueSlider?.value = value.toDouble()
+
+        hueSlider?.valueChangingProperty()?.addListener { _, _, changing ->
             if (!changing) {
-                brightnessValue = briSlider?.value?.toInt()!!
-                valLavel?.text = brightnessValue.toString()
+                hue = hueSlider?.value?.toInt()!!
+                hueLabel?.text = hue.toString()
                 update()
             }
         }
+
+        saturationSlider?.valueChangingProperty()?.addListener { _, _, changing ->
+            if (!changing) {
+                saturation = saturationSlider?.value?.toInt()!!
+                saturationLabel?.text = saturation.toString()
+                update()
+            }
+        }
+
+        valueSlider?.valueChangingProperty()?.addListener { _, _, changing ->
+            if (!changing) {
+                value = valueSlider?.value?.toInt()!!
+                valueLabel?.text = value.toString()
+                update()
+            }
+        }
+
     }
 
     override fun update() {
@@ -60,23 +97,22 @@ class BrightnessBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(to
             val oppositeAnchor = inputAnchor.oppositeAnchor.get()
             val block = oppositeAnchor.block
             if (block is ValueBlock<*>) {
-                val value = block.getValue(oppositeAnchor.position) as FastImage
-                val sob = BrightnessFilter(value, brightnessValue)
-                Single.fromCallable { sob.filter() }
+                val fastImage = block.getValue(oppositeAnchor.position) as FastImage
+                val sob = HueSaturationValueFilter(fastImage)
+
+                Single.fromCallable { sob.filter(hue, saturation, value) }
                         .subscribeOn(Schedulers.computation())
                         .observeOn(Schedulers.trampoline())
                         .subscribe(
                                 { image ->
-                                    log.info("Sending message downstream from BrightnessBlock: {}", hashCode())
+                                    log.info("Sending message downstream from HueSaturationValueBlock: {}", hashCode())
                                     value1 = image
                                     sendUpdateDownSteam()
 
                                 },
                                 { log.error("Can`t process image!", it) }
                         )
-
             }
-
         }
     }
 
@@ -98,4 +134,5 @@ class BrightnessBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(to
     override fun getNewCopy(): Optional<Block> {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
 }

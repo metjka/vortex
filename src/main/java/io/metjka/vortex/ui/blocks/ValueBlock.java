@@ -1,4 +1,4 @@
-package io.metjka.vortex.ui.components.blocks;
+package io.metjka.vortex.ui.blocks;
 
 import io.metjka.vortex.ui.ToplevelPane;
 

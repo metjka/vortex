@@ -1,25 +1,29 @@
-package io.metjka.vortex.ui.components.blocks
+package io.metjka.vortex.ui.blocks
 
 import com.google.common.collect.ImmutableList
-import com.metjka.vort.precessing.FastImage
-import io.metjka.vortex.precessing.SobelFilter
+import io.metjka.vortex.precessing.FastImage
+import io.metjka.vortex.precessing.GammaFilter
 import io.metjka.vortex.ui.ToplevelPane
 import io.metjka.vortex.ui.Type
-import io.metjka.vortex.ui.components.connections.InputAnchor
-import io.metjka.vortex.ui.components.connections.OutputAnchor
+import io.metjka.vortex.ui.connections.InputAnchor
+import io.metjka.vortex.ui.connections.OutputAnchor
 import javafx.fxml.FXML
+import javafx.scene.control.Label
+import javafx.scene.control.Slider
 import javafx.scene.layout.VBox
 import mu.KotlinLogging
 import rx.Single
 import rx.schedulers.Schedulers
 import java.util.*
 
-class SobelBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "SobelBlock") {
+class GammaBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, GammaBlock::class.simpleName) {
 
     val log = KotlinLogging.logger { }
 
     val inputAnchor: InputAnchor = InputAnchor(this, Type.IMAGE)
     val outputAnchor: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
+
+    var brightnessValue: Double = 0.05
 
     @FXML
     var inputSpace: VBox? = null
@@ -27,9 +31,25 @@ class SobelBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topleve
     @FXML
     var outputSpace: VBox? = null
 
+    @FXML
+    var briSlider: Slider? = null
+
+    @FXML
+    var valLavel: Label? = null
+
     init {
         inputSpace?.children?.add(0, inputAnchor)
         outputSpace?.children?.add(outputAnchor)
+
+        valLavel?.text = brightnessValue.toString()
+
+        briSlider?.valueChangingProperty()?.addListener { observableValue, wasChanging, changing ->
+            if (!changing) {
+                brightnessValue = briSlider?.value!!
+                valLavel?.text = brightnessValue.toString()
+                update()
+            }
+        }
     }
 
     override fun update() {
@@ -41,13 +61,13 @@ class SobelBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topleve
             val block = oppositeAnchor.block
             if (block is ValueBlock<*>) {
                 val value = block.getValue(oppositeAnchor.position) as FastImage
-                val sob = SobelFilter(value)
-                sob.filter()
+                val sob = GammaFilter(value, brightnessValue)
+                Single.fromCallable { sob.filter() }
                         .subscribeOn(Schedulers.computation())
                         .observeOn(Schedulers.trampoline())
                         .subscribe(
                                 { image ->
-                                    log.info("Sending message downstream from SobelBlock: {}", hashCode())
+                                    log.info("Sending message downstream from GammaBlock: {}", hashCode())
                                     value1 = image
                                     sendUpdateDownSteam()
 
@@ -78,5 +98,4 @@ class SobelBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topleve
     override fun getNewCopy(): Optional<Block> {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
 }

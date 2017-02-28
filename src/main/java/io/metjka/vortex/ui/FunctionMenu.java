@@ -1,6 +1,6 @@
 package io.metjka.vortex.ui;
 
-import io.metjka.vortex.ui.components.blocks.*;
+import io.metjka.vortex.ui.blocks.*;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
