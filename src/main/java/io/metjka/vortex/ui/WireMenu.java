@@ -1,6 +1,5 @@
 package io.metjka.vortex.ui;
 
-import io.metjka.vortex.ui.blocks.Block;
 import io.metjka.vortex.ui.connections.Connection;
 import io.metjka.vortex.ui.connections.DrawWire;
 import io.metjka.vortex.ui.connections.InputAnchor;

@@ -28,7 +28,7 @@ public class MathOutputBlock extends Block implements Target {
      * @param pane The pane this block belongs to.
      */
     public MathOutputBlock(ToplevelPane pane) {
-        super(pane);
+        super(pane, "InvertBlock");
         loadFXML("MathOutputBlock");
 
         inputAnchor = new InputAnchor(this, Type.NUMBER);

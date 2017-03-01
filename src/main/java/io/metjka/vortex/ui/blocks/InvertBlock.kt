@@ -14,7 +14,7 @@ import rx.Single
 import rx.schedulers.Schedulers
 import java.util.*
 
-class InvertBlock(toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "InvertBlock") {
+class InvertBlock(toplevelPane: ToplevelPane) : Block(toplevelPane, "InvertBlock") {
 
     val log = KotlinLogging.logger { }
 

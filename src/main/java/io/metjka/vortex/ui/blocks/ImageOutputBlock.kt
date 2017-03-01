@@ -21,7 +21,7 @@ import java.io.File
 import java.util.*
 import javax.imageio.ImageIO
 
-class ImageOutputBlock(toplevelPane: ToplevelPane) : Block(toplevelPane) {
+class ImageOutputBlock(toplevelPane: ToplevelPane) : Block(toplevelPane, "InvertBlock") {
 
     val log = KotlinLogging.logger { }
 

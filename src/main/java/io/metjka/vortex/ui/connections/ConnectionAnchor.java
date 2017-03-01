@@ -110,7 +110,7 @@ public abstract class ConnectionAnchor extends StackPane implements ComponentLoa
      * Handle the Connection changes for the Block this anchor is attached to.
      */
     public void handleConnectionChanges() {
-        this.block.handleConnectionChanges();
+        this.block.update();
     }
 
     public void receiveUpdate(){
