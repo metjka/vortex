@@ -1,10 +1,10 @@
 package io.metjka.vortex.ui.serialize
 
-import io.metjka.vortex.ui.ToplevelPane
+import io.metjka.vortex.ui.TopLevelPane
 
 object Exporter {
 
-    fun export(toplevelPane: ToplevelPane){
+    fun export(topLevelPane: TopLevelPane){
 
     }
 

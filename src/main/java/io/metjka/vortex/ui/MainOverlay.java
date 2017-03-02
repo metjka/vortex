@@ -17,19 +17,19 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * MainOverlay creates a stack of panes, the ToplevelPane with contents, menu button, zoom buttons, and touch overlay
+ * MainOverlay creates a stack of panes, the TopLevelPane with contents, menu button, zoom buttons, and touch overlay
  */
 public class MainOverlay extends StackPane {
     public static final String MENU_LABEL = "\u2630";
 
     private final Pane touchOverlay;
     private final Map<Integer, TouchDisplay> circleByTouchId;
-    private final ToplevelPane toplevelPane;
+    private final TopLevelPane topLevelPane;
 
-    public MainOverlay(ToplevelPane toplevelPane) {
+    public MainOverlay(TopLevelPane topLevelPane) {
         super();
 
-        this.toplevelPane = toplevelPane;
+        this.topLevelPane = topLevelPane;
 
         touchOverlay = makeTouchOverlay();
         circleByTouchId = new TreeMap<>();
@@ -63,11 +63,11 @@ public class MainOverlay extends StackPane {
             touchOverlay.getChildren().remove(circle);
         });
 
-        MenuActions menuActions = new MenuActions(this, toplevelPane);
+        MenuActions menuActions = new MenuActions(this, topLevelPane);
         Pane zoomBar = makeZoomPane(menuActions);
         StackPane.setAlignment(zoomBar, Pos.BOTTOM_CENTER);
 
-        getChildren().setAll(this.toplevelPane, zoomBar, getMenu(menuActions), touchOverlay);
+        getChildren().setAll(this.topLevelPane, zoomBar, getMenu(menuActions), touchOverlay);
     }
 
     /**
@@ -85,12 +85,12 @@ public class MainOverlay extends StackPane {
     }
 
     /**
-     * Get the ToplevelPane where all content is displayed
+     * Get the TopLevelPane where all content is displayed
      *
-     * @return ToplevelPane
+     * @return TopLevelPane
      */
-    public ToplevelPane getToplevelPane() {
-        return this.toplevelPane;
+    public TopLevelPane getTopLevelPane() {
+        return this.topLevelPane;
     }
 
     /**

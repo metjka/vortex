@@ -2,7 +2,7 @@ package io.metjka.vortex.ui.blocks
 
 import com.google.common.collect.ImmutableList
 import io.metjka.vortex.precessing.FastImage
-import io.metjka.vortex.ui.ToplevelPane
+import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.connections.InputAnchor
 import io.metjka.vortex.ui.connections.OutputAnchor
 import javafx.embed.swing.SwingFXUtils
@@ -20,7 +20,7 @@ import java.io.File
 import java.util.*
 import javax.imageio.ImageIO
 
-class ImageOutputBlock(toplevelPane: ToplevelPane) : Block(toplevelPane, "InvertBlock") {
+class ImageOutputBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, "InvertBlock") {
 
     val log = KotlinLogging.logger { }
 
@@ -49,7 +49,7 @@ class ImageOutputBlock(toplevelPane: ToplevelPane) : Block(toplevelPane, "Invert
                 fileChooser.title = "Open PNG file!"
                 fileChooser.extensionFilters.add(extensionFilter)
 
-                val file: File? = fileChooser.showSaveDialog(toplevelPane.scene.window)
+                val file: File? = fileChooser.showSaveDialog(topLevelPane.scene.window)
 
                 file?.let {
                     ImageIO.write(SwingFXUtils.fromFXImage(image, null), "PNG", file)

@@ -164,7 +164,7 @@ public class TouchContext {
     
     /** A circular local area for handling multi finger touch actions. */
     private class TouchArea extends Circle {
-        private final ToplevelPane toplevel;
+        private final TopLevelPane toplevel;
         
         /** The ID of finger that spawned this touch area. */
         private int touchID;

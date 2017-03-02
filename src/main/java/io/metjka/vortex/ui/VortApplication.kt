@@ -29,7 +29,7 @@ class VortApplication : Application() {
 
         Font.loadFont(this::class.java.getResourceAsStream("/ui/fonts/titillium.otf"), 20.0)
 
-        val toplevelPane = ToplevelPane()
+        val toplevelPane = TopLevelPane()
         val mainOverlay = MainOverlay(toplevelPane)
         val scene = Scene(mainOverlay)
         val prefs = Preferences.userNodeForPackage(VortApplication::class.java)

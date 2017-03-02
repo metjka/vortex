@@ -3,7 +3,7 @@ package io.metjka.vortex.ui.blocks
 import com.google.common.collect.ImmutableList
 import io.metjka.vortex.precessing.FastImage
 import io.metjka.vortex.precessing.GrayFilter
-import io.metjka.vortex.ui.ToplevelPane
+import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.connections.InputAnchor
 import io.metjka.vortex.ui.connections.OutputAnchor
 import javafx.fxml.FXML
@@ -13,7 +13,7 @@ import rx.Single
 import rx.schedulers.Schedulers
 import java.util.*
 
-class GrayScaleBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "GrayScaleBlock") {
+class GrayScaleBlock(val topLevelPane: TopLevelPane) : ValueBlock<FastImage>(topLevelPane, "GrayScaleBlock") {
 
     val log = KotlinLogging.logger { }
 

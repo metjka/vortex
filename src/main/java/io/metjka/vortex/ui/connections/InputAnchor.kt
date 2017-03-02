@@ -12,7 +12,7 @@ import javafx.scene.paint.Color
 import javafx.scene.shape.Shape
 import java.util.*
 
-class InputAnchor(block: Block, val type: Type) : ConnectionAnchor(block), Target {
+class InputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), Target {
 
     @FXML
     var visibleAnchor: Shape? = null
@@ -23,20 +23,20 @@ class InputAnchor(block: Block, val type: Type) : ConnectionAnchor(block), Targe
     @FXML
     var openWire: Shape? = null
 
-    private var connection: Optional<Connection>
+    private var connection: Optional<Connection<T>>
 
     var errorState: BooleanProperty
 
     init {
         loadFXML(this::class.simpleName)
 
-        connection = Optional.empty<Connection>()
+        connection = Optional.empty<Connection<T>>()
         errorState = SimpleBooleanProperty(false)
         errorState.addListener { observable, oldValue, newValue -> checkError(observable, oldValue, newValue) }
     }
 
     fun checkError(observable: ObservableValue<out Boolean>, oldValue: Boolean?, newValue: Boolean?) {
-        val style = this.visibleAnchor?.getStyleClass()
+        val style = this.visibleAnchor?.styleClass
         style?.removeAll("error")
         if (newValue!!) {
             style?.add("error")
@@ -47,17 +47,17 @@ class InputAnchor(block: Block, val type: Type) : ConnectionAnchor(block), Targe
         return this
     }
 
-    fun getConnection(): Optional<Connection> {
+    fun getConnection(): Optional<Connection<T>> {
         return connection
     }
 
-    fun getOppositeAnchor(): Optional<OutputAnchor<*>> {
+    fun getOppositeAnchor(): Optional<OutputAnchor<T>> {
         return this.connection.map { c -> c.start }
     }
 
-    protected fun setConnection(connection: Connection) {
+    fun setConnection(connection: Connection<T>) {
         this.connection = Optional.of(connection)
-        this.openWire?.setVisible(false)
+        this.openWire?.isVisible = false
     }
 
     override fun removeConnections() {
@@ -76,6 +76,10 @@ class InputAnchor(block: Block, val type: Type) : ConnectionAnchor(block), Targe
 
     }
 
+    fun onUpdate() {
+        block.sendUpdateDownStream()
+    }
+
     override fun hasConnection(): Boolean {
         return connection.isPresent
     }
@@ -88,24 +92,24 @@ class InputAnchor(block: Block, val type: Type) : ConnectionAnchor(block), Targe
 
         when (goodness) {
             DrawWire.GOOD_TYPE_REACTION -> {
-                this.openWire?.setStroke(Color.DARKGREEN)
-                this.openWire?.setStrokeWidth(5.0)
-                this.visibleAnchor?.setFill(Color.DARKGREEN)
+                this.openWire?.stroke = Color.DARKGREEN
+                this.openWire?.strokeWidth = 5.0
+                this.visibleAnchor?.fill = Color.DARKGREEN
             }
             DrawWire.NEUTRAL_TYPE_REACTION -> {
-                this.openWire?.setStroke(Color.DODGERBLUE)
-                this.openWire?.setStrokeWidth(5.0)
-                this.visibleAnchor?.setFill(Color.DODGERBLUE)
+                this.openWire?.stroke = Color.DODGERBLUE
+                this.openWire?.strokeWidth = 5.0
+                this.visibleAnchor?.fill = Color.DODGERBLUE
             }
             DrawWire.WRONG_TYPE_REACTION -> {
-                this.openWire?.setStroke(Color.RED)
-                this.openWire?.setStrokeWidth(3.0)
-                this.visibleAnchor?.setFill(Color.RED)
+                this.openWire?.stroke = Color.RED
+                this.openWire?.strokeWidth = 3.0
+                this.visibleAnchor?.fill = Color.RED
             }
             else -> {
-                this.openWire?.setStroke(Color.BLACK)
-                this.openWire?.setStrokeWidth(3.0)
-                this.visibleAnchor?.setFill(Color.BLACK)
+                this.openWire?.stroke = Color.BLACK
+                this.openWire?.strokeWidth = 3.0
+                this.visibleAnchor?.fill = Color.BLACK
             }
         }
     }
@@ -115,14 +119,14 @@ class InputAnchor(block: Block, val type: Type) : ConnectionAnchor(block), Targe
     }
 
     fun invalidateVisualState() {
-        this.connection.ifPresent { connection -> connection.invalidateVisualState() }
-    }
-
-    override fun toBundle(): Map<String, Any> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.connection.ifPresent { it.invalidateVisualState() }
     }
 
     override fun toString(): String {
         return "InputAnchor for $block"
+    }
+
+    override fun toBundle(): Map<String, Any> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

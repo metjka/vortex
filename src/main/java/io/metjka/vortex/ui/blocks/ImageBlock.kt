@@ -2,7 +2,7 @@ package io.metjka.vortex.ui.blocks
 
 import com.google.common.collect.ImmutableList
 import io.metjka.vortex.precessing.FastImage
-import io.metjka.vortex.ui.ToplevelPane
+import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.connections.InputAnchor
 import io.metjka.vortex.ui.connections.OutputAnchor
 import javafx.embed.swing.SwingFXUtils
@@ -17,7 +17,7 @@ import java.io.IOException
 import java.util.*
 import javax.imageio.ImageIO
 
-class ImageBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, "ImageBlock") {
+class ImageBlock(val topLevelPane: TopLevelPane) : ValueBlock<FastImage>(topLevelPane, "ImageBlock") {
     val log = KotlinLogging.logger { }
 
     val outputAnchor: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
@@ -42,7 +42,7 @@ class ImageBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topleve
         outputSpace?.children?.add(outputAnchor)
 
         fileButton?.setOnMouseClicked {
-            val file: File? = fileChooser.showOpenDialog(toplevelPane.scene.window)
+            val file: File? = fileChooser.showOpenDialog(topLevelPane.scene.window)
             if (file != null) {
                 try {
                     val bufferedImage = ImageIO.read(file)

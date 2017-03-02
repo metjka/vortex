@@ -2,7 +2,7 @@ package io.metjka.vortex.ui.connections;
 
 import io.metjka.vortex.ui.BlockContainer;
 import io.metjka.vortex.ui.ComponentLoader;
-import io.metjka.vortex.ui.ToplevelPane;
+import io.metjka.vortex.ui.TopLevelPane;
 import io.metjka.vortex.ui.WireMenu;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -51,7 +51,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
         this.anchor = anchor;
         this.anchor.setWireInProgress(this);
 
-        ToplevelPane pane = anchor.getPane();
+        TopLevelPane pane = anchor.getPane();
         pane.addWire(this);
         this.setFreePosition(startingPoint);
         anchor.localToSceneTransformProperty().addListener(this);
@@ -235,7 +235,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
 
         this.invalidateAnchorPosition();
 
-        ToplevelPane pane = this.anchor.block.getToplevel();
+        TopLevelPane pane = this.anchor.block.getToplevel();
         Point2D scenePoint = pane.localToScene(point, false);
         BlockContainer anchorContainer = this.anchor.getContainer();
         boolean scopeOK = true;
@@ -341,7 +341,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
 
         private void remove() {
             this.clearWireReactions();
-            ToplevelPane pane = DrawWire.this.anchor.getPane();
+            TopLevelPane pane = DrawWire.this.anchor.getPane();
             pane.removeUpperTouchArea(this);
         }
 

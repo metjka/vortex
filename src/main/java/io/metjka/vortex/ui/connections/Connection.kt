@@ -5,6 +5,7 @@ import io.metjka.vortex.ui.serialize.Bundleable
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
 import javafx.geometry.Point2D
+import javafx.scene.paint.Color
 import javafx.scene.shape.CubicCurve
 import javafx.scene.transform.Transform
 
@@ -12,7 +13,7 @@ import javafx.scene.transform.Transform
  * Created by Ihor Salnikov on 1.3.2017, 9:30 PM.
  * https://github.com/metjka/VORT
  */
-class Connection(val start: OutputAnchor, val end: InputAnchor) : CubicCurve(), ChangeListener<Transform>, Bundleable, ComponentLoader {
+class Connection<R>(val start: OutputAnchor<R>, val end: InputAnchor<R>) : CubicCurve(), ChangeListener<Transform>, Bundleable, ComponentLoader {
 
     val BEZIER_CONTROL_OFFSET = 150.0
 
@@ -24,14 +25,14 @@ class Connection(val start: OutputAnchor, val end: InputAnchor) : CubicCurve(), 
 
         this.error = false
 
-        start.getPane().addConnection(this)
+        start.topLevelPane.addConnection(this)
         this.invalidateAnchorPositions()
         this.start.addConnection(this)
         this.start.localToSceneTransformProperty().addListener(this)
 
         this.end.setConnection(this)
         this.end.localToSceneTransformProperty().addListener(this)
-        this.end.handleConnectionChanges()
+        this.end.onUpdate()
 
     }
 
@@ -40,16 +41,16 @@ class Connection(val start: OutputAnchor, val end: InputAnchor) : CubicCurve(), 
         this.setEndPosition(this.end.getAttachmentPoint())
     }
 
-    fun     remove() {
-        this.start.localToSceneTransformProperty().removeListener(this)
-        this.end.localToSceneTransformProperty().removeListener(this)
+    fun remove() {
+        start.localToSceneTransformProperty().removeListener(this)
+        end.localToSceneTransformProperty().removeListener(this)
 
-        this.start.dropConnection(this)
-        this.end.removeConnections()
-        this.start.getPane().removeConnection(this)
+        start.dropConnection(this)
+        end.removeConnections()
+        start.topLevelPane.removeConnection(this)
 
-        this.start.handleConnectionChanges()
-        this.end.handleConnectionChanges()
+        start.invalidateVisualState()
+        end.onUpdate()
     }
 
     override fun changed(observable: ObservableValue<out Transform>?, oldValue: Transform?, newValue: Transform?) {
@@ -71,10 +72,6 @@ class Connection(val start: OutputAnchor, val end: InputAnchor) : CubicCurve(), 
             this.endY = point.getY()
             updateBezierControlPoints(this)
         }
-    }
-
-    public fun invalidateVisualState() {
-        TODO()
     }
 
     protected fun updateBezierControlPoints(wire: CubicCurve) {
@@ -103,6 +100,28 @@ class Connection(val start: OutputAnchor, val end: InputAnchor) : CubicCurve(), 
 
     fun hasError(): Boolean {
         return error
+    }
+
+    fun invalidateVisualState() {
+        this.scopeError = !this.endAnchor.getContainer().isContainedWithin(this.startAnchor.getContainer())
+
+        if (this.errorState) {
+            this.stroke = Color.RED
+            this.strokeDashArray.clear()
+            this.setStrokeWidth(3.0)
+
+        } else if (this.scopeError) {
+            this.stroke = Color.RED
+            this.strokeWidth = 3.0
+            if (this.strokeDashArray.isEmpty()) {
+                this.strokeDashArray.addAll(10.0, 10.0)
+            }
+
+        } else {
+            this.stroke = Color.BLACK
+            this.strokeDashArray.clear()
+            this.setStrokeWidth(3.0)
+        }
     }
 
     override fun toBundle(): MutableMap<String, Any> {

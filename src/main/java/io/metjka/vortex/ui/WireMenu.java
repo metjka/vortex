@@ -18,7 +18,7 @@ public class WireMenu extends TilePane {
     /**
      * The toplevel pane this menu is on.
      */
-    private final ToplevelPane toplevel;
+    private final TopLevelPane toplevel;
 
     /**
      * The draw wire belonging to this menu

@@ -2,7 +2,7 @@ package io.metjka.vortex.ui.connections
 
 import io.metjka.vortex.ui.BlockContainer
 import io.metjka.vortex.ui.ComponentLoader
-import io.metjka.vortex.ui.ToplevelPane
+import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.blocks.Block
 import io.metjka.vortex.ui.serialize.Bundleable
 import javafx.geometry.Point2D
@@ -14,7 +14,7 @@ abstract class ConnectionAnchor(val block: Block) : StackPane(), ComponentLoader
     protected var wireInProgress: DrawWire? = null
     protected var eventRedirectionTarget: DrawWire? = null
 
-    protected val topLevelPane: ToplevelPane = block.toplevelPane
+     val topLevelPane: TopLevelPane = block.topLevelPane
 
     init {
         addEventHandler(MouseEvent.MOUSE_PRESSED, { handleMousePress(it) })

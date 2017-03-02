@@ -45,20 +45,20 @@ public interface BlockContainer {
     BlockContainer getParentContainer();
 
     /**
-     * @return the ToplevelPane where this container is (indirectly) part of.
+     * @return the TopLevelPane where this container is (indirectly) part of.
      * @throws IllegalStateException
      */
-    default ToplevelPane getToplevel() {
+    default TopLevelPane getToplevel() {
         BlockContainer cont = this;
         while (cont.getParentContainer() != cont) {
             cont = cont.getParentContainer();
         }
 
-        if (cont instanceof ToplevelPane) {
-            return (ToplevelPane) cont;
+        if (cont instanceof TopLevelPane) {
+            return (TopLevelPane) cont;
         }
 
-        throw new IllegalStateException("Manipulating container that is not in a ToplevelPane");
+        throw new IllegalStateException("Manipulating container that is not in a TopLevelPane");
     }
 
     Node asNode();

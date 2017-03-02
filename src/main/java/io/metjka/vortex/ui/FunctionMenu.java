@@ -32,7 +32,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
     private int blockCounter = 0;
 
     private Accordion categoryContainer = new Accordion();
-    private ToplevelPane parent;
+    private TopLevelPane parent;
     @FXML
     private Pane searchSpace;
     @FXML
@@ -40,7 +40,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
     @FXML
     private Pane utilSpace;
 
-    public FunctionMenu(boolean byMouse, ToplevelPane pane) {
+    public FunctionMenu(boolean byMouse, TopLevelPane pane) {
         this.parent = pane;
         this.loadFXML("FunctionMenu");
         this.dragContext = new DragContext(this);
@@ -110,14 +110,14 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         int offSetY = (this.blockCounter % 5) * 20 + (block.getAllOutputs().isEmpty() ? 250 : 125);
         if (this.localToScene(Point2D.ZERO).getX() < 200) {
             // too close to the left side of screen, put block on the right
-            int offSetX = (this.blockCounter % 5) * 10 + (block.belongsOnBottom() ? 50 : 100);
+            int offSetX = (this.blockCounter % 5) * 10 + (block.isBottomMost() ? 50 : 100);
             block.relocate(menuBounds.getMaxX() + offSetX, menuBounds.getMinY() + offSetY);
         } else {
-            int offSetX = (this.blockCounter % 5) * 10 - (block.belongsOnBottom() ? 400 : 200);
+            int offSetX = (this.blockCounter % 5) * 10 - (block.isBottomMost() ? 400 : 200);
             block.relocate(menuBounds.getMinX() + offSetX, menuBounds.getMinY() + offSetY);
         }
 
-        if (!block.belongsOnBottom()) {
+        if (!block.isBottomMost()) {
             block.refreshContainer();
         }
 
@@ -130,7 +130,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         parent.addBlock(block);
         block.relocate(pos.getX(), pos.getY());
         touchPoint.grab(block);
-        block.handleConnectionChanges();
+        block.sendUpdateDownStream();
     }
 
     /**

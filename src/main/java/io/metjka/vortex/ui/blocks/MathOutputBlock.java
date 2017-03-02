@@ -1,7 +1,8 @@
 package io.metjka.vortex.ui.blocks;
 
 import com.google.common.collect.ImmutableList;
-import io.metjka.vortex.ui.ToplevelPane;
+import io.metjka.vortex.ui.TopLevelPane;
+import io.metjka.vortex.ui.connections.InputAnchor;
 import io.metjka.vortex.ui.connections.OutputAnchor;
 import io.metjka.vortex.ui.connections.Target;
 import javafx.fxml.FXML;
@@ -24,7 +25,7 @@ public class MathOutputBlock extends Block implements Target {
     /**
      * @param pane The pane this block belongs to.
      */
-    public MathOutputBlock(ToplevelPane pane) {
+    public MathOutputBlock(TopLevelPane pane) {
         super(pane, "InvertBlock");
         loadFXML("MathOutputBlock");
 

@@ -29,16 +29,16 @@ public class MenuActions {
      */
     protected MainOverlay overlay;
 
-    private final ToplevelPane toplevelPane;
+    private final TopLevelPane topLevelPane;
 
     /**
      * The File we're currently working on, if any.
      */
     private Optional<File> currentFile;
 
-    public MenuActions(final MainOverlay ol, final ToplevelPane tl) {
+    public MenuActions(final MainOverlay ol, final TopLevelPane tl) {
         overlay = ol;
-        toplevelPane = tl;
+        topLevelPane = tl;
         newFile();
     }
 
@@ -87,7 +87,7 @@ public class MenuActions {
     }
 
     protected void onNew(ActionEvent actionEvent) {
-        toplevelPane.clearChildren();
+        topLevelPane.clearChildren();
         newFile();
     }
 
@@ -106,7 +106,7 @@ public class MenuActions {
         File file = new FileChooser().showOpenDialog(window);
 
         if (file != null) {
-            addChildrenFrom(file, toplevelPane);
+            addChildrenFrom(file, topLevelPane);
         }
     }
 
@@ -128,7 +128,7 @@ public class MenuActions {
         }
     }
 
-    protected void addChildrenFrom(File file, ToplevelPane toplevelPane) {
+    protected void addChildrenFrom(File file, TopLevelPane topLevelPane) {
         try (FileInputStream fis = new FileInputStream(file)) {
             Map<String, Object> layers = Importer.readLayers(fis);
             fis.close();
@@ -136,7 +136,7 @@ public class MenuActions {
             // check we can read this version of the serialized file format
             Integer fileFormatversion = ((Double)layers.get(ViskellFormat.VERSION_NUMBER_LABEL)).intValue();
             if (ViskellFormat.SUPPORTED_IMPORT_VERSIONS.contains(fileFormatversion)) {
-                toplevelPane.fromBundle(layers);
+                topLevelPane.fromBundle(layers);
             } else {
                 // TODO show a dialog telling the user this version of the file cannot be read, list the versions
                 // that it can read, and pointing them to where they can download a newer version of the app to read the version
@@ -150,7 +150,7 @@ public class MenuActions {
 
     protected void saveTo(File file) {
         try (FileOutputStream fos = new FileOutputStream(file)) {
-            fos.write(Exporter.export(toplevelPane).getBytes(Charsets.UTF_8));
+            fos.write(Exporter.export(topLevelPane).getBytes(Charsets.UTF_8));
             fos.close();
         } catch (IOException e) {
             // TODO do something sensible here
@@ -176,11 +176,11 @@ public class MenuActions {
 
     @SuppressWarnings("UnusedParameters")
     protected void zoomIn(ActionEvent actionEvent) {
-        toplevelPane.zoom(1.1);
+        topLevelPane.zoom(1.1);
     }
 
     @SuppressWarnings("UnusedParameters")
     protected void zoomOut(ActionEvent actionEvent) {
-        toplevelPane.zoom(1 / 1.1);
+        topLevelPane.zoom(1 / 1.1);
     }
 }

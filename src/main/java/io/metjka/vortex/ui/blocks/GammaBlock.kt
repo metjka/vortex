@@ -3,7 +3,7 @@ package io.metjka.vortex.ui.blocks
 import com.google.common.collect.ImmutableList
 import io.metjka.vortex.precessing.FastImage
 import io.metjka.vortex.precessing.GammaFilter
-import io.metjka.vortex.ui.ToplevelPane
+import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.connections.InputAnchor
 import io.metjka.vortex.ui.connections.OutputAnchor
 import javafx.fxml.FXML
@@ -15,7 +15,7 @@ import rx.Single
 import rx.schedulers.Schedulers
 import java.util.*
 
-class GammaBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, GammaBlock::class.simpleName) {
+class GammaBlock(val topLevelPane: TopLevelPane) : ValueBlock<FastImage>(topLevelPane, GammaBlock::class.simpleName) {
 
     val log = KotlinLogging.logger { }
 

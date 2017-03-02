@@ -3,7 +3,7 @@ package io.metjka.vortex.ui.blocks
 import io.metjka.vortex.ui.BlockContainer
 import io.metjka.vortex.ui.ComponentLoader
 import io.metjka.vortex.ui.DragContext
-import io.metjka.vortex.ui.ToplevelPane
+import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.connections.ConnectionAnchor
 import io.metjka.vortex.ui.connections.InputAnchor
 import io.metjka.vortex.ui.connections.OutputAnchor
@@ -15,13 +15,13 @@ import java.util.*
 import java.util.stream.Collectors.toList
 
 
-abstract class Block(val toplevelPane: ToplevelPane, val blockName: String) : StackPane(), Bundleable, ComponentLoader {
+abstract class Block(val topLevelPane: TopLevelPane, val blockName: String?) : StackPane(), Bundleable, ComponentLoader {
 
     val dragContext: DragContext
 
     init {
         loadFXML(blockName)
-        toplevelPane.attachBlock(this)
+        topLevelPane.attachBlock(this)
         isPickOnBounds = false
 
         dragContext = DragContext(this)
@@ -79,7 +79,7 @@ abstract class Block(val toplevelPane: ToplevelPane, val blockName: String) : St
     fun refreshContainer() {
         val bounds = getBodyBounds()
         val localToParent = localToParent(sceneToLocal(bounds))
-        toplevelPane.expandToFit(BoundingBox(
+        topLevelPane.expandToFit(BoundingBox(
                 localToParent.minX - 10,
                 localToParent.minY - 10,
                 localToParent.width + 20,
@@ -88,7 +88,7 @@ abstract class Block(val toplevelPane: ToplevelPane, val blockName: String) : St
     }
 
     fun getContainer(): BlockContainer {
-        return toplevelPane
+        return topLevelPane
     }
 
     override fun toBundle(): MutableMap<String, Any> {

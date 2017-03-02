@@ -128,7 +128,7 @@ public class OutputAnchor extends ConnectionAnchor implements Target {
 
     @Override
     public Point2D getAttachmentPoint() {
-        return this.getPane().sceneToLocal(this.localToScene(new Point2D(0, 7)));
+        return this.getTopLevelPane()ne().sceneToLocal(this.localToScene(new Point2D(0, 7)));
     }
 
     /**

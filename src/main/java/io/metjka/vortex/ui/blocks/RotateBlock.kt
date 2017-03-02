@@ -3,7 +3,7 @@ package io.metjka.vortex.ui.blocks
 import com.google.common.collect.ImmutableList
 import io.metjka.vortex.precessing.FastImage
 import io.metjka.vortex.precessing.ImageRotation
-import io.metjka.vortex.ui.ToplevelPane
+import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.connections.InputAnchor
 import io.metjka.vortex.ui.connections.OutputAnchor
 import javafx.fxml.FXML
@@ -14,7 +14,7 @@ import rx.Single
 import rx.schedulers.Schedulers
 import java.util.*
 
-class RotateBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, RotateBlock::class.simpleName) {
+class RotateBlock(val topLevelPane: TopLevelPane) : ValueBlock<FastImage>(topLevelPane, RotateBlock::class.simpleName) {
 
     val log = KotlinLogging.logger { }
 

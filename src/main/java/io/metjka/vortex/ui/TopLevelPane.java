@@ -22,7 +22,7 @@ import java.util.stream.Stream;
  * It is a layered visualization of all blocks, wires, and menu elements.
  * And represents the toplevel container of all blocks.
  */
-public class ToplevelPane extends Region implements BlockContainer, Bundleable {
+public class TopLevelPane extends Region implements BlockContainer, Bundleable {
 
     public static final String BLOCKS_SERIALIZED_NAME = "Blocks";
     public static final String CONNECTIONS_SERIALIZED_NAME = "Connections";
@@ -45,7 +45,7 @@ public class ToplevelPane extends Region implements BlockContainer, Bundleable {
     /**
      * Constructs a new instance.
      */
-    public ToplevelPane() {
+    public TopLevelPane() {
         super();
         this.attachedBlocks = new HashSet<>();
 
@@ -259,7 +259,7 @@ public class ToplevelPane extends Region implements BlockContainer, Bundleable {
     }
 
     @Override
-    public ToplevelPane getToplevel() {
+    public TopLevelPane getToplevel() {
         return this;
     }
 
