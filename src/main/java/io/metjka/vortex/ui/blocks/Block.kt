@@ -36,7 +36,7 @@ abstract class Block(val toplevelPane: ToplevelPane, val blockName: String) : St
     }
 
     abstract fun getAllInputs(): List<InputAnchor>
-    abstract fun getAllOutputs(): List<OutputAnchor>
+    abstract fun getAllOutputs(): List<OutputAnchor<*>>
 
     fun getAllAnchor(): List<ConnectionAnchor> {
         val mutableListOf = mutableListOf<ConnectionAnchor>()
@@ -56,11 +56,11 @@ abstract class Block(val toplevelPane: ToplevelPane, val blockName: String) : St
 
     fun sendUpdateDownStream() {
         getAllOutputs().stream().flatMap {
-            return@flatMap it.oppositeAnchors.stream()
+            return@flatMap it.getOppositeAnchors().stream()
         }.collect(toList())
                 .stream()
                 .distinct()
-                .forEach { it.receiveUpdate() }
+                .forEach { it.handleChange() }
     }
 
     abstract fun update()
@@ -91,7 +91,7 @@ abstract class Block(val toplevelPane: ToplevelPane, val blockName: String) : St
         return toplevelPane
     }
 
-    override fun toBundle(): MutableMap<String, Any>? {
+    override fun toBundle(): MutableMap<String, Any> {
         TODO()
     }
 

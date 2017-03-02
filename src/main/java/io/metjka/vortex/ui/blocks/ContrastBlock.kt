@@ -16,12 +16,12 @@ import rx.Single
 import rx.schedulers.Schedulers
 import java.util.*
 
-class ContrastBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(toplevelPane, ContrastBlock::class.simpleName) {
+class ContrastBlock(toplevelPane: ToplevelPane) : Block(toplevelPane, ContrastBlock::class.simpleName!!) {
 
     val log = KotlinLogging.logger { }
 
     val inputAnchor: InputAnchor = InputAnchor(this, Type.IMAGE)
-    val outputAnchor: OutputAnchor = OutputAnchor(this, 0, Type.IMAGE)
+    val outputAnchor = OutputAnchor<FastImage>(this, Type.IMAGE)
 
     var contrastFilter: Int = 0
 
@@ -71,7 +71,7 @@ class ContrastBlock(val toplevelPane: ToplevelPane) : ValueBlock<FastImage>(topl
                                 { image ->
                                     log.info("Sending message downstream from ContrastBlock: {}", hashCode())
                                     value1 = image
-                                    sendUpdateDownSteam()
+                                    update()
 
                                 },
                                 { log.error("Can`t process image!", it) }

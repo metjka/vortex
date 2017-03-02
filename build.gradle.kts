@@ -1,6 +1,6 @@
 import org.gradle.api.JavaVersion.VERSION_1_8
 
-val kotlin_version = "1.1.0-rc-91"
+val kotlin_version = "1.1.0"
 
 plugins {
     application
@@ -9,6 +9,7 @@ plugins {
 application {
     mainClassName = "io.metjka.vortex.ui.VortApplication"
 }
+
 java {
     sourceCompatibility = VERSION_1_8
     targetCompatibility = VERSION_1_8

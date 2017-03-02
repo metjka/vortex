@@ -5,7 +5,6 @@ import io.metjka.vortex.precessing.Convolution
 import io.metjka.vortex.precessing.FastImage
 import io.metjka.vortex.precessing.Kernel
 import io.metjka.vortex.ui.ToplevelPane
-import io.metjka.vortex.ui.Type
 import io.metjka.vortex.ui.connections.InputAnchor
 import io.metjka.vortex.ui.connections.OutputAnchor
 import javafx.fxml.FXML

@@ -1,9 +1,6 @@
 package io.metjka.vortex.ui;
 
 import com.google.common.base.Charsets;
-import io.metjka.vortex.ui.serialize.Exporter;
-import io.metjka.vortex.ui.serialize.Importer;
-import io.metjka.vortex.ui.serialize.ViskellFormat;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.MenuItem;

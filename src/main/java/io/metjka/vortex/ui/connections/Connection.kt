@@ -40,7 +40,7 @@ class Connection(val start: OutputAnchor, val end: InputAnchor) : CubicCurve(), 
         this.setEndPosition(this.end.getAttachmentPoint())
     }
 
-    fun remove() {
+    fun     remove() {
         this.start.localToSceneTransformProperty().removeListener(this)
         this.end.localToSceneTransformProperty().removeListener(this)
 

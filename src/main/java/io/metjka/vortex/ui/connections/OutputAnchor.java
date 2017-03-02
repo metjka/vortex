@@ -3,6 +3,7 @@ package io.metjka.vortex.ui.connections;
 import com.google.common.collect.ImmutableMap;
 import io.metjka.vortex.ui.BlockContainer;
 import io.metjka.vortex.ui.Type;
+import io.metjka.vortex.ui.blocks.Block;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;

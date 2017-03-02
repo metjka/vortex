@@ -1,5 +1,6 @@
 package io.metjka.vortex.ui;
 
+import io.metjka.vortex.ui.blocks.Block;
 import io.metjka.vortex.ui.connections.Connection;
 import io.metjka.vortex.ui.connections.DrawWire;
 import io.metjka.vortex.ui.connections.InputAnchor;
@@ -68,11 +69,11 @@ public class WireMenu extends TilePane {
             block.refreshContainer();
         }
 
-        block.handleConnectionChanges();
+        block.update();
         InputAnchor input = block.getAllInputs().get(0);
         Connection connection = this.attachedWire.buildConnectionTo(input);
         if (connection != null) {
-            connection.getStartAnchor().initiateConnectionChanges();
+            connection.getStart().initiateConnectionChanges();
         }
         this.attachedWire.remove();
     }
