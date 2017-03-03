@@ -55,7 +55,7 @@ class MathBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathBlock::cla
         inputSpace1?.children?.add(0, inputAnchor1)
         inputSpace2?.children?.add(0, inputAnchor2)
 
-        outputSpace?.children?.add(0, outputAnchor)
+        outputSpace?.children?.add(1, outputAnchor)
 
         outputAnchor.property?.value = 0
         method = Method.ADD

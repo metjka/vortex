@@ -36,6 +36,40 @@ class Connection<R>(val start: OutputAnchor<R>, val end: InputAnchor<R>) : Cubic
 
     }
 
+    companion object {
+        val BEZIER_CONTROL_OFFSET = 150.0
+
+        protected fun lengthSquared(wire: CubicCurve): Double {
+            val diffX = wire.startX - wire.endX
+            val diffY = wire.startY - wire.endY
+            return diffX * diffX + diffY * diffY
+        }
+
+        protected fun updateBezierControlPoints(wire: CubicCurve) {
+            val yOffset = getBezierYOffset(wire)
+            wire.controlX1 = wire.startX
+            wire.controlY1 = wire.startY + yOffset
+            wire.controlX2 = wire.endX
+            wire.controlY2 = wire.endY - yOffset
+        }
+
+        private fun getBezierYOffset(wire: CubicCurve): Double {
+            val distX = Math.abs(wire.endX - wire.startX) / 3
+            val diffY = wire.endY - wire.startY
+            val distY = if (diffY > 0) diffY / 2 else Math.max(0.0, -diffY - 10)
+            if (distY < BEZIER_CONTROL_OFFSET) {
+                if (distX < BEZIER_CONTROL_OFFSET) {
+                    // short lines are extra flexible
+                    return Math.max(1.0, Math.max(distX, distY))
+                } else {
+                    return BEZIER_CONTROL_OFFSET
+                }
+            } else {
+                return Math.cbrt(distY / BEZIER_CONTROL_OFFSET) * BEZIER_CONTROL_OFFSET
+            }
+        }
+    }
+
     private fun invalidateAnchorPositions() {
         this.setStartPosition(this.start.getAttachmentPoint())
         this.setEndPosition(this.end.getAttachmentPoint())

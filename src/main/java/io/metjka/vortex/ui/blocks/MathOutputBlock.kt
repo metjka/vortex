@@ -14,24 +14,24 @@ class MathOutputBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathOutp
     val inputAnchor: InputAnchor<Int> = InputAnchor<Int>(this, Type.NUMBER);
 
     @FXML
-    val inputSpace: Pane? = null
+    var inputSpace: Pane? = null
 
     @FXML
-    val printValue: Label? = null
+    var printValue: Label? = null
 
     /**
      * @param pane The pane this block belongs to.
      */
-   init {
-        inputSpace?.getChildren()?.add(0, inputAnchor);
+    init {
+        inputSpace?.children?.add(0, inputAnchor);
 
     }
 
-    override fun getAllInputs():List<InputAnchor<*>> {
+    override fun getAllInputs(): List<InputAnchor<*>> {
         return listOf(inputAnchor)
     }
 
-    override fun getAllOutputs():List<OutputAnchor<*>> {
+    override fun getAllOutputs(): List<OutputAnchor<*>> {
         return emptyList()
     }
 
@@ -46,8 +46,4 @@ class MathOutputBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathOutp
     override fun getNewCopy(): Optional<Block> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
-
-
-
 }

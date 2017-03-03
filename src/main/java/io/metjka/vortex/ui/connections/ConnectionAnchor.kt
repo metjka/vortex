@@ -11,7 +11,7 @@ import javafx.scene.layout.StackPane
 
 abstract class ConnectionAnchor(val block: Block) : StackPane(), ComponentLoader, Bundleable {
 
-    protected var wireInProgress: DrawWire? = null
+     var wireInProgress: DrawWire? = null
     protected var eventRedirectionTarget: DrawWire? = null
 
      val topLevelPane: TopLevelPane = block.topLevelPane

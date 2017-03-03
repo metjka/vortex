@@ -72,7 +72,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
             } else {
                 return null;
             }
-        } else if (anchor instanceof OutputAnchor && anchor.hasConnection() && ((OutputAnchor) anchor).getConnections().get(0).hasTypeError()) {
+        } else if (anchor instanceof OutputAnchor<?> && anchor.hasConnection() && ((OutputAnchor<?>) anchor).getConnections().get(0).hasError()) {
             Connection<?> conn = ((OutputAnchor<?>) anchor).getConnections().get(0);
             InputAnchor endAnchor = conn.getEnd();
             if (endAnchor.getWireInProgress() == null) {
@@ -215,7 +215,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
             this.setStartY(point.getY());
         }
 
-        Connection.updateBezierControlPoints(this);
+        Connection.Companion.updateBezierControlPoints(this);
     }
 
     /**
@@ -456,7 +456,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
             // threshold to avoid doing a quite expensive computation too often
             if (this.lastNearbyUpdate.distance(newPos) > 10) {
                 this.lastNearbyUpdate = newPos;
-                List<ConnectionAnchor> targetAnchors = anchor.block.getToplevel().allNearbyFreeAnchors(newPos, 166);
+                List<ConnectionAnchor> targetAnchors = anchor.getBlock().getTopLevelPane().allNearbyFreeAnchors(newPos, 166);
                 List<ConnectionAnchor> newNearby = new ArrayList<>();
 
                 // trial unification on all nearby opposite free anchor so see if they could fit

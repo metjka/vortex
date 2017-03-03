@@ -26,7 +26,7 @@ public class WireMenu extends TilePane {
     private DrawWire attachedWire;
 
     public WireMenu(DrawWire wire, boolean byMouse) {
-        this.toplevel = wire.getAnchor().getPane();
+        this.toplevel = wire.getAnchor().getTopLevelPane();
         this.attachedWire = wire;
         this.setMouseTransparent(true);
 
@@ -65,7 +65,7 @@ public class WireMenu extends TilePane {
         block.relocate(this.attachedWire.getEndX(), this.attachedWire.getEndY());
         this.close();
 
-        if (!block.belongsOnBottom()) {
+        if (!block.isBottomMost()) {
             block.refreshContainer();
         }
 
@@ -73,7 +73,7 @@ public class WireMenu extends TilePane {
         InputAnchor input = block.getAllInputs().get(0);
         Connection connection = this.attachedWire.buildConnectionTo(input);
         if (connection != null) {
-            connection.getStart().initiateConnectionChanges();
+            connection.getStart().connectionChanged();
         }
         this.attachedWire.remove();
     }
@@ -91,7 +91,7 @@ public class WireMenu extends TilePane {
         OutputAnchor output = block.getAllOutputs().get(0);
         Connection connection = this.attachedWire.buildConnectionTo(output);
         if (connection != null) {
-            connection.getStart().initiateConnectionChanges();
+            connection.getStart().connectionChanged();
         }
         this.attachedWire.remove();
     }

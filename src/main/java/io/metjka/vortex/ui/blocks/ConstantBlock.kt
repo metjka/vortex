@@ -14,15 +14,15 @@ import java.util.*
 class ConstantBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, ConstantBlock::class.simpleName) {
 
     @FXML
-    private val textField: TextField? = null
+    private var textField: TextField? = null
 
     @FXML
-    private val outputSpace: Pane? = null
+    private var outputSpace: Pane? = null
 
-    val outputAnchor: OutputAnchor<Int> = OutputAnchor(this, Type.NUMBER)
+    val outputAnchor: OutputAnchor<Int> = OutputAnchor<Int>(this, Type.NUMBER)
 
     init {
-        outputSpace?.children?.add(0, outputAnchor)
+        outputSpace?.children?.add( outputAnchor)
         textField?.text = "0"
         outputAnchor.property?.value = 0
 

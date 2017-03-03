@@ -65,8 +65,6 @@ abstract class Block(val topLevelPane: TopLevelPane, val blockName: String?) : S
 
     abstract fun update()
 
-    abstract fun getNewCopy(): Optional<Block>
-
     fun deleteAllLinks() {
         getAllAnchors().forEach { it.removeConnections() }
     }
@@ -98,5 +96,7 @@ abstract class Block(val topLevelPane: TopLevelPane, val blockName: String?) : S
     fun fromBundle() {
         TODO()
     }
+
+    abstract fun getNewCopy(): Optional<Block>
 
 }

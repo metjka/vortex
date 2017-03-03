@@ -206,24 +206,24 @@ public class TopLevelPane extends Region implements BlockContainer, Bundleable {
         return this.localToScene(this.getBoundsInLocal());
     }
 
-//    /**
-//     * @param pos      the position to look around in coordinate system of this pane.
-//     * @param distance the maximum 'nearby' distance.
-//     */
-//    public List<ConnectionAnchor> allNearbyFreeAnchors(Point2D pos, double distance) {
-//        ArrayList<ConnectionAnchor> anchors = new ArrayList<>();
-//        Bounds testBounds = new BoundingBox(pos.getX() - distance, pos.getY() - distance, distance * 2, distance * 2);
-//        for (Block nearBlock : this.streamChildren().filter(n -> n instanceof Block).map(n -> (Block) n).filter(b -> b.getBoundsInParent().intersects(testBounds)).collect(Collectors.toList())) {
-//            for (ConnectionAnchor anchor : nearBlock.getAllAnchors()) {
-//                Point2D anchorPos = anchor.getAttachmentPoint();
-//                if (pos.distance(anchorPos) < distance && anchor.getWireInProgress() == null && !anchor.hasConnection()) {
-//                    anchors.add(anchor);
-//                }
-//            }
-//        }
-//
-//        return anchors;
-//    }
+    /**
+     * @param pos      the position to look around in coordinate system of this pane.
+     * @param distance the maximum 'nearby' distance.
+     */
+    public List<ConnectionAnchor> allNearbyFreeAnchors(Point2D pos, double distance) {
+        ArrayList<ConnectionAnchor> anchors = new ArrayList<>();
+        Bounds testBounds = new BoundingBox(pos.getX() - distance, pos.getY() - distance, distance * 2, distance * 2);
+        for (Block nearBlock : this.streamChildren().filter(n -> n instanceof Block).map(n -> (Block) n).filter(b -> b.getBoundsInParent().intersects(testBounds)).collect(Collectors.toList())) {
+            for (ConnectionAnchor anchor : nearBlock.getAllAnchors()) {
+                Point2D anchorPos = anchor.getAttachmentPoint();
+                if (pos.distance(anchorPos) < distance && anchor.getWireInProgress() == null && !anchor.hasConnection()) {
+                    anchors.add(anchor);
+                }
+            }
+        }
+
+        return anchors;
+    }
 
     protected void cutIntersectingConnections(Shape cutter) {
         new ArrayList<>(this.wireLayer.getChildren()).stream()

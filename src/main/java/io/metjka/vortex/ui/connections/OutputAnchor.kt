@@ -60,6 +60,10 @@ class OutputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), T
         return list
     }
 
+    fun connectionChanged(){
+        block.update()
+    }
+
     override fun hasConnection(): Boolean {
         return connections.isNotEmpty()
     }
