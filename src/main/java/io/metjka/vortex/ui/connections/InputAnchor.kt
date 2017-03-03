@@ -63,9 +63,8 @@ class InputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), Ta
     override fun removeConnections() {
         if (connection.isPresent) {
             val get = connection.get()
-            get.remove()
-
             connection = Optional.empty()
+            get.remove()
         }
         errorState.value = false
         openWire?.isVisible = true

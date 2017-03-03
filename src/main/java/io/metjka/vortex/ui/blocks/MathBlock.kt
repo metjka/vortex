@@ -109,19 +109,21 @@ class MathBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathBlock::cla
         getAllInputs().forEach { it.invalidateVisualState() }
         outputAnchor.invalidateVisualState()
 
-        val value1: Int? = inputAnchor1.getOppositeAnchor().get().property?.get()
-        val value2: Int? = inputAnchor2.getOppositeAnchor().get().property?.get()
+        if(inputAnchor1.hasConnection() && inputAnchor2.hasConnection()){
+            val value1: Int? = inputAnchor1.getOppositeAnchor().get().property?.get()
+            val value2: Int? = inputAnchor2.getOppositeAnchor().get().property?.get()
 
-        value1?.let {
-            value2?.let {
-                Single.fromCallable { calculate(value1, value2) }
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(Schedulers.newThread())
-                        .subscribe({
-                            outputAnchor.property?.value = it
-                        }, {
-                            log.error("Something gone wrong in $this", it)
-                        })
+            value1?.let {
+                value2?.let {
+                    Single.fromCallable { calculate(value1, value2) }
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(Schedulers.newThread())
+                            .subscribe({
+                                outputAnchor.property?.value = it
+                            }, {
+                                log.error("Something gone wrong in $this", it)
+                            })
+                }
             }
         }
     }

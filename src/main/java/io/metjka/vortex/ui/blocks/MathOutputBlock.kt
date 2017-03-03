@@ -38,7 +38,7 @@ class MathOutputBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathOutp
     override fun update() {
         inputAnchor.invalidateVisualState()
 
-        val property: Int = inputAnchor.getOppositeAnchor().get().property?.value!!
+        val property: Int? = inputAnchor.getOppositeAnchor().get().property?.value
         printValue?.text = property.toString()
 
     }
