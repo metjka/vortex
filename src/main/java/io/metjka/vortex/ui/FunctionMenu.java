@@ -71,23 +71,25 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button outputBlock = new MenuButton("Output", bm -> addBlock(new MathOutputBlock(parent)));
         Button mathBlock = new MenuButton("Math", bm -> addBlock(new MathBlock(parent)));
         Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ConstantBlock(parent)));
-        Button imageBlock = new MenuButton("Image", bm -> addBlock(new ImageBlock(parent)));
-        Button convolutionBlock = new MenuButton("Convolution", bm -> addBlock(new ConvolutionBlock(parent)));
-        Button imagePreviewBlock = new MenuButton("Image Output", bm -> addBlock(new ImageOutputBlock(parent)));
-        Button invertBlock = new MenuButton("Invert", bm -> addBlock(new InvertBlock(parent)));
-        Button greyscaleBlock = new MenuButton("Greyscale", bm -> addBlock(new GrayScaleBlock(parent)));
-        Button sobelBlock = new MenuButton("Sobel", bm -> addBlock(new SobelBlock(parent)));
-        Button sepiaBlock = new MenuButton("Sepia", bm -> addBlock(new SepiaBlock(parent)));
-        Button rotateBlock = new MenuButton("Rotate", bm -> addBlock(new RotateBlock(parent)));
-        Button brightnessBlock = new MenuButton("Brihtness", bm -> addBlock(new BrightnessBlock(parent)));
-        Button gammaBlock = new MenuButton("Gamma", bm -> addBlock(new GammaBlock(parent)));
-        Button contrastBlock = new MenuButton("Contrast", bm -> addBlock(new ContrastBlock(parent)));
-        Button hueSaturationBlock = new MenuButton("HSB", bm -> addBlock(new HueSaturationValueBlock(parent)));
+//        Button imageBlock = new MenuButton("Image", bm -> addBlock(new ImageBlock(parent)));
+//        Button convolutionBlock = new MenuButton("Convolution", bm -> addBlock(new ConvolutionBlock(parent)));
+//        Button imagePreviewBlock = new MenuButton("Image Output", bm -> addBlock(new ImageOutputBlock(parent)));
+//        Button invertBlock = new MenuButton("Invert", bm -> addBlock(new InvertBlock(parent)));
+//        Button greyscaleBlock = new MenuButton("Greyscale", bm -> addBlock(new GrayScaleBlock(parent)));
+//        Button sobelBlock = new MenuButton("Sobel", bm -> addBlock(new SobelBlock(parent)));
+//        Button sepiaBlock = new MenuButton("Sepia", bm -> addBlock(new SepiaBlock(parent)));
+//        Button rotateBlock = new MenuButton("Rotate", bm -> addBlock(new RotateBlock(parent)));
+//        Button brightnessBlock = new MenuButton("Brihtness", bm -> addBlock(new BrightnessBlock(parent)));
+//        Button gammaBlock = new MenuButton("Gamma", bm -> addBlock(new GammaBlock(parent)));
+//        Button contrastBlock = new MenuButton("Contrast", bm -> addBlock(new ContrastBlock(parent)));
+//        Button hueSaturationBlock = new MenuButton("HSB", bm -> addBlock(new HueSaturationValueBlock(parent)));
 
         utilSpace.getChildren().addAll(
-                closeButton, outputBlock, constantBlock, mathBlock, imageBlock, convolutionBlock, imagePreviewBlock,
-                invertBlock, greyscaleBlock, sobelBlock, sepiaBlock, rotateBlock, brightnessBlock, gammaBlock,
-                contrastBlock, hueSaturationBlock);
+                closeButton, outputBlock, constantBlock, mathBlock
+//                , imageBlock, convolutionBlock, imagePreviewBlock,
+//                invertBlock, greyscaleBlock, sobelBlock, sepiaBlock, rotateBlock, brightnessBlock, gammaBlock,
+//                contrastBlock, hueSaturationBlock
+        );
 
         for (Node button : utilSpace.getChildren()) {
             ((Region) button).setMaxWidth(Double.MAX_VALUE);

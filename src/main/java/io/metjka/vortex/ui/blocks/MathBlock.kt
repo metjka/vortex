@@ -8,6 +8,12 @@ import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
 import javafx.scene.control.TextField
 import javafx.scene.layout.Pane
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
+import mu.KotlinLogging
+import rx.Single
+import rx.schedulers.Schedulers
 import java.util.*
 
 /**
@@ -16,20 +22,22 @@ import java.util.*
  */
 class MathBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathBlock::class.simpleName) {
 
-    @FXML
-    private val inputSpace1: Pane? = null
+    val log = KotlinLogging.logger { }
 
     @FXML
-    private val inputSpace2: Pane? = null
+    private var inputSpace1: Pane? = null
 
     @FXML
-    private val outputSpace: Pane? = null
+    private var inputSpace2: Pane? = null
 
     @FXML
-    private val textField: TextField? = null
+    private var outputSpace: Pane? = null
 
     @FXML
-    private val methodComboBox: ComboBox<String>? = null
+    private var textField: TextField? = null
+
+    @FXML
+    private var methodComboBox: ComboBox<String>? = null
 
     enum class Method {
         ADD, EXT, MIX, MIN, MAX, MULL
@@ -78,6 +86,7 @@ class MathBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathBlock::cla
     }
 
     private fun calculate(a: Int, b: Int): Int {
+
         when (method) {
             MathBlock.Method.ADD -> return a + b
             MathBlock.Method.EXT -> return a - b
@@ -105,12 +114,16 @@ class MathBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathBlock::cla
 
         value1?.let {
             value2?.let {
-                val result = calculate(value1, value2)
-                outputAnchor.property?.value = result
+                Single.fromCallable { calculate(value1, value2) }
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(Schedulers.newThread())
+                        .subscribe({
+                            outputAnchor.property?.value = it
+                        }, {
+                            log.error("Something gone wrong in $this", it)
+                        })
             }
         }
-
-
     }
 
     override fun getNewCopy(): Optional<Block> {

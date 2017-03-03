@@ -26,7 +26,7 @@ class OutputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), T
     @FXML
     private val guardMarker: Shape? = null
 
-    protected var connections: MutableList<Connection<T>>
+    public var connections: MutableList<Connection<T>>
 
     var property: SimpleObjectProperty<T>? = null
 
@@ -45,10 +45,10 @@ class OutputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), T
         guardMarker?.isVisible = false
     }
 
-     fun dropConnection(connection: Connection<T>) {
+    fun dropConnection(connection: Connection<T>) {
         if (this.connections.contains(connection)) {
             this.connections.remove(connection)
-            this.openWire?.setVisible(!this.hasConnection())
+            this.openWire?.isVisible = !this.hasConnection()
         }
     }
 
@@ -69,7 +69,7 @@ class OutputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), T
             val connection = this.connections.removeAt(0)
             connection.remove()
         }
-        this.openWire?.setVisible(true)
+        this.openWire?.isVisible = true
         if (this.wireInProgress != null) {
             this.wireInProgress!!.remove()
         }
@@ -84,36 +84,36 @@ class OutputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), T
     }
 
     fun invalidateVisualState() {
-        this.openWire?.setVisible(!this.hasConnection())
-        this.guardMarker?.setVisible(false)
+        this.openWire?.isVisible = !this.hasConnection()
+        this.guardMarker?.isVisible = false
     }
 
     override fun setNearbyWireReaction(goodness: Int) {
 
         when (goodness) {
             GOOD_TYPE_REACTION -> {
-                this.openWire?.setStroke(Color.DARKGREEN)
-                this.openWire?.setStrokeWidth(5.0)
-                this.visibleAnchor?.setFill(Color.DARKGREEN)
-                this.guardMarker?.setStroke(Color.DARKGREEN)
+                this.openWire?.stroke = Color.DARKGREEN
+                this.openWire?.strokeWidth = 5.0
+                this.visibleAnchor?.fill = Color.DARKGREEN
+                this.guardMarker?.stroke = Color.DARKGREEN
             }
             NEUTRAL_TYPE_REACTION -> {
-                this.openWire?.setStroke(Color.DODGERBLUE)
-                this.openWire?.setStrokeWidth(5.0)
-                this.visibleAnchor?.setFill(Color.DODGERBLUE)
-                this.guardMarker?.setStroke(Color.DODGERBLUE)
+                this.openWire?.stroke = Color.DODGERBLUE
+                this.openWire?.strokeWidth = 5.0
+                this.visibleAnchor?.fill = Color.DODGERBLUE
+                this.guardMarker?.stroke = Color.DODGERBLUE
             }
             WRONG_TYPE_REACTION -> {
-                this.openWire?.setStroke(Color.RED)
-                this.openWire?.setStrokeWidth(3.0)
-                this.visibleAnchor?.setFill(Color.RED)
-                this.guardMarker?.setStroke(Color.RED)
+                this.openWire?.stroke = Color.RED
+                this.openWire?.strokeWidth = 3.0
+                this.visibleAnchor?.fill = Color.RED
+                this.guardMarker?.stroke = Color.RED
             }
             else -> {
-                this.openWire?.setStroke(Color.BLACK)
-                this.openWire?.setStrokeWidth(3.0)
-                this.visibleAnchor?.setFill(Color.BLACK)
-                this.guardMarker?.setStroke(Color.BLACK)
+                this.openWire?.stroke = Color.BLACK
+                this.openWire?.strokeWidth = 3.0
+                this.visibleAnchor?.fill = Color.BLACK
+                this.guardMarker?.stroke = Color.BLACK
             }
         }
     }

@@ -103,20 +103,12 @@ class Connection<R>(val start: OutputAnchor<R>, val end: InputAnchor<R>) : Cubic
     }
 
     fun invalidateVisualState() {
-        this.scopeError = !this.endAnchor.getContainer().isContainedWithin(this.startAnchor.getContainer())
+        this.error = !this.end.getContainer().isContainedWithin(this.start.getContainer())
 
-        if (this.errorState) {
+        if (this.error) {
             this.stroke = Color.RED
             this.strokeDashArray.clear()
             this.setStrokeWidth(3.0)
-
-        } else if (this.scopeError) {
-            this.stroke = Color.RED
-            this.strokeWidth = 3.0
-            if (this.strokeDashArray.isEmpty()) {
-                this.strokeDashArray.addAll(10.0, 10.0)
-            }
-
         } else {
             this.stroke = Color.BLACK
             this.strokeDashArray.clear()

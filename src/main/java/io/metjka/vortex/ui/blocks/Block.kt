@@ -35,10 +35,10 @@ abstract class Block(val topLevelPane: TopLevelPane, val blockName: String?) : S
         return dragContext.isActivated
     }
 
-    abstract fun getAllInputs(): List<InputAnchor>
+    abstract fun getAllInputs(): List<InputAnchor<*>>
     abstract fun getAllOutputs(): List<OutputAnchor<*>>
 
-    fun getAllAnchor(): List<ConnectionAnchor> {
+    fun getAllAnchors(): List<ConnectionAnchor> {
         val mutableListOf = mutableListOf<ConnectionAnchor>()
         mutableListOf.addAll(getAllInputs())
         mutableListOf.addAll(getAllOutputs())
@@ -68,7 +68,7 @@ abstract class Block(val topLevelPane: TopLevelPane, val blockName: String?) : S
     abstract fun getNewCopy(): Optional<Block>
 
     fun deleteAllLinks() {
-        getAllAnchor().forEach { it.removeConnections() }
+        getAllAnchors().forEach { it.removeConnections() }
     }
 
     fun getBodyBounds(): Bounds? {

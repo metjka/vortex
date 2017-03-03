@@ -83,15 +83,15 @@ public class WireMenu extends TilePane {
         block.relocate(this.attachedWire.getStartX(), this.attachedWire.getStartY() - block.prefHeight(-1));
         this.close();
 
-        if (!block.belongsOnBottom()) {
+        if (!block.isBottomMost()) {
             block.refreshContainer();
         }
 
-        block.handleConnectionChanges();
+        block.update();
         OutputAnchor output = block.getAllOutputs().get(0);
         Connection connection = this.attachedWire.buildConnectionTo(output);
         if (connection != null) {
-            connection.getStartAnchor().initiateConnectionChanges();
+            connection.getStart().initiateConnectionChanges();
         }
         this.attachedWire.remove();
     }

@@ -1,5 +1,6 @@
 package io.metjka.vortex.ui;
 
+import io.metjka.vortex.ui.blocks.Block;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;

@@ -51,7 +51,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
         this.anchor = anchor;
         this.anchor.setWireInProgress(this);
 
-        TopLevelPane pane = anchor.getPane();
+        TopLevelPane pane = anchor.getTopLevelPane();
         pane.addWire(this);
         this.setFreePosition(startingPoint);
         anchor.localToSceneTransformProperty().addListener(this);
@@ -62,8 +62,8 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
 
     protected static DrawWire initiate(ConnectionAnchor anchor, TouchPoint touchPoint) {
         if (anchor instanceof InputAnchor && anchor.hasConnection()) {
-            Connection conn = ((InputAnchor) anchor).getConnection().get();
-            OutputAnchor startAnchor = conn.getStartAnchor();
+            Connection<?> conn = ((InputAnchor<?>) anchor).getConnection().get();
+            OutputAnchor startAnchor = conn.getStart();
             if (startAnchor.getWireInProgress() == null) {
                 // make room for a new connection by removing existing one
                 conn.remove();
@@ -72,9 +72,9 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
             } else {
                 return null;
             }
-        } else if (anchor instanceof OutputAnchor && anchor.hasConnection() && ((OutputAnchor) anchor).connections.get(0).hasTypeError()) {
-            Connection conn = ((OutputAnchor) anchor).connections.get(0);
-            InputAnchor endAnchor = conn.getEndAnchor();
+        } else if (anchor instanceof OutputAnchor && anchor.hasConnection() && ((OutputAnchor) anchor).getConnections().get(0).hasTypeError()) {
+            Connection<?> conn = ((OutputAnchor<?>) anchor).getConnections().get(0);
+            InputAnchor endAnchor = conn.getEnd();
             if (endAnchor.getWireInProgress() == null) {
                 // trying to solve the type error by changing the connection
                 conn.remove();
@@ -93,13 +93,13 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
         if (this.menu == null) {
             this.menu = new WireMenu(this, byMouse);
             this.menu.relocate(this.toucharea.getLayoutX() + 50, this.toucharea.getLayoutY() - 50);
-            this.anchor.block.getToplevel().addMenu(this.menu);
+            this.anchor.getBlock().getTopLevelPane().addMenu(this.menu);
         }
     }
 
     protected void handleMouseDrag(MouseEvent event) {
         if (this.menu == null && !event.isSynthesized()) {
-            Point2D localPos = this.anchor.getPane().sceneToLocal(event.getSceneX(), event.getSceneY());
+            Point2D localPos = this.anchor.getTopLevelPane().sceneToLocal(event.getSceneX(), event.getSceneY());
             this.toucharea.dragTo(localPos.getX(), localPos.getY(), event.getPickResult().getIntersectedNode());
         }
         event.consume();
@@ -131,12 +131,12 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
         } else if (target != null && target.getWireInProgress() == null) {
             Connection connection = this.buildConnectionTo(target);
             if (connection != null) {
-                connection.getStartAnchor().receiveUpdate();
+                connection.getStart().handleChange();
                 this.remove();
             } else {
                 this.toucharea.handleReleaseOnNothing();
             }
-        } else if (Connection.lengthSquared(this) < 900) {
+        } else if (Connection.Companion.lengthSquared(this) < 900) {
             this.toucharea.handleReleaseOnSelf();
         } else {
             this.toucharea.handleReleaseOnNothing();
@@ -170,7 +170,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
             }
         }
 
-        if (sink.block == source.block) {
+        if (sink.getBlock() == source.getBlock()) {
             // self recursive wires are not allowed
             return null;
         }
@@ -193,7 +193,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
 
         this.anchor.setWireInProgress(null);
         this.anchor.localToSceneTransformProperty().removeListener(this);
-        this.anchor.getPane().removeWire(this);
+        this.anchor.getTopLevelPane().removeWire(this);
     }
 
     @Override
@@ -235,7 +235,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
 
         this.invalidateAnchorPosition();
 
-        TopLevelPane pane = this.anchor.block.getToplevel();
+        TopLevelPane pane = this.anchor.getBlock().getTopLevelPane();
         Point2D scenePoint = pane.localToScene(point, false);
         BlockContainer anchorContainer = this.anchor.getContainer();
         boolean scopeOK = true;
@@ -341,7 +341,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
 
         private void remove() {
             this.clearWireReactions();
-            TopLevelPane pane = DrawWire.this.anchor.getPane();
+            TopLevelPane pane = DrawWire.this.anchor.getTopLevelPane();
             pane.removeUpperTouchArea(this);
         }
 
