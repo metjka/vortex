@@ -4,13 +4,11 @@ import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.Type
 import io.metjka.vortex.ui.connections.InputAnchor
 import io.metjka.vortex.ui.connections.OutputAnchor
+import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
 import javafx.scene.control.TextField
 import javafx.scene.layout.Pane
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.launch
 import mu.KotlinLogging
 import rx.Single
 import rx.schedulers.Schedulers
@@ -57,14 +55,15 @@ class MathBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathBlock::cla
 
         outputSpace?.children?.add(1, outputAnchor)
 
-        outputAnchor.property?.value = 0
+        outputAnchor.property.value = 0
+        methodComboBox?.selectionModel?.select(0);
         method = Method.ADD
 
-        outputAnchor.property?.addListener { _ ->
-            update()
+        outputAnchor.property.addListener { _ ->
+            sendUpdateDownStream()
         }
 
-        methodComboBox?.getSelectionModel()
+        methodComboBox?.selectionModel
                 ?.selectedItemProperty()?.addListener { _, _, newValue ->
             method = getMethod(newValue)
             update()
@@ -109,17 +108,21 @@ class MathBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathBlock::cla
         getAllInputs().forEach { it.invalidateVisualState() }
         outputAnchor.invalidateVisualState()
 
-        if(inputAnchor1.hasConnection() && inputAnchor2.hasConnection()){
-            val value1: Int? = inputAnchor1.getOppositeAnchor().get().property?.get()
-            val value2: Int? = inputAnchor2.getOppositeAnchor().get().property?.get()
+        log.info { "Update int $this" }
+
+        if (inputAnchor1.hasConnection() && inputAnchor2.hasConnection()) {
+            val value1: Int? = inputAnchor1.getOppositeAnchor().get().property.get()
+            val value2: Int? = inputAnchor2.getOppositeAnchor().get().property.get()
 
             value1?.let {
                 value2?.let {
                     Single.fromCallable { calculate(value1, value2) }
                             .subscribeOn(Schedulers.newThread())
-                            .observeOn(Schedulers.newThread())
+                            .observeOn(Schedulers.trampoline())
                             .subscribe({
-                                outputAnchor.property?.value = it
+                                Platform.runLater({
+                                    outputAnchor.property.value = it
+                                })
                             }, {
                                 log.error("Something gone wrong in $this", it)
                             })

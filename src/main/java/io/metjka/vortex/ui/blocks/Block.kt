@@ -60,7 +60,7 @@ abstract class Block(val topLevelPane: TopLevelPane, val blockName: String?) : S
         }.collect(toList())
                 .stream()
                 .distinct()
-                .forEach { it.handleChange() }
+                .forEach { it -> it.handleChange() }
     }
 
     abstract fun update()

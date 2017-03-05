@@ -4,7 +4,7 @@ import java.util.concurrent.ThreadLocalRandom
 
 class Star(fastABGRRGB: FastImage) : ProcessingFilter(fastABGRRGB) {
 
-   val random: ThreadLocalRandom = ThreadLocalRandom.current()
+    val random: ThreadLocalRandom = ThreadLocalRandom.current()
 
     fun spiralGalaxy(number: Int, centerX: Int, centerY: Int, centerDensity: Int, edgeDensity: Int,
                      cycles: Int, spiralHarms: Int, powerFrom: Int, powerTo: Int, radiusFrom: Int, radiusTo: Int) {
@@ -27,11 +27,11 @@ class Star(fastABGRRGB: FastImage) : ProcessingFilter(fastABGRRGB) {
     }
 
     fun starfield(count: Int, powerFrom: Int, powerTo: Int, radiusFrom: Int, radiusTo: Int) {
-        for (i: Int in 1..count){
+        for (i: Int in 1..count) {
             val power = random.nextDouble(powerFrom, powerTo)
             val radius = random.nextInt(radiusFrom, radiusTo)
 
-            val x =  random.nextInt(width)
+            val x = random.nextInt(width)
             val y = random.nextInt(height)
 
             addStar(x, y, power, radius)

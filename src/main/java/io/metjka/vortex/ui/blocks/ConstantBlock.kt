@@ -4,8 +4,6 @@ import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.Type
 import io.metjka.vortex.ui.connections.InputAnchor
 import io.metjka.vortex.ui.connections.OutputAnchor
-import javafx.beans.property.IntegerProperty
-import javafx.beans.property.SimpleIntegerProperty
 import javafx.fxml.FXML
 import javafx.scene.control.TextField
 import javafx.scene.layout.Pane
@@ -19,22 +17,22 @@ class ConstantBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, ConstantBl
     @FXML
     private var outputSpace: Pane? = null
 
-    val outputAnchor: OutputAnchor<Int> = OutputAnchor<Int>(this, Type.NUMBER)
+    val outputAnchor: OutputAnchor<Int> = OutputAnchor(this, Type.NUMBER)
 
     init {
-        outputSpace?.children?.add( outputAnchor)
+        outputSpace?.children?.add(outputAnchor)
         textField?.text = "0"
-        outputAnchor.property?.value = 0
+        outputAnchor.property.value = 0
 
-        outputAnchor.property?.addListener { _ ->
+        outputAnchor.property.addListener { _ ->
             update()
         }
 
         textField?.textProperty()?.addListener { _, _, newValue ->
             if ("" != newValue) {
-                outputAnchor.property?.value = Integer.parseInt(newValue)
+                outputAnchor.property.setValue(Integer.parseInt(newValue))
             } else {
-                outputAnchor.property?.value = 0
+                outputAnchor.property.value = 0
             }
         }
 

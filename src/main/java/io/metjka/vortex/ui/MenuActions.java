@@ -1,38 +1,27 @@
 package io.metjka.vortex.ui;
 
-import com.google.common.base.Charsets;
-import io.metjka.vortex.ui.serialize.Exporter;
-import io.metjka.vortex.ui.serialize.Importer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 /**
  * menu actions
  */
 public class MenuActions {
+    private final TopLevelPane topLevelPane;
     /**
      * The main overlay of which this menu is a part
      */
     protected MainOverlay overlay;
-
-    private final TopLevelPane topLevelPane;
-
     /**
      * The File we're currently working on, if any.
      */
@@ -97,7 +86,7 @@ public class MenuActions {
      * onOpen() acts more like a "load from file" than open that file. It reads all the objects from the specified file
      * and adds them to the UI, but doesn't assume that filename. The user can use this to read in objects to a file
      * they are already working on, to build-on the objects in the file - and then save to a different file later.
-     *
+     * <p>
      * They will have to choose the destination file when saving. They can choose to save to the same file they read
      * from if they want by selecting it in the dialog.
      *
@@ -159,7 +148,6 @@ public class MenuActions {
 //            e.printStackTrace();
 //        }
 //    }
-
     @SuppressWarnings("UnusedParameters")
     protected void toggleFullScreen(ActionEvent actionEvent) {
         Stage stage = VortApplication.Companion.getStagee();

@@ -13,6 +13,18 @@ import java.util.stream.Stream;
 public interface BlockContainer {
 
     /**
+     * Return the union of two Bounds, i.e. a Bound that contains both.
+     */
+    static Bounds union(Bounds a, Bounds b) {
+        double left = Math.min(a.getMinX(), b.getMinX());
+        double right = Math.max(a.getMaxX(), b.getMaxX());
+        double top = Math.min(a.getMinY(), b.getMinY());
+        double bottom = Math.max(a.getMaxY(), b.getMaxY());
+
+        return new BoundingBox(left, top, right - left, bottom - top);
+    }
+
+    /**
      * Gets the bounds to be used for testing what is inside this container, transformed into the coordinate space of its scene.
      */
     Bounds containmentBoundsInScene();
@@ -88,17 +100,5 @@ public interface BlockContainer {
      * @param blockBounds of the Block that needs to fit in the container.
      */
     void expandToFit(Bounds blockBounds);
-
-    /**
-     * Return the union of two Bounds, i.e. a Bound that contains both.
-     */
-    static Bounds union(Bounds a, Bounds b) {
-        double left = Math.min(a.getMinX(), b.getMinX());
-        double right = Math.max(a.getMaxX(), b.getMaxX());
-        double top = Math.min(a.getMinY(), b.getMinY());
-        double bottom = Math.max(a.getMaxY(), b.getMaxY());
-
-        return new BoundingBox(left, top, right - left, bottom - top);
-    }
 
 }

@@ -85,6 +85,21 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
         return new DrawWire(anchor, anchor.getAttachmentPoint(), touchPoint);
     }
 
+    /**
+     * @return the ConnectionAnchor related to the picked Node, or null of none.
+     */
+    private static ConnectionAnchor findPickedAnchor(Node picked) {
+        Node next = picked;
+        while (next != null) {
+            if (next instanceof Target) {
+                return ((Target) next).getAssociatedAnchor();
+            }
+            next = next.getParent();
+        }
+
+        return null;
+    }
+
     public ConnectionAnchor getAnchor() {
         return this.anchor;
     }
@@ -107,21 +122,6 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
 
     protected void handleMouseRelease(MouseEvent event) {
         this.toucharea.handleMouseRelease(event);
-    }
-
-    /**
-     * @return the ConnectionAnchor related to the picked Node, or null of none.
-     */
-    private static ConnectionAnchor findPickedAnchor(Node picked) {
-        Node next = picked;
-        while (next != null) {
-            if (next instanceof Target) {
-                return ((Target) next).getAssociatedAnchor();
-            }
-            next = next.getParent();
-        }
-
-        return null;
     }
 
     private void handleReleaseOn(Node picked) {
@@ -250,20 +250,17 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
      */
     private class TouchArea extends Path {
         /**
+         * Timed animation for toucharea and drawwire self removal
+         */
+        private final Timeline disapperance;
+        /**
          * The ID of finger that spawned this touch area.
          */
         private int touchID;
-
         /**
          * Whether this touch area has been dragged further than the drag threshold.
          */
         private boolean dragStarted;
-
-        /**
-         * Timed animation for toucharea and drawwire self removal
-         */
-        private final Timeline disapperance;
-
         /**
          * List of nearby anchors that have visually reacted to this wire.
          */
@@ -469,7 +466,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
 
                     for (ConnectionAnchor target : targetAnchors) {
                         if (target instanceof OutputAnchor) {
-                            target.setNearbyWireReaction(determineWireReaction((OutputAnchor) target, anchor));
+                            target.setNearbyWireReaction(determineWireReaction((OutputAnchor<?>) target, anchor));
                             newNearby.add(target);
                         }
                     }
@@ -483,7 +480,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
                     for (ConnectionAnchor target : targetAnchors) {
                         if (target instanceof InputAnchor) {
                             newNearby.add(target);
-                                target.setNearbyWireReaction(determineWireReaction(anchor, (InputAnchor) target));
+                            target.setNearbyWireReaction(determineWireReaction(anchor, (InputAnchor) target));
                         }
                     }
                 }
@@ -501,13 +498,12 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
 
         private int determineWireReaction(OutputAnchor source, InputAnchor sink) {
 
-            if(source.getType() == sink.getType()){
-                if(source.getBlock() == sink.getBlock()){
+            if (source.getType() == sink.getType()) {
+                if (source.getBlock() == sink.getBlock()) {
                     return NEUTRAL_TYPE_REACTION;
                 }
                 return GOOD_TYPE_REACTION;
-            }
-            else return WRONG_TYPE_REACTION;
+            } else return WRONG_TYPE_REACTION;
 
         }
 

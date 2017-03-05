@@ -4,13 +4,11 @@ import io.metjka.vortex.ui.BlockContainer
 import io.metjka.vortex.ui.Type
 import io.metjka.vortex.ui.blocks.Block
 import io.metjka.vortex.ui.connections.DrawWire.*
-import javafx.beans.property.ReadOnlyObjectWrapper
-import javafx.beans.property.SimpleObjectProperty
 import javafx.fxml.FXML
 import javafx.geometry.Point2D
 import javafx.scene.paint.Color
 import javafx.scene.shape.Shape
-import java.util.ArrayList
+import java.util.*
 
 class OutputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), Target {
 
@@ -29,7 +27,7 @@ class OutputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), T
 
     public var connections: MutableList<Connection<T>>
 
-    var property: ReadOnlyObjectWrapper<T>? = null
+    var property: Prop<T> = Prop()
 
     init {
         loadFXML(this::class.simpleName)
@@ -61,7 +59,7 @@ class OutputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), T
         return list
     }
 
-    fun connectionChanged(){
+    fun connectionChanged() {
         block.update()
     }
 

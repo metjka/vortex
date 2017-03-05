@@ -13,7 +13,7 @@ public class GlobalContextMenu extends ContextMenu {
 
         MenuItem menuFullScreen = new MenuItem("Toggle full screen");
         menuFullScreen.setOnAction(menuActions::toggleFullScreen);
-        
+
         MenuItem menuQuit = new MenuItem("Quit");
         menuQuit.setOnAction(menuActions::onQuit);
 

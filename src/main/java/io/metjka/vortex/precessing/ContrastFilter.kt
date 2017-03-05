@@ -9,7 +9,7 @@ class ContrastFilter(val fastImage: FastImage, val contrastVal: Int) : Filter {
 
     override fun filter(): FastImage {
 
-        val contrast = Math.pow((100 + contrastVal).toDouble()/100, 2.0)
+        val contrast = Math.pow((100 + contrastVal).toDouble() / 100, 2.0)
 
         val image = FastImage(width, height)
         for (x in 0..width - 1) {

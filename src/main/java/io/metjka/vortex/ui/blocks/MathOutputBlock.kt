@@ -11,7 +11,7 @@ import java.util.*
 
 class MathOutputBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathOutputBlock::class.simpleName) {
 
-    val inputAnchor: InputAnchor<Int> = InputAnchor<Int>(this, Type.NUMBER);
+    val inputAnchor: InputAnchor<Int> = InputAnchor(this, Type.NUMBER)
 
     @FXML
     var inputSpace: Pane? = null
@@ -19,9 +19,7 @@ class MathOutputBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathOutp
     @FXML
     var printValue: Label? = null
 
-    /**
-     * @param pane The pane this block belongs to.
-     */
+
     init {
         inputSpace?.children?.add(0, inputAnchor);
 
@@ -38,8 +36,10 @@ class MathOutputBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathOutp
     override fun update() {
         inputAnchor.invalidateVisualState()
 
-        val property: Int? = inputAnchor.getOppositeAnchor().get().property?.value
-        printValue?.text = property.toString()
+        if (inputAnchor.hasConnection()) {
+            val property: Int? = inputAnchor.getOppositeAnchor().get().property.value
+            printValue?.text = property.toString()
+        }
 
     }
 

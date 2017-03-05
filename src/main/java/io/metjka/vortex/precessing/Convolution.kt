@@ -84,7 +84,7 @@ class Convolution(val fastImage: FastImage) {
                 1f, -8f, 1f,
                 1f, 1f, 1f
         )
-        val LAPLACE_NEGATIVE = Kernel(3,3, laplaceNegative)
+        val LAPLACE_NEGATIVE = Kernel(3, 3, laplaceNegative)
 
         val lap = floatArrayOf(
                 0f, 1f, 0f,

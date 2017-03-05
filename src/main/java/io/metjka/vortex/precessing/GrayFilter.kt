@@ -16,7 +16,7 @@ class GrayFilter(val fastImage: FastImage) : Filter {
                 val g: Int = (color.green * 0.59).toInt().clamp()
                 val b: Int = (color.blue * 0.11).toInt().clamp()
                 val gray = (r + g + b).clamp()
-                val color1 = Color(gray,gray,gray)
+                val color1 = Color(gray, gray, gray)
                 image.setARGB(x, y, color1.rgb)
             }
         }

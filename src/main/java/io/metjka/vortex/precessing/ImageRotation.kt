@@ -6,7 +6,7 @@ class ImageRotation(val fastImage: FastImage) {
     val height = fastImage.height
 
     fun rotate(dig: Int): FastImage {
-        when(dig){
+        when (dig) {
             90 -> return rotate90()
             -90 -> return rotateMinus90()
             180 -> return rotate180()

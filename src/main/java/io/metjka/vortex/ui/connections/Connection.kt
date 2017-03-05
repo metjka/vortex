@@ -93,8 +93,8 @@ class Connection<R>(val start: OutputAnchor<R>, val end: InputAnchor<R>) : Cubic
 
     private fun setStartPosition(point: Point2D?) {
         point?.let {
-            this.startX = point.getX()
-            this.startY = point.getY()
+            this.startX = point.x
+            this.startY = point.y
             updateBezierControlPoints(this)
 
         }
@@ -102,8 +102,8 @@ class Connection<R>(val start: OutputAnchor<R>, val end: InputAnchor<R>) : Cubic
 
     private fun setEndPosition(point: Point2D?) {
         point?.let {
-            this.endX = point.getX()
-            this.endY = point.getY()
+            this.endX = point.x
+            this.endY = point.y
             updateBezierControlPoints(this)
         }
     }

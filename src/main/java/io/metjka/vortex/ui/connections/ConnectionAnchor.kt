@@ -11,10 +11,10 @@ import javafx.scene.layout.StackPane
 
 abstract class ConnectionAnchor(val block: Block) : StackPane(), ComponentLoader, Bundleable {
 
-     var wireInProgress: DrawWire? = null
+    var wireInProgress: DrawWire? = null
     protected var eventRedirectionTarget: DrawWire? = null
 
-     val topLevelPane: TopLevelPane = block.topLevelPane
+    val topLevelPane: TopLevelPane = block.topLevelPane
 
     init {
         addEventHandler(MouseEvent.MOUSE_PRESSED, { handleMousePress(it) })
@@ -40,7 +40,7 @@ abstract class ConnectionAnchor(val block: Block) : StackPane(), ComponentLoader
     abstract fun setNearbyWireReaction(goodness: Int)
     abstract fun getContainer(): BlockContainer
 
-    fun handleChange(){
+    fun handleChange() {
         block.update()
     }
 
@@ -55,7 +55,6 @@ abstract class ConnectionAnchor(val block: Block) : StackPane(), ComponentLoader
         val simpleName = this::class.simpleName
         return "$simpleName belong to $block"
     }
-
 
 
 }

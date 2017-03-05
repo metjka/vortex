@@ -4,7 +4,7 @@ import java.io.InputStream
 
 object Importer {
 
-    fun import(inputStream: InputStream){
+    fun import(inputStream: InputStream) {
 
     }
 

@@ -52,7 +52,7 @@ class FastImage {
 
     fun getARGB(x: Int, y: Int) = pixels?.get(x + y * width)
 
-    fun setARGB(x:Int,y:Int, valu:Int) = pixels?.set(x+y*width, valu)
+    fun setARGB(x: Int, y: Int, valu: Int) = pixels?.set(x + y * width, valu)
 
     fun toBufferedImage(): BufferedImage {
         val image = BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)

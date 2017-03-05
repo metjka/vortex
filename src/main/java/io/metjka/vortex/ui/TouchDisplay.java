@@ -15,7 +15,7 @@ class TouchDisplay extends Pane {
     final static Color COLOR_OPAQUE = new Color(1.0, 0, 0, 1);
     final static Color COLOR_SEMI_TRANSPARENT = new Color(1.0, 0, 0, 0.5);
     final static double touchCircleRadius = 50.0;
-    
+
     private final StringProperty labelText;
     private final Circle circle;
     private final Label label;
@@ -35,11 +35,13 @@ class TouchDisplay extends Pane {
         label.setTextFill(COLOR_OPAQUE);
         label.relocate(0, touchCircleRadius * 2);
         getChildren().add(label);
-        
+
         setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
     }
 
-    /** Move this TouchDisplay to a new x-y position. */
+    /**
+     * Move this TouchDisplay to a new x-y position.
+     */
     protected void moveTouchPoint(double x, double y) {
         labelText.set(createLabelText(x, y, touchId));
         Bounds cb = circle.getBoundsInParent();
