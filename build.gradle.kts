@@ -1,6 +1,19 @@
 import org.gradle.api.JavaVersion.VERSION_1_8
+import org.gradle.api.tasks.wrapper.Wrapper
 
 val kotlin_version = "1.1.0"
+
+buildscript {
+
+    repositories {
+        gradleScriptKotlin()
+    }
+
+    dependencies {
+        classpath(kotlinModule("gradle-plugin"))
+    }
+
+}
 
 plugins {
     application
@@ -14,6 +27,20 @@ java {
     sourceCompatibility = VERSION_1_8
     targetCompatibility = VERSION_1_8
 
+}
+apply {
+    plugin("kotlin")
+}
+
+tasks{
+    "goodbye"{
+        dependsOn("build")
+        doLast { println("Bye!") }
+    }
+}
+
+task<Wrapper>("wrapper"){
+    gradleVersion ="3.5-20170227190532+0000"
 }
 
 repositories {
