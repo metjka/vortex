@@ -1,8 +1,8 @@
-ToplevelPane {
+TopLevelPane {
     -fx-background-position: 2500 2500;
 }
 
-ToplevelPane, ToplevelPane > Pane > Pane > Pane {
+TopLevelPane, TopLevelPane > Pane > Pane > Pane {
     -fx-min-width: 8000;
     -fx-min-height: 4500;
     -fx-max-width: 8000;

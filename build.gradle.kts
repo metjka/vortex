@@ -58,10 +58,11 @@ repositories {
 
 dependencies {
     compile("com.github.thomasnield" , "rxkotlinfx" , "2.0.2")
-    compile("io.reactivex", "rxkotlin", "0.60.0")
+//    compile("io.reactivex", "rxkotlin", "0.60.0")
     compile("org.slf4j", "slf4j-simple", "1.7.22")
     compile("com.google.code.gson", "gson", "2.8.0")
     compile("com.google.guava", "guava", "20.0")
+
     compile("org.jetbrains.kotlin", "kotlin-reflect", kotlin_version)
     compile("org.jetbrains.kotlin", "kotlin-stdlib", kotlin_version)
     compile("io.github.microutils", "kotlin-logging", "1.4.1")

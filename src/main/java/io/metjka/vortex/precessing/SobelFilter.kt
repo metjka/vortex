@@ -1,7 +1,9 @@
 package io.metjka.vortex.precessing
 
+import io.reactivex.Observable
+import io.reactivex.Observable.zip
+import io.reactivex.functions.BiFunction
 import mu.KotlinLogging
-import rx.Observable
 import java.awt.Color
 
 class SobelFilter(val fastImage: FastImage) {
@@ -16,7 +18,9 @@ class SobelFilter(val fastImage: FastImage) {
         val obsSobelHorizontal = Observable.fromCallable { convolution.convolve(Convolution.SOBEL_HORIZONTAL) }
         val obsSobelVertical = Observable.fromCallable { convolution.convolve(Convolution.SOBEL_VERTICAL) }
 
-        val zip = Observable.zip(obsSobelHorizontal, obsSobelVertical, { r1, r2 ->
+
+
+        val zip = zip(obsSobelHorizontal, obsSobelVertical, BiFunction<FastImage, FastImage,FastImage> { r1, r2 ->
             val fast = FastImage(width, height)
             for (x in 0..width - 1) {
                 for (y in 0..height - 1) {
@@ -45,7 +49,7 @@ class SobelFilter(val fastImage: FastImage) {
                     }
                 }
             }
-            return@zip fast
+            return@BiFunction fast
 
         })
 

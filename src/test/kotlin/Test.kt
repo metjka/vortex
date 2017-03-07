@@ -1,4 +1,5 @@
-import rx.Observable
+import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 
 class Test {
 
@@ -8,9 +9,12 @@ class Test {
         val obs1 = Observable.just("Hello")
         val obs2 = Observable.just("World")
 
-        Observable.zip(obs1, obs2, { s1, s2 ->  return@zip s1 + s2 })
+        Observable.zip(obs1, obs2, BiFunction<String,String,String> { s1, s2 ->   return@BiFunction s1 + s2 })
                 .map { it.plus("da") }
-                .subscribe ({s -> print(s)},{t -> print(t)})
+                .subscribe (
+                        ::print,
+                        ::print
+                )
     }
 
 

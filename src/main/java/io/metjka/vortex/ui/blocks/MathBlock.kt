@@ -4,14 +4,13 @@ import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.Type
 import io.metjka.vortex.ui.connections.InputAnchor
 import io.metjka.vortex.ui.connections.OutputAnchor
-import javafx.application.Platform
+import io.reactivex.Observable
+import io.reactivex.rxjavafx.schedulers.JavaFxScheduler
 import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
 import javafx.scene.control.TextField
 import javafx.scene.layout.Pane
 import mu.KotlinLogging
-import rx.Single
-import rx.schedulers.Schedulers
 import java.util.*
 
 /**
@@ -116,13 +115,11 @@ class MathBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, MathBlock::cla
 
             value1?.let {
                 value2?.let {
-                    Single.fromCallable { calculate(value1, value2) }
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(Schedulers.trampoline())
+                    Observable.fromCallable { calculate(value1, value2) }
+                            .subscribeOn(io.reactivex.schedulers.Schedulers.newThread())
+                            .observeOn(JavaFxScheduler.platform())
                             .subscribe({
-                                Platform.runLater({
-                                    outputAnchor.property.value = it
-                                })
+                                outputAnchor.property.value = it
                             }, {
                                 log.error("Something gone wrong in $this", it)
                             })
