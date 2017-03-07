@@ -27,7 +27,7 @@ class VortApplication : Application() {
 
         stagee = primaryStage
 
-        Font.loadFont(this::class.java.getResourceAsStream("/ui/fonts/titillium.otf"), 20.0)
+        Font.loadFont(this::class.java.getResourceAsStream("/ui/fonts/FiraCode-Light.otf"), 20.0)
 
         val toplevelPane = TopLevelPane()
         val mainOverlay = MainOverlay(toplevelPane)

@@ -1,9 +1,6 @@
 package io.metjka.vortex.ui;
 
-import io.metjka.vortex.ui.blocks.Block;
-import io.metjka.vortex.ui.blocks.ConstantBlock;
-import io.metjka.vortex.ui.blocks.MathBlock;
-import io.metjka.vortex.ui.blocks.MathOutputBlock;
+import io.metjka.vortex.ui.blocks.*;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -74,6 +71,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button outputBlock = new MenuButton("Output", bm -> addBlock(new MathOutputBlock(parent)));
         Button mathBlock = new MenuButton("Math", bm -> addBlock(new MathBlock(parent)));
         Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ConstantBlock(parent)));
+        Button node = new MenuButton("Node", bm -> addBlock(new NodeBlock(parent)));
 //        Button imageBlock = new MenuButton("Image", bm -> addBlock(new ImageBlock(parent)));
 //        Button convolutionBlock = new MenuButton("Convolution", bm -> addBlock(new ConvolutionBlock(parent)));
 //        Button imagePreviewBlock = new MenuButton("Image Output", bm -> addBlock(new ImageOutputBlock(parent)));
@@ -88,7 +86,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
 //        Button hueSaturationBlock = new MenuButton("HSB", bm -> addBlock(new HueSaturationValueBlock(parent)));
 
         utilSpace.getChildren().addAll(
-                closeButton, outputBlock, constantBlock, mathBlock
+                closeButton, outputBlock, constantBlock, mathBlock, node
 //                , imageBlock, convolutionBlock, imagePreviewBlock,
 //                invertBlock, greyscaleBlock, sobelBlock, sepiaBlock, rotateBlock, brightnessBlock, gammaBlock,
 //                contrastBlock, hueSaturationBlock

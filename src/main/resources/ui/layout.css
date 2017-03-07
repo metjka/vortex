@@ -15,40 +15,13 @@ TopLevelPane, TopLevelPane > Pane > Pane > Pane {
     -fx-border-width: 2px;
 }
 
-.menu .title {
-    -fx-font-weight: bold;
-}
-
-.menu .content {
-    -fx-font-size: 15px;
-    -fx-font-weight: normal;
-}
-
-.menu #categorySpace TitledPane {
-    -fx-padding: 3px;
-}
-
-.menu #utilSpace {
-    -fx-padding: 3px;
-    -fx-spacing: 6px;
-}
-
-.menu .scroll-bar .increment-button {
-    -fx-padding: 5px;
-}
-
-.menu .scroll-bar .thumb {
-    -fx-background-color: darkgrey;
-    -fx-background-radius: 10px;
-    -fx-background-insets: 4, 0, 0;
-}
-
 .block {
     -fx-font-size: 15px;
     -fx-font-weight: lighter;
-    -fx-font-family: Titillium;
+    -fx-font-family:  FiraCode;
+    -fx-text-fill: #f0f0f0;
     -fx-border-width: 1px;
-    -fx-border-style: solid outside;
+    /*-fx-border-style: solid outside;*/
     -fx-alignment: center;
 }
 
@@ -58,7 +31,6 @@ TopLevelPane, TopLevelPane > Pane > Pane > Pane {
 }
 
 .value.block {
-    -fx-padding: 10 5 10 5;
     -fx-pref-width: 150px;
 
     -fx-max-width: 150px;
