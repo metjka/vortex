@@ -19,6 +19,7 @@ abstract class ConnectionAnchor(val block: Block) : StackPane(), ComponentLoader
     init {
         addEventHandler(MouseEvent.MOUSE_PRESSED, { handleMousePress(it) })
         addEventHandler(MouseEvent.MOUSE_DRAGGED, {
+            println("Dragged")
             if (this.eventRedirectionTarget != null && !it.isSynthesized) {
                 this.eventRedirectionTarget!!.handleMouseDrag(it)
             }
