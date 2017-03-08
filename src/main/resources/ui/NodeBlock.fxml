@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.Circle?>
-<?import java.lang.String?>
-<?import java.net.URL?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
 <fx:root type="StackPane" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <VBox prefHeight="200.0" prefWidth="100.0">
         <stylesheets>
@@ -28,14 +32,13 @@
             </ImageView>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                 <left>
-                    <Circle  radius="7.0" stroke="BLACK" strokeType="INSIDE"
-                            BorderPane.alignment="CENTER"/>
+                    <StackPane fx:id="inputSpace" minHeight="20.0" prefHeight="20.0" BorderPane.alignment="CENTER" />
                 </left>
                 <center>
                     <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                         <Label alignment="CENTER" text="Image" textFill="WHITE">
                             <padding>
-                                <Insets left="6.0"/>
+                                <Insets left="6.0" />
                             </padding>
                         </Label>
                     </Pane>

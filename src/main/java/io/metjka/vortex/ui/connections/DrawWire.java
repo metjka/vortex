@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * A DrawWire represents the UI for a new incomplete connection is the process of being drawn.
- * It is linked to a single Anchor as starting point, and with a second anchor it produces a new Connection.
+ * It is linked to a single Anchor as starting point, and with a second anchor it produces a new ConnectionDep.
  */
 public class DrawWire extends CubicCurve implements ChangeListener<Transform>, ComponentLoader {
 
@@ -62,7 +62,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
 
     protected static DrawWire initiate(ConnectionAnchor anchor, TouchPoint touchPoint) {
         if (anchor instanceof InputAnchor && anchor.hasConnection()) {
-            Connection<?> conn = ((InputAnchor<?>) anchor).getConnection().get();
+            ConnectionDep<?> conn = ((InputAnchor<?>) anchor).getConnection().get();
             OutputAnchor startAnchor = conn.getStart();
             if (startAnchor.getWireInProgress() == null) {
                 // make room for a new connection by removing existing one
@@ -72,8 +72,8 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
             } else {
                 return null;
             }
-        } else if (anchor instanceof OutputAnchor<?> && anchor.hasConnection() && ((OutputAnchor<?>) anchor).getConnections().get(0).hasError()) {
-            Connection<?> conn = ((OutputAnchor<?>) anchor).getConnections().get(0);
+        } else if (anchor instanceof OutputAnchor<?> && anchor.hasConnection() && ((OutputAnchor<?>) anchor).getConnectionDeps().get(0).hasError()) {
+            ConnectionDep<?> conn = ((OutputAnchor<?>) anchor).getConnectionDeps().get(0);
             InputAnchor endAnchor = conn.getEnd();
             if (endAnchor.getWireInProgress() == null) {
                 // trying to solve the type error by changing the connection
@@ -129,14 +129,14 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
         if (target == this.anchor) {
             this.toucharea.handleReleaseOnSelf();
         } else if (target != null && target.getWireInProgress() == null) {
-            Connection connection = this.buildConnectionTo(target);
-            if (connection != null) {
-                connection.getStart().handleChange();
+            ConnectionDep connectionDep = this.buildConnectionTo(target);
+            if (connectionDep != null) {
+                connectionDep.getStart().handleChange();
                 this.remove();
             } else {
                 this.toucharea.handleReleaseOnNothing();
             }
-        } else if (Connection.Companion.lengthSquared(this) < 900) {
+        } else if (ConnectionDep.Companion.lengthSquared(this) < 900) {
             this.toucharea.handleReleaseOnSelf();
         } else {
             this.toucharea.handleReleaseOnNothing();
@@ -144,12 +144,12 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
     }
 
     /**
-     * Constructs a new Connection from this partial wire and another anchor
+     * Constructs a new ConnectionDep from this partial wire and another anchor
      *
      * @param target the Anchor to which the other end of this should be connection to.
-     * @return the newly build Connection or null if it's not possible
+     * @return the newly build ConnectionDep or null if it's not possible
      */
-    public Connection buildConnectionTo(ConnectionAnchor target) {
+    public ConnectionDep buildConnectionTo(ConnectionAnchor target) {
         InputAnchor sink;
         OutputAnchor source;
         if (this.anchor instanceof InputAnchor) {
@@ -175,7 +175,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
             return null;
         }
 
-        return new Connection(source, sink);
+        return new ConnectionDep(source, sink);
     }
 
     /**
@@ -215,7 +215,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
             this.setStartY(point.getY());
         }
 
-        Connection.Companion.updateBezierControlPoints(this);
+        ConnectionDep.Companion.updateBezierControlPoints(this);
     }
 
     /**

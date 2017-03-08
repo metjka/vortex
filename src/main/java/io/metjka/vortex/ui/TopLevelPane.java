@@ -2,7 +2,7 @@ package io.metjka.vortex.ui;
 
 import com.google.common.collect.ImmutableMap;
 import io.metjka.vortex.ui.blocks.Block;
-import io.metjka.vortex.ui.connections.Connection;
+import io.metjka.vortex.ui.connections.ConnectionDep;
 import io.metjka.vortex.ui.connections.ConnectionAnchor;
 import io.metjka.vortex.ui.connections.DrawWire;
 import io.metjka.vortex.ui.serialize.Bundleable;
@@ -35,7 +35,7 @@ public class TopLevelPane extends Region implements BlockContainer, Bundleable {
     private final Pane blockLayer;
 
     /**
-     * higher pane layer for connections wires
+     * higher pane layer for connectionDeps wires
      */
     private final Pane wireLayer;
 
@@ -77,7 +77,7 @@ public class TopLevelPane extends Region implements BlockContainer, Bundleable {
     }
 
     /**
-     * Remove the given block from this UI pane, including its connections.
+     * Remove the given block from this UI pane, including its connectionDeps.
      */
     public void removeBlock(Block block) {
         block.deleteAllLinks();
@@ -107,12 +107,12 @@ public class TopLevelPane extends Region implements BlockContainer, Bundleable {
         return this.getChildren().remove(menu);
     }
 
-    public boolean addConnection(Connection connection) {
-        return this.wireLayer.getChildren().add(connection);
+    public boolean addConnection(ConnectionDep connectionDep) {
+        return this.wireLayer.getChildren().add(connectionDep);
     }
 
-    public boolean removeConnection(Connection connection) {
-        return this.wireLayer.getChildren().remove(connection);
+    public boolean removeConnection(ConnectionDep connectionDep) {
+        return this.wireLayer.getChildren().remove(connectionDep);
     }
 
     public boolean addWire(DrawWire drawWire) {
@@ -192,7 +192,7 @@ public class TopLevelPane extends Region implements BlockContainer, Bundleable {
 //            if (connectionsBundle != null) {
 //                for (Map<String, Object> bundle : connectionsBundle) {
 //                    try {
-//                        Connection.fromBundle(bundle, blockLookupTable);
+//                        ConnectionDep.fromBundle(bundle, blockLookupTable);
 //                    } catch (Exception e) {
 //                        e.printStackTrace();
 //                    }
@@ -227,8 +227,8 @@ public class TopLevelPane extends Region implements BlockContainer, Bundleable {
 
     protected void cutIntersectingConnections(Shape cutter) {
         new ArrayList<>(this.wireLayer.getChildren()).stream()
-                .filter(node -> node instanceof Connection).forEach(node -> {
-            Connection wire = (Connection) node;
+                .filter(node -> node instanceof ConnectionDep).forEach(node -> {
+            ConnectionDep wire = (ConnectionDep) node;
             if (((Path) Shape.intersect(wire, cutter)).getElements().size() > 0) {
                 wire.remove();
             }

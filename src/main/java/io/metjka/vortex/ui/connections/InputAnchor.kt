@@ -23,14 +23,14 @@ class InputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), Ta
     @FXML
     var openWire: Shape? = null
 
-    private var connection: Optional<Connection<T>>
+    private var connectionDep: Optional<ConnectionDep<T>>
 
     var errorState: BooleanProperty
 
     init {
         loadFXML(this::class.simpleName)
 
-        connection = Optional.empty<Connection<T>>()
+        connectionDep = Optional.empty<ConnectionDep<T>>()
         errorState = SimpleBooleanProperty(false)
         errorState.addListener { observable, oldValue, newValue -> checkError(observable, oldValue, newValue) }
     }
@@ -47,23 +47,23 @@ class InputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), Ta
         return this
     }
 
-    fun getConnection(): Optional<Connection<T>> {
-        return connection
+    fun getConnection(): Optional<ConnectionDep<T>> {
+        return connectionDep
     }
 
     fun getOppositeAnchor(): Optional<OutputAnchor<T>> {
-        return this.connection.map { c -> c.start }
+        return this.connectionDep.map { c -> c.start }
     }
 
-    fun setConnection(connection: Connection<T>) {
-        this.connection = Optional.of(connection)
+    fun setConnection(connectionDep: ConnectionDep<T>) {
+        this.connectionDep = Optional.of(connectionDep)
         this.openWire?.isVisible = false
     }
 
     override fun removeConnections() {
-        if (connection.isPresent) {
-            val get = connection.get()
-            connection = Optional.empty()
+        if (connectionDep.isPresent) {
+            val get = connectionDep.get()
+            connectionDep = Optional.empty()
             get.remove()
         }
         errorState.value = false
@@ -80,7 +80,7 @@ class InputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), Ta
     }
 
     override fun hasConnection(): Boolean {
-        return connection.isPresent
+        return connectionDep.isPresent
     }
 
     override fun getAttachmentPoint(): Point2D {
@@ -118,7 +118,7 @@ class InputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), Ta
     }
 
     fun invalidateVisualState() {
-        this.connection.ifPresent { it.invalidateVisualState() }
+        this.connectionDep.ifPresent { it.invalidateVisualState() }
     }
 
     override fun toString(): String {

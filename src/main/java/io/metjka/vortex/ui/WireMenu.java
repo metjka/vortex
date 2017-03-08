@@ -1,7 +1,7 @@
 package io.metjka.vortex.ui;
 
 import io.metjka.vortex.ui.blocks.Block;
-import io.metjka.vortex.ui.connections.Connection;
+import io.metjka.vortex.ui.connections.ConnectionDep;
 import io.metjka.vortex.ui.connections.DrawWire;
 import io.metjka.vortex.ui.connections.InputAnchor;
 import io.metjka.vortex.ui.connections.OutputAnchor;
@@ -71,9 +71,9 @@ public class WireMenu extends TilePane {
 
         block.update();
         InputAnchor input = block.getAllInputs().get(0);
-        Connection connection = this.attachedWire.buildConnectionTo(input);
-        if (connection != null) {
-            connection.getStart().connectionChanged();
+        ConnectionDep connectionDep = this.attachedWire.buildConnectionTo(input);
+        if (connectionDep != null) {
+            connectionDep.getStart().connectionChanged();
         }
         this.attachedWire.remove();
     }
@@ -89,9 +89,9 @@ public class WireMenu extends TilePane {
 
         block.update();
         OutputAnchor output = block.getAllOutputs().get(0);
-        Connection connection = this.attachedWire.buildConnectionTo(output);
-        if (connection != null) {
-            connection.getStart().connectionChanged();
+        ConnectionDep connectionDep = this.attachedWire.buildConnectionTo(output);
+        if (connectionDep != null) {
+            connectionDep.getStart().connectionChanged();
         }
         this.attachedWire.remove();
     }

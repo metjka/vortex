@@ -13,7 +13,7 @@ import javafx.scene.transform.Transform
  * Created by Ihor Salnikov on 1.3.2017, 9:30 PM.
  * https://github.com/metjka/VORT
  */
-class Connection<R>(val start: OutputAnchor<R>, val end: InputAnchor<R>) : CubicCurve(), ChangeListener<Transform>, Bundleable, ComponentLoader {
+class ConnectionDep<R>(val start: OutputAnchor<R>, val end: InputAnchor<R>) : CubicCurve(), ChangeListener<Transform>, Bundleable, ComponentLoader {
 
     val BEZIER_CONTROL_OFFSET = 150.0
 

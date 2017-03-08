@@ -25,35 +25,35 @@ class OutputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), T
     @FXML
     private val guardMarker: Shape? = null
 
-    public var connections: MutableList<Connection<T>>
+    var connectionDeps: MutableList<ConnectionDep<T>>
 
     var property: Prop<T> = Prop()
 
     init {
         loadFXML(this::class.simpleName)
-        connections = mutableListOf()
+        connectionDeps = mutableListOf()
     }
 
     override fun getAssociatedAnchor(): ConnectionAnchor {
         return this
     }
 
-    fun addConnection(connection: Connection<T>) {
-        connections.add(connection)
+    fun addConnection(connectionDep: ConnectionDep<T>) {
+        connectionDeps.add(connectionDep)
         openWire?.isVisible = false
         guardMarker?.isVisible = false
     }
 
-    fun dropConnection(connection: Connection<T>) {
-        if (this.connections.contains(connection)) {
-            this.connections.remove(connection)
+    fun dropConnection(connectionDep: ConnectionDep<T>) {
+        if (this.connectionDeps.contains(connectionDep)) {
+            this.connectionDeps.remove(connectionDep)
             this.openWire?.isVisible = !this.hasConnection()
         }
     }
 
     fun getOppositeAnchors(): List<InputAnchor<T>> {
         val list = ArrayList<InputAnchor<T>>()
-        for (c in this.connections) {
+        for (c in this.connectionDeps) {
             list.add(c.end)
         }
         return list
@@ -64,12 +64,12 @@ class OutputAnchor<T>(block: Block, val type: Type) : ConnectionAnchor(block), T
     }
 
     override fun hasConnection(): Boolean {
-        return connections.isNotEmpty()
+        return connectionDeps.isNotEmpty()
     }
 
     override fun removeConnections() {
-        while (!this.connections.isEmpty()) {
-            val connection = this.connections.removeAt(0)
+        while (!this.connectionDeps.isEmpty()) {
+            val connection = this.connectionDeps.removeAt(0)
             connection.remove()
         }
         this.openWire?.isVisible = true
