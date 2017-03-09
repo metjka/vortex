@@ -109,17 +109,24 @@ class ConnectionDep<R>(val start: OutputAnchor<R>, val end: InputAnchor<R>) : Cu
     }
 
     protected fun updateBezierControlPoints(wire: CubicCurve) {
-        val yOffset = getBezierYOffset(wire)
+        val yOffset = 150
         wire.controlX1 = wire.startX
         wire.controlY1 = wire.startY + yOffset
+
         wire.controlX2 = wire.endX
         wire.controlY2 = wire.endY - yOffset
     }
 
     private fun getBezierYOffset(wire: CubicCurve): Double {
         val distX = Math.abs(wire.endX - wire.startX) / 3
+
         val diffY = wire.endY - wire.startY
-        val distY = if (diffY > 0) diffY / 2 else Math.max(0.0, -diffY - 10)
+
+        val distY = if (diffY > 0) {
+            diffY / 2
+        } else {
+            Math.max(0.0, -diffY - 10)
+        }
         if (distY < BEZIER_CONTROL_OFFSET) {
             if (distX < BEZIER_CONTROL_OFFSET) {
                 // short lines are extra flexible

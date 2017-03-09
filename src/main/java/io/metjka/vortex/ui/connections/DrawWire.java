@@ -67,7 +67,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
             if (startAnchor.getWireInProgress() == null) {
                 // make room for a new connection by removing existing one
                 conn.remove();
-                // keep the other end of old connection to initiate the new one
+                // keep the other endDot of old connection to initiate the new one
                 return new DrawWire(startAnchor, anchor.getAttachmentPoint(), touchPoint);
             } else {
                 return null;
@@ -146,7 +146,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
     /**
      * Constructs a new ConnectionDep from this partial wire and another anchor
      *
-     * @param target the Anchor to which the other end of this should be connection to.
+     * @param target the Anchor to which the other endDot of this should be connection to.
      * @return the newly build ConnectionDep or null if it's not possible
      */
     public ConnectionDep buildConnectionTo(ConnectionAnchor target) {
@@ -219,7 +219,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
     }
 
     /**
-     * Sets the free end coordinates for this wire.
+     * Sets the free endDot coordinates for this wire.
      *
      * @param point coordinates local to this wire's parent.
      */
@@ -245,7 +245,7 @@ public class DrawWire extends CubicCurve implements ChangeListener<Transform>, C
     }
 
     /**
-     * A circular area at the open end of the draw wire for handling multi finger touch actions.
+     * A circular area at the open endDot of the draw wire for handling multi finger touch actions.
      * This area has as a workaround a hole in the middle to be able to pick the thing behind it on release.
      */
     private class TouchArea extends Path {
