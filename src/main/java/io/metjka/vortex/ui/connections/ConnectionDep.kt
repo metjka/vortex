@@ -13,7 +13,9 @@ import javafx.scene.transform.Transform
  * Created by Ihor Salnikov on 1.3.2017, 9:30 PM.
  * https://github.com/metjka/VORT
  */
-class ConnectionDep<R>(val start: OutputAnchor<R>, val end: InputAnchor<R>) : CubicCurve(), ChangeListener<Transform>, Bundleable, ComponentLoader {
+class ConnectionDep<R>(val start: OutputAnchor<R>,
+                       val end: InputAnchor<R>) :
+        CubicCurve(), ChangeListener<Transform>, Bundleable, ComponentLoader {
 
     val BEZIER_CONTROL_OFFSET = 150.0
 
@@ -25,7 +27,7 @@ class ConnectionDep<R>(val start: OutputAnchor<R>, val end: InputAnchor<R>) : Cu
 
         this.error = false
 
-        start.topLevelPane.addConnection(this)
+        start.topLevelPane.addWire(this)
         this.invalidateAnchorPositions()
         this.start.addConnection(this)
         this.start.localToSceneTransformProperty().addListener(this)
@@ -109,7 +111,7 @@ class ConnectionDep<R>(val start: OutputAnchor<R>, val end: InputAnchor<R>) : Cu
     }
 
     protected fun updateBezierControlPoints(wire: CubicCurve) {
-        val yOffset = 150
+        val yOffset = getBezierYOffset(wire)
         wire.controlX1 = wire.startX
         wire.controlY1 = wire.startY + yOffset
 

@@ -37,7 +37,7 @@ class InputDot<T>(block: Block, image: Type) : ConnectionDot<T>(block), Componen
     override fun removeConnections() {
         if (connection.isPresent) {
             val con = connection.get()
-            connection == Optional.empty<Connection<T>>()
+            connection = Optional.empty()
             con.remove()
         }
     }

@@ -12,6 +12,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 
@@ -107,19 +108,19 @@ public class TopLevelPane extends Region implements BlockContainer, Bundleable {
         return this.getChildren().remove(menu);
     }
 
-    public boolean addConnection(ConnectionDep connectionDep) {
+    public boolean addConnection(CubicCurve connectionDep) {
         return this.wireLayer.getChildren().add(connectionDep);
     }
 
-    public boolean removeConnection(ConnectionDep connectionDep) {
+    public boolean removeConnection(CubicCurve connectionDep) {
         return this.wireLayer.getChildren().remove(connectionDep);
     }
 
-    public boolean addWire(DrawWire drawWire) {
+    public boolean addWire(CubicCurve drawWire) {
         return this.getChildren().add(drawWire);
     }
 
-    public boolean removeWire(DrawWire drawWire) {
+    public boolean removeWire(CubicCurve drawWire) {
         return this.getChildren().remove(drawWire);
     }
 

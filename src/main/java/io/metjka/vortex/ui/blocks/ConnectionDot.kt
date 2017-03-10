@@ -34,12 +34,12 @@ abstract class ConnectionDot<X>(val block: Block) : Circle() {
                         connectionDot.removeConnections()
                     }
 
-                    return Connection<X>(connectionDot as InputDot<X>)
+                    return Connection<X>(connectionDot as InputDot<X>, connectionDot.topLevelPane)
                 }
                 is OutputAnchor<*> -> {
                     log.info("Drawing from output dot!")
 
-                    return Connection<X>(connectionDot as OutputDot<X>)
+                    return Connection<X>(connectionDot as OutputDot<X>, connectionDot.topLevelPane)
                 }
                 else -> throw IllegalArgumentException("Wrong connection type!")
             }
@@ -50,26 +50,26 @@ abstract class ConnectionDot<X>(val block: Block) : Circle() {
 
         wireInProgress = true
 
-        if (!wireInProgress && !mouseEvent?.isSynthesized!!) {
+        if (!mouseEvent?.isSynthesized!!) {
             connection = Optional.of(ConnectionDot.initDraw(this))
 
         }
-        mouseEvent?.consume()
+        mouseEvent.consume()
     }
+
+    private fun handleMouseDragged(mouseEvent: MouseEvent?) {
+        log.info("OnDrag")
+        connection.ifPresent {
+            connection.get().setFreePosition(mouseEvent!!)
+        }
+    }
+
 
     private fun handleMouseReleased(mouseEvent: MouseEvent?) {
         wireInProgress = false
 
         connection.ifPresent {
-
-        }
-    }
-
-    private fun handleMouseDragged(mouseEvent: MouseEvent?) {
-        if (!wireInProgress) {
-            connection.ifPresent {
-                connection.get().setFreePosition(mouseEvent!!)
-            }
+            connection.get().remove()
         }
     }
 

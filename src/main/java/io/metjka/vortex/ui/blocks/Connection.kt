@@ -1,15 +1,18 @@
 package io.metjka.vortex.ui.blocks
 
+import io.metjka.vortex.ui.TopLevelPane
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
 import javafx.geometry.Point2D
 import javafx.scene.input.MouseEvent
+import javafx.scene.paint.Color
 import javafx.scene.shape.CubicCurve
+import javafx.scene.shape.StrokeLineCap
 import javafx.scene.transform.Transform
 import mu.KotlinLogging
 import java.util.*
 
-class Connection<T> private constructor() : CubicCurve(), ChangeListener<Transform> {
+class Connection<T> private constructor(val topLevelPane: TopLevelPane) : CubicCurve(), ChangeListener<Transform> {
 
     val log = KotlinLogging.logger { }
 
@@ -19,16 +22,35 @@ class Connection<T> private constructor() : CubicCurve(), ChangeListener<Transfo
     var endDot: InputDot<T>? = null
 
     init {
-//        set
+        topLevelPane.addWire(this)
+        stroke = Color.FORESTGREEN
+        strokeWidth = 4.0
+        strokeLineCap = StrokeLineCap.ROUND
+        fill = Color.TRANSPARENT
+//        invalidateAnchorPositions()
     }
 
-    constructor(start: OutputDot<T>) : this() {
-        start.connection = Optional.of(this)
-        start.localToSceneTransformProperty().addListener(this)
+    constructor(start: OutputDot<T>, topLevelPane: TopLevelPane) : this(topLevelPane) {
+        startDot = start
+        endDot?.connection = Optional.of(this)
+        startDot?.localToSceneTransformProperty()?.addListener(this)
 
+        setStartPosition(startDot?.getAttachmentPoint())
+        setEndPosition(startDot?.getAttachmentPoint())
     }
 
-    constructor(end: InputDot<T>) : this()
+    constructor(end: InputDot<T>, topLevelPane: TopLevelPane) : this(topLevelPane) {
+        endDot = end
+        endDot?.connection = Optional.of(this)
+        endDot?.localToSceneTransformProperty()?.addListener(this)
+
+        setStartPosition(endDot?.getAttachmentPoint())
+        setEndPosition(endDot?.getAttachmentPoint())
+    }
+
+    fun onConnectionCreated() {
+
+    }
 
     fun remove() {
         startDot?.localToSceneTransformProperty()?.removeListener(this)
@@ -36,24 +58,25 @@ class Connection<T> private constructor() : CubicCurve(), ChangeListener<Transfo
 
         startDot?.dropConnection(this)
         endDot?.removeConnections()
-//        startDot?.topLevelPane?.removeConnection(this)
+        topLevelPane.removeWire(this)
 
         endDot?.onUpdate()
     }
 
     override fun changed(observable: ObservableValue<out Transform>?, oldValue: Transform?, newValue: Transform?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        invalidateAnchorPositions()
     }
 
     fun setFreePosition(mouseEvent: MouseEvent) {
-        val scaleFactor = this.scaleX
-        val newX = this.layoutX + mouseEvent.x * scaleFactor
-        val newY = this.layoutY + mouseEvent.y * scaleFactor
+        val sceneToLocal = topLevelPane.sceneToLocal(mouseEvent.sceneX, mouseEvent.sceneY)
+        val newX = sceneToLocal.x
+        val newY = sceneToLocal.y
         val point2D = Point2D(newX, newY)
         when {
             endDot != null && startDot == null -> {
-                this.endX = point2D.x
-                this.setEndY(point2D.y)
+                startX = point2D.x
+                startY = point2D.y
+
             }
             startDot != null && endDot == null -> {
                 this.startX = point2D.x
@@ -63,11 +86,15 @@ class Connection<T> private constructor() : CubicCurve(), ChangeListener<Transfo
                 log.error("Wtf!")
             }
         }
+        strokeDashArray.clear()
+        updateBezierControlPoints(this)
     }
-     fun invalidateAnchorPositions() {
+
+    fun invalidateAnchorPositions() {
         this.setStartPosition(this.startDot?.getAttachmentPoint())
         this.setEndPosition(this.endDot?.getAttachmentPoint())
     }
+
     private fun setStartPosition(point: Point2D?) {
         point?.let {
             this.startX = point.x
@@ -86,14 +113,17 @@ class Connection<T> private constructor() : CubicCurve(), ChangeListener<Transfo
     }
 
     protected fun updateBezierControlPoints(wire: CubicCurve) {
-        val yOffset = 150
-        wire.controlX1 = wire.startX
-        wire.controlY1 = wire.startY + yOffset
-        wire.controlX2 = wire.endX
-        wire.controlY2 = wire.endY - yOffset
+        val yOffset = getBezierYOffset(wire)
+        wire.controlX1 = wire.startX + yOffset
+        wire.controlY1 = wire.startY
+
+        wire.controlX2 = wire.endX - yOffset
+        wire.controlY2 = wire.endY
     }
+
     private fun getBezierYOffset(wire: CubicCurve): Double {
         val distX = Math.abs(wire.endX - wire.startX) / 3
+
         val diffY = wire.endY - wire.startY
 
         val distY = if (diffY > 0) {

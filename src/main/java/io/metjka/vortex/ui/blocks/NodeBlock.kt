@@ -12,14 +12,13 @@ import java.util.*
 class NodeBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, NodeBlock::class.simpleName) {
 
     @FXML
-    var inputSpace: Pane? = null
+    lateinit var inputSpace: Pane
 
     val inputDot = InputDot<FastImage>(this, Type.IMAGE)
 
     init {
-        inputSpace?.children?.add(0, inputDot)
+        inputSpace.children?.add(0, inputDot)
     }
-
 
     override fun getAllInputs(): List<InputAnchor<*>> {
         return emptyList()
