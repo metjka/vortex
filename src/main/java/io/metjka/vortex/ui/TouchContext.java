@@ -114,7 +114,7 @@ public class TouchContext {
                 if (distance > 300) {
                     this.dropMouseCutLine();
                 } else if (distance > 75) {
-                    this.mouseCutLine.setVisible(true);
+                    this.mouseCutLine.setVisible(false);
                 }
 
             } else if (distance < 10 && lengthSQ > 100 * 100) {
