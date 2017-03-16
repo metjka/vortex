@@ -1,39 +1,80 @@
 package io.metjka.vortex.ui.blocks
 
-import io.metjka.vortex.precessing.FastImage
+import io.metjka.vortex.ui.ComponentLoader
+import io.metjka.vortex.ui.DragContext
 import io.metjka.vortex.ui.TopLevelPane
-import io.metjka.vortex.ui.Type
-import io.metjka.vortex.ui.connections.InputAnchor
-import io.metjka.vortex.ui.connections.OutputAnchor
-import javafx.fxml.FXML
-import javafx.scene.layout.Pane
-import java.util.*
+import io.metjka.vortex.ui.connections.ConnectionDot
+import io.metjka.vortex.ui.connections.InputDot
+import io.metjka.vortex.ui.connections.OutputDot
+import javafx.geometry.BoundingBox
+import javafx.geometry.Bounds
+import javafx.scene.layout.StackPane
+import java.util.stream.Collectors
 
-class NodeBlock(topLevelPane: TopLevelPane) : Block(topLevelPane, NodeBlock::class.simpleName) {
+abstract class NodeBlock(val topLevelPane: TopLevelPane, blockName: String?) : StackPane(), ComponentLoader {
 
-    @FXML
-    lateinit var inputSpace: Pane
-
-    val inputDot = InputDot<FastImage>(this, Type.IMAGE)
+    val dragContext: DragContext
 
     init {
-        inputSpace.children?.add(0, inputDot)
+        loadFXML(blockName)
+
+        topLevelPane.attachBlock(this)
+        isPickOnBounds = false
+
+        dragContext = DragContext(this)
+        dragContext.setDragFinishAction { refreshContainer() }
+        dragContext.setContactAction { styleClass.add("activated") }
+        dragContext.setReleaseAction { styleClass.removeAll("activated") }
     }
 
-    override fun getAllInputs(): List<InputAnchor<*>> {
-        return emptyList()
+    abstract fun getAllInputs(): List<InputDot<*>>
+    abstract fun getAllOutputs(): List<OutputDot<*>>
+    abstract fun getNewCopy(): NodeBlock
+    abstract fun update()
+
+    fun getBodyBounds(): Bounds? {
+        val node = children.get(0)
+        return node.localToScene(node.layoutBounds)
     }
 
-    override fun getAllOutputs(): List<OutputAnchor<*>> {
-        return emptyList()
+    fun getAllConnectionDots(): List<ConnectionDot<*>> {
+        val mutableListOf = mutableListOf<ConnectionDot<*>>()
+        mutableListOf.addAll(getAllInputs())
+        mutableListOf.addAll(getAllOutputs())
+        return mutableListOf
     }
 
-    override fun update() {
-
+    fun refreshContainer() {
+        val bounds = getBodyBounds()
+        val localToParent = localToParent(sceneToLocal(bounds))
+        topLevelPane.expandToFit(BoundingBox(
+                localToParent.minX - 10,
+                localToParent.minY - 10,
+                localToParent.width + 20,
+                localToParent.height + 20
+        ))
     }
 
-    override fun getNewCopy(): Optional<Block> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    fun isBottomMost(): Boolean {
+        getAllOutputs().forEach {
+            if (it.hasConnection()) {
+                return false
+            }
+        }
+        return true
     }
+
+    fun sendUpdateDownStream() {
+        getAllOutputs().stream().flatMap {
+            return@flatMap it.getOppositeConnectionDots().stream()
+        }.collect(Collectors.toList())
+                .stream()
+                .distinct()
+                .forEach { it -> it.onUpdate() }
+    }
+
+    fun deleteAllLinks() {
+        getAllConnectionDots().forEach { it.removeConnections() }
+    }
+
 }
-

@@ -1,14 +1,15 @@
-package io.metjka.vortex.ui.blocks
+package io.metjka.vortex.ui.connections
 
-import io.metjka.vortex.ui.BlockContainer
 import io.metjka.vortex.ui.ComponentLoader
+import io.metjka.vortex.ui.NodeBlockContainer
 import io.metjka.vortex.ui.Type
+import io.metjka.vortex.ui.blocks.NodeBlock
 import javafx.fxml.FXML
 import javafx.geometry.Point2D
 import javafx.scene.shape.Circle
 import java.util.*
 
-class InputDot<T>(block: Block, image: Type) : ConnectionDot<T>(block), ComponentLoader {
+class InputDot<T>(block: NodeBlock, image: Type) : ConnectionDot<T>(block), ComponentLoader {
 
     @FXML
     var circle: Circle? = null
@@ -26,12 +27,8 @@ class InputDot<T>(block: Block, image: Type) : ConnectionDot<T>(block), Componen
         return topLevelPane.sceneToLocal(localToScene(Point2D(0.0, 0.0)))
     }
 
-    override fun setNearbyWireReaction(goodness: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getContainer(): BlockContainer {
-        return block.getContainer()
+    override fun getContainer(): NodeBlockContainer {
+        return block.topLevelPane
     }
 
     override fun removeConnections() {

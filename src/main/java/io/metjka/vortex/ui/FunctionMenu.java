@@ -68,10 +68,10 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button closeButton = new MenuButton("Close", bm -> close(bm));
         closeButton.getStyleClass().add("escape");
 
-        Button outputBlock = new MenuButton("Output", bm -> addBlock(new MathOutputBlock(parent)));
-        Button mathBlock = new MenuButton("Math", bm -> addBlock(new MathBlock(parent)));
-        Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ConstantBlock(parent)));
-        Button node = new MenuButton("Node", bm -> addBlock(new NodeBlock(parent)));
+        Button outputBlock = new MenuButton("Output", bm -> addBlock(new NodeTestBlock(parent)));
+        Button mathBlock = new MenuButton("Math", bm -> addBlock(new NodeInputBlock(parent)));
+//        Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ConstantBlock(parent)));
+//        Button node = new MenuButton("Node", bm -> addBlock(new NodeTestBlock(parent)));
 //        Button imageBlock = new MenuButton("Image", bm -> addBlock(new ImageBlock(parent)));
 //        Button convolutionBlock = new MenuButton("Convolution", bm -> addBlock(new ConvolutionBlock(parent)));
 //        Button imagePreviewBlock = new MenuButton("Image Output", bm -> addBlock(new ImageOutputBlock(parent)));
@@ -86,7 +86,9 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
 //        Button hueSaturationBlock = new MenuButton("HSB", bm -> addBlock(new HueSaturationValueBlock(parent)));
 
         utilSpace.getChildren().addAll(
-                closeButton, outputBlock, constantBlock, mathBlock, node
+                closeButton, outputBlock, mathBlock
+//                ,
+//                constantBlock, mathBlock, node
 //                , imageBlock, convolutionBlock, imagePreviewBlock,
 //                invertBlock, greyscaleBlock, sobelBlock, sepiaBlock, rotateBlock, brightnessBlock, gammaBlock,
 //                contrastBlock, hueSaturationBlock
@@ -107,7 +109,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         opening.play();
     }
 
-    private void addBlock(Block block) {
+    private void addBlock(NodeBlock block) {
         parent.addBlock(block);
         Bounds menuBounds = this.getBoundsInParent();
         int offSetY = (this.blockCounter % 5) * 20 + (block.getAllOutputs().isEmpty() ? 250 : 125);
@@ -128,7 +130,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         this.blockCounter++;
     }
 
-    private void addDraggedBlock(TouchPoint touchPoint, Block block) {
+    private void addDraggedBlock(TouchPoint touchPoint, NodeBlock block) {
         Point2D pos = parent.sceneToLocal(touchPoint.getSceneX(), touchPoint.getSceneY());
         parent.addBlock(block);
         block.relocate(pos.getX(), pos.getY());

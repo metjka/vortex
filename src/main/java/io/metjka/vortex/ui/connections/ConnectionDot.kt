@@ -1,14 +1,17 @@
-package io.metjka.vortex.ui.blocks
+package io.metjka.vortex.ui.connections
 
-import io.metjka.vortex.ui.BlockContainer
-import io.metjka.vortex.ui.connections.OutputAnchor
+import io.metjka.vortex.ui.NodeBlockContainer
+import io.metjka.vortex.ui.blocks.NodeBlock
+import io.metjka.vortex.ui.connections.Connection
+import io.metjka.vortex.ui.connections.InputDot
+import io.metjka.vortex.ui.connections.OutputDot
 import javafx.geometry.Point2D
 import javafx.scene.input.MouseEvent
 import javafx.scene.shape.Circle
 import mu.KotlinLogging
 import java.util.*
 
-abstract class ConnectionDot<X>(val block: Block) : Circle() {
+abstract class ConnectionDot<X>(val block: NodeBlock) : Circle() {
 
     val log = KotlinLogging.logger { }
 
@@ -36,7 +39,7 @@ abstract class ConnectionDot<X>(val block: Block) : Circle() {
 
                     return Connection<X>(connectionDot as InputDot<X>, connectionDot.topLevelPane)
                 }
-                is OutputAnchor<*> -> {
+                is OutputDot<*> -> {
                     log.info("Drawing from output dot!")
 
                     return Connection<X>(connectionDot as OutputDot<X>, connectionDot.topLevelPane)
@@ -51,7 +54,7 @@ abstract class ConnectionDot<X>(val block: Block) : Circle() {
         wireInProgress = true
 
         if (!mouseEvent?.isSynthesized!!) {
-            connection = Optional.of(ConnectionDot.initDraw(this))
+            connection = Optional.of(initDraw(this))
 
         }
         mouseEvent.consume()
@@ -76,7 +79,6 @@ abstract class ConnectionDot<X>(val block: Block) : Circle() {
     abstract fun removeConnections()
     abstract fun hasConnection(): Boolean
     abstract fun getAttachmentPoint(): Point2D
-    abstract fun setNearbyWireReaction(goodness: Int)
-    abstract fun getContainer(): BlockContainer
+    abstract fun getContainer(): NodeBlockContainer
 
 }

@@ -1,6 +1,8 @@
-package io.metjka.vortex.ui.blocks
+package io.metjka.vortex.ui.connections
 
 import io.metjka.vortex.ui.TopLevelPane
+import io.metjka.vortex.ui.connections.InputDot
+import io.metjka.vortex.ui.connections.OutputDot
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
 import javafx.geometry.Point2D
@@ -22,7 +24,7 @@ class Connection<T> private constructor(val topLevelPane: TopLevelPane) : CubicC
     var endDot: InputDot<T>? = null
 
     init {
-        topLevelPane.addWire(this)
+        topLevelPane.addConnection(this)
         stroke = Color.FORESTGREEN
         strokeWidth = 4.0
         strokeLineCap = StrokeLineCap.ROUND
@@ -48,17 +50,13 @@ class Connection<T> private constructor(val topLevelPane: TopLevelPane) : CubicC
         setEndPosition(endDot?.getAttachmentPoint())
     }
 
-    fun onConnectionCreated() {
-
-    }
-
     fun remove() {
         startDot?.localToSceneTransformProperty()?.removeListener(this)
         endDot?.localToSceneTransformProperty()?.removeListener(this)
 
         startDot?.dropConnection(this)
         endDot?.removeConnections()
-        topLevelPane.removeWire(this)
+        topLevelPane.removeConnection(this)
 
         endDot?.onUpdate()
     }
@@ -112,7 +110,7 @@ class Connection<T> private constructor(val topLevelPane: TopLevelPane) : CubicC
         }
     }
 
-    protected fun updateBezierControlPoints(wire: CubicCurve) {
+    private fun updateBezierControlPoints(wire: CubicCurve) {
         val yOffset = getBezierYOffset(wire)
         wire.controlX1 = wire.startX + yOffset
         wire.controlY1 = wire.startY

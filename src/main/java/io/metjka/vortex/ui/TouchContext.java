@@ -23,7 +23,7 @@ public class TouchContext {
     /**
      * The container this context handling events for.
      */
-    private final BlockContainer container;
+    private final NodeBlockContainer container;
 
     /**
      * the last mouse Position the pan action was handled for
@@ -47,7 +47,7 @@ public class TouchContext {
      */
     private Line mouseCutLine;
 
-    public TouchContext(BlockContainer container, boolean willPanTouchArea) {
+    public TouchContext(NodeBlockContainer container, boolean willPanTouchArea) {
         super();
         this.container = container;
         this.willPanTouchArea = willPanTouchArea;
