@@ -58,7 +58,6 @@ abstract class ConnectionDot<X>(val block: Block) : Circle() {
     }
 
     private fun handleMouseDragged(mouseEvent: MouseEvent?) {
-        log.info("OnDrag")
         connection.ifPresent {
             connection.get().setFreePosition(mouseEvent!!)
         }
