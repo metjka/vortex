@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
-    <BorderPane>
-        <top>
-            <BorderPane styleClass="value, block" pickOnBounds="false">
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<fx:root type="StackPane" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox prefWidth="100.0">
+        <stylesheets>
+            <URL value="@layout.css"/>
+            <URL value="@colours.css"/>
+        </stylesheets>
+        <styleClass>
+            <String fx:value="value"/>
+            <String fx:value="block"/>
+        </styleClass>
+        <HBox alignment="TOP_CENTER" minHeight="20.0" styleClass="header">
+            <Label text="Constant" textFill="WHITE"/>
+        </HBox>
+        <VBox styleClass="blockcontent">
+            <BorderPane>
+                <left>
+                </left>
                 <center>
-                    <Label styleClass="labra">Constant</Label>
-                    <TextField fx:id="textField" maxWidth="120"/>
+                    <Pane BorderPane.alignment="CENTER">
+                        <Label alignment="CENTER" text="Image" textFill="WHITE">
+                            <padding>
+                                <Insets left="6.0"/>
+                            </padding>
+                        </Label>
+                    </Pane>
                 </center>
+                <right>
+                    <StackPane fx:id="inputSpace" minHeight="20.0" prefHeight="20.0" BorderPane.alignment="CENTER"/>
+                </right>
             </BorderPane>
-        </top>
-        <bottom>
-            <VBox fx:id="outputSpace" pickOnBounds="false" styleClass="space"/>
-        </bottom>
-    </BorderPane>
-
-
+        </VBox>
+    </VBox>
 </fx:root>
