@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
 <?import java.net.URL?>
@@ -18,17 +18,15 @@
         <HBox alignment="TOP_CENTER" minHeight="20.0" styleClass="header">
             <Label text="Constant" textFill="WHITE"/>
         </HBox>
-        <VBox styleClass="blockcontent">
+        <VBox prefHeight="43.0" prefWidth="107.0" styleClass="blockcontent">
             <BorderPane>
                 <left>
                 </left>
                 <center>
                     <Pane BorderPane.alignment="CENTER">
-                        <Label alignment="CENTER" text="Image" textFill="WHITE">
-                            <padding>
-                                <Insets left="6.0"/>
-                            </padding>
-                        </Label>
+                        <TextField maxHeight="20.0" minHeight="27.0" prefHeight="20.0" prefWidth="128.0"
+                                   styleClass="inputValue">
+                        </TextField>
                     </Pane>
                 </center>
                 <right>

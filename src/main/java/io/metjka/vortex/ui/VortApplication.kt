@@ -12,7 +12,6 @@ import java.util.prefs.Preferences
  */
 class VortApplication : Application() {
 
-
     companion object {
 
         var stagee: Stage? = null
@@ -46,6 +45,5 @@ class VortApplication : Application() {
         primaryStage?.show()
 
         toplevelPane.requestFocus()
-
     }
 }
