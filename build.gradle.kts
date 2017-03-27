@@ -15,19 +15,6 @@ buildscript {
 
 }
 
-plugins {
-    application
-}
-
-application {
-    mainClassName = "io.metjka.vortex.ui.VortApplication"
-}
-
-java {
-    sourceCompatibility = VERSION_1_8
-    targetCompatibility = VERSION_1_8
-
-}
 apply {
     plugin("kotlin")
 }

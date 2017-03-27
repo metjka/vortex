@@ -13,6 +13,8 @@
 
 # IntelliJ
 /out/
+reports
+classes
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
