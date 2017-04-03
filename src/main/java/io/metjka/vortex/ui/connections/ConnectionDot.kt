@@ -16,6 +16,7 @@ abstract class ConnectionDot<X>(val block: NodeBlock) : Circle() {
     val log = KotlinLogging.logger { }
 
     var connection: Optional<Connection<X>> = Optional.empty()
+    var connectionDrawer: Optional<ConnectionDrawer> = Optional.empty()
     var wireInProgress: Boolean = false
 
     val topLevelPane = block.topLevelPane
@@ -27,7 +28,7 @@ abstract class ConnectionDot<X>(val block: NodeBlock) : Circle() {
     }
 
     companion object {
-        fun <X> initDraw(connectionDot: ConnectionDot<X>): Connection<X> {
+        fun <X> initDraw(connectionDot: ConnectionDot<X>): ConnectionDrawer {
             val log = KotlinLogging.logger { }
             when (connectionDot) {
                 is InputDot<*> -> {
@@ -37,12 +38,12 @@ abstract class ConnectionDot<X>(val block: NodeBlock) : Circle() {
                         connectionDot.removeConnections()
                     }
 
-                    return Connection<X>(connectionDot as InputDot<X>, connectionDot.topLevelPane)
+                    return ConnectionDrawer(connectionDot as InputDot<X>, connectionDot.topLevelPane)
                 }
                 is OutputDot<*> -> {
                     log.info("Drawing from output dot!")
 
-                    return Connection<X>(connectionDot as OutputDot<X>, connectionDot.topLevelPane)
+                    return ConnectionDrawer(connectionDot as OutputDot<X>, connectionDot.topLevelPane)
                 }
                 else -> throw IllegalArgumentException("Wrong connection type!")
             }
@@ -54,7 +55,7 @@ abstract class ConnectionDot<X>(val block: NodeBlock) : Circle() {
         wireInProgress = true
 
         if (!mouseEvent?.isSynthesized!!) {
-            connection = Optional.of(initDraw(this))
+            connectionDrawer = Optional.of(initDraw(this))
 
         }
         mouseEvent.consume()

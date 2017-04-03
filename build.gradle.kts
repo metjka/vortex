@@ -15,19 +15,27 @@ buildscript {
 
 }
 
+plugins {
+    application
+}
+
+application {
+    mainClassName = "io.metjka.vortex.ui.VortApplication"
+}
+
 apply {
     plugin("kotlin")
 }
 
-tasks{
+tasks {
     "goodbye"{
         dependsOn("build")
         doLast { println("Bye!") }
     }
 }
 
-task<Wrapper>("wrapper"){
-    gradleVersion ="3.5-20170227190532+0000"
+task<Wrapper>("wrapper") {
+    gradleVersion = "3.5-20170227190532+0000"
 }
 
 repositories {
@@ -44,7 +52,7 @@ repositories {
 }
 
 dependencies {
-    compile("com.github.thomasnield" , "rxkotlinfx" , "2.0.2")
+    compile("com.github.thomasnield", "rxkotlinfx", "2.0.2")
 //    compile("io.reactivex", "rxkotlin", "0.60.0")
     compile("org.slf4j", "slf4j-simple", "1.7.22")
     compile("com.google.code.gson", "gson", "2.8.0")

@@ -17,7 +17,7 @@ class NodeTestBlock(topLevelPane: TopLevelPane) : NodeBlock(topLevelPane, NodeTe
     val inputDot = InputDot<FastImage>(this, Type.IMAGE)
 
     init {
-        inputSpace.children?.add(0, inputDot)
+        inputSpace.children.add(0, inputDot)
     }
 
     override fun getAllInputs(): List<InputDot<*>> {

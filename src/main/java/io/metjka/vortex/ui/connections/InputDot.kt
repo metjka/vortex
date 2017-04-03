@@ -12,7 +12,7 @@ import java.util.*
 class InputDot<T>(block: NodeBlock, image: Type) : ConnectionDot<T>(block), ComponentLoader {
 
     @FXML
-    var circle: Circle? = null
+    lateinit var circle: Circle
 
     init {
         loadFXML("InputDot")

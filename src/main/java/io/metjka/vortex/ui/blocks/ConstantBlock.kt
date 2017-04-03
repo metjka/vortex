@@ -4,13 +4,18 @@ import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.Type
 import io.metjka.vortex.ui.connections.InputDot
 import io.metjka.vortex.ui.connections.OutputDot
+import javafx.fxml.FXML
+import javafx.scene.layout.Pane
 
 class ConstantBlock(topLevelPane: TopLevelPane) : NodeBlock(topLevelPane, ConstantBlock::class.simpleName) {
+
+    @FXML
+    lateinit var outputSpace: Pane
 
     val outputDot = OutputDot<Number>(this, Type.NUMBER)
 
     init {
-
+        outputSpace.children?.add(0, outputDot)
     }
 
     override fun update() {

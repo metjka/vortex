@@ -31,9 +31,7 @@ TopLevelPane, TopLevelPane > Pane > Pane > Pane {
 }
 
 .value.block {
-    -fx-pref-width: 150px;
-
-    -fx-max-width: 150px;
+    -fx-max-width: 200px;
     -fx-max-height: 200px;
 }
 
