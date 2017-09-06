@@ -2,9 +2,6 @@ package io.metjka.vortex.ui.connections
 
 import io.metjka.vortex.ui.NodeBlockContainer
 import io.metjka.vortex.ui.blocks.NodeBlock
-import io.metjka.vortex.ui.connections.Connection
-import io.metjka.vortex.ui.connections.InputDot
-import io.metjka.vortex.ui.connections.OutputDot
 import javafx.geometry.Point2D
 import javafx.scene.input.MouseEvent
 import javafx.scene.shape.Circle
@@ -22,9 +19,18 @@ abstract class ConnectionDot<X>(val block: NodeBlock) : Circle() {
     val topLevelPane = block.topLevelPane
 
     init {
-        addEventHandler(MouseEvent.MOUSE_PRESSED, { handleMousePress(it) })
-        addEventHandler(MouseEvent.MOUSE_DRAGGED, { handleMouseDragged(it) })
-        addEventHandler(MouseEvent.MOUSE_RELEASED, { handleMouseReleased(it) })
+        addEventHandler(MouseEvent.MOUSE_PRESSED, {
+            handleMousePress(it)
+            it.consume()
+        })
+        addEventHandler(MouseEvent.MOUSE_DRAGGED, {
+            handleMouseDragged(it)
+            it.consume()
+        })
+        addEventHandler(MouseEvent.MOUSE_RELEASED, {
+            handleMouseReleased(it)
+            it.consume()
+        })
     }
 
     companion object {
@@ -51,9 +57,7 @@ abstract class ConnectionDot<X>(val block: NodeBlock) : Circle() {
     }
 
     private fun handleMousePress(mouseEvent: MouseEvent?) {
-
         wireInProgress = true
-
         if (!mouseEvent?.isSynthesized!!) {
             connectionDrawer = Optional.of(initDraw(this))
 
@@ -62,17 +66,18 @@ abstract class ConnectionDot<X>(val block: NodeBlock) : Circle() {
     }
 
     private fun handleMouseDragged(mouseEvent: MouseEvent?) {
-        connection.ifPresent {
-            connection.get().setFreePosition(mouseEvent!!)
+        if (connectionDrawer.isPresent) {
+            val get = connectionDrawer.get()
+            get.handleMouseDrag(mouseEvent)
         }
     }
 
 
     private fun handleMouseReleased(mouseEvent: MouseEvent?) {
         wireInProgress = false
-
-        connection.ifPresent {
-            connection.get().remove()
+        if (connectionDrawer.isPresent) {
+            val drawer = connectionDrawer.get()
+            drawer.remove()
         }
     }
 
