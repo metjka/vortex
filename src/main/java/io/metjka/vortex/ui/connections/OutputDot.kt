@@ -22,8 +22,8 @@ class OutputDot<T>(block: NodeBlock) : ConnectionDot(block), Target, ComponentLo
 
     fun getOppositeConnectionDots(): ArrayList<InputDot<*>> {
         val list = ArrayList<InputDot<*>>()
-        for (c in this.connections) {
-            c.endDot?.let {
+        for (conn in this.connections) {
+            conn.endDot?.let {
                 list.add(it)
             }
         }
@@ -53,7 +53,7 @@ class OutputDot<T>(block: NodeBlock) : ConnectionDot(block), Target, ComponentLo
     }
 
     fun onUpdate() {
-        block.update()
+//        block.update()
     }
 
     override fun removeConnections() {

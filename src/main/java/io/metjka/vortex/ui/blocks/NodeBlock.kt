@@ -1,7 +1,6 @@
 package io.metjka.vortex.ui.blocks
 
 import io.metjka.vortex.ui.ComponentLoader
-import io.metjka.vortex.ui.DragContext
 import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.connections.ConnectionDot
 import io.metjka.vortex.ui.connections.InputDot

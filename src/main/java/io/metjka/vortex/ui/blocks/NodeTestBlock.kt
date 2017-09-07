@@ -7,7 +7,6 @@ import io.metjka.vortex.ui.connections.InputDot
 import io.metjka.vortex.ui.connections.OutputDot
 import javafx.fxml.FXML
 import javafx.scene.layout.Pane
-import java.util.*
 
 class NodeTestBlock(topLevelPane: TopLevelPane) : NodeBlock(topLevelPane, NodeTestBlock::class.simpleName) {
 

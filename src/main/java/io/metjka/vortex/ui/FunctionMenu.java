@@ -68,8 +68,8 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button closeButton = new MenuButton("Close", bm -> close(bm));
         closeButton.getStyleClass().add("escape");
 
-        Button outputBlock = new MenuButton("Input", bm -> addBlock(new NodeTestBlock(parent)));
-        Button mathBlock = new MenuButton("Output", bm -> addBlock(new ConstantBlock(parent)));
+        Button outputBlock = new MenuButton("Outputblock", bm -> addBlock(new NodeTestBlock(parent)));
+        Button mathBlock = new MenuButton("Constant block", bm -> addBlock(new ConstantBlock(parent)));
 //        Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ConstantBlock(parent)));
 //        Button node = new MenuButton("Node", bm -> addBlock(new NodeTestBlock(parent)));
 //        Button imageBlock = new MenuButton("Image", bm -> addBlock(new ImageBlock(parent)));

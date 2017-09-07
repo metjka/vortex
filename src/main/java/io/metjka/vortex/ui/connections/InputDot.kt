@@ -46,5 +46,4 @@ class InputDot<T>(block: NodeBlock, image: Type) : ConnectionDot(block), Compone
         return this
     }
 
-
 }

@@ -54,7 +54,7 @@ class ConnectionDrawer private constructor(val topLevelPane: TopLevelPane) : Cub
     }
 
     override fun changed(observable: ObservableValue<out Transform>?, oldValue: Transform?, newValue: Transform?) {
-
+        println("sika")
     }
 
     private fun setFreePosition(point2D: Point2D) {
@@ -95,7 +95,7 @@ class ConnectionDrawer private constructor(val topLevelPane: TopLevelPane) : Cub
 
     fun handleRelease(mouseEvent: MouseEvent) {
         if (mouseEvent.isSynthesized) {
-
+            remove()
         } else if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             handleReleaseOn(mouseEvent.getPickResult().getIntersectedNode())
         }
@@ -108,11 +108,52 @@ class ConnectionDrawer private constructor(val topLevelPane: TopLevelPane) : Cub
         } else {
             println(findPickedAnchor)
             if (dot is OutputDot<*>) {
-                val connection = Connection(dot as OutputDot<*>, findPickedAnchor as InputDot<*>)
 
+                val conn = buildConnection(findPickedAnchor)
+                conn?.let {
+                    topLevelPane.addConnection(conn)
+                }
                 remove()
+            } else {
+                val conn = buildConnection(findPickedAnchor)
+                conn?.let {
+                    topLevelPane.addConnection(conn)
+                }
+                remove()
+
             }
         }
+    }
+
+    private fun buildConnection(target: ConnectionDot): Connection? {
+        var inp: InputDot<*>? = null
+        var out: OutputDot<*>? = null
+        when (dot) {
+            is InputDot<*> -> {
+                if (target is InputDot<*>) {
+                    return null
+                }
+                inp = dot as InputDot<*>
+                out = target as OutputDot<*>
+            }
+            is OutputDot<*> -> {
+                if (target is OutputDot<*>) {
+                    return null
+                }
+                inp = target as InputDot<*>
+                out = dot as OutputDot<*>
+
+                if (inp.hasConnection()) {
+                    inp.removeConnections()
+                }
+            }
+        }
+
+        if (inp?.block == out?.block) {
+            return null
+        }
+
+        return Connection(out, inp)
     }
 
     private fun findPickedAnchor(picked: Node): ConnectionDot? {

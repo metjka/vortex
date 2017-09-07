@@ -29,14 +29,14 @@ class Connection private constructor() : CubicCurve(), ChangeListener<Transform>
 //        invalidateAnchorPositions()
     }
 
-    constructor(start: OutputDot<*>, end: InputDot<*>) : this() {
-        topLevelPane = start.topLevelPane
+    constructor(start: OutputDot<*>?, end: InputDot<*>?) : this() {
+        topLevelPane = start?.topLevelPane!!
 
         startDot = start
         endDot = end
 
         endDot?.connection = Optional.of(this)
-        startDot?.connections?.add(this)
+        startDot?.addConnection(this)
 
         startDot?.localToSceneTransformProperty()?.addListener(this)
         endDot?.localToSceneTransformProperty()?.addListener(this)
@@ -44,9 +44,7 @@ class Connection private constructor() : CubicCurve(), ChangeListener<Transform>
         setStartPosition(startDot?.getAttachmentPoint())
         setEndPosition(startDot?.getAttachmentPoint())
 
-        topLevelPane.addConnection(this)
-
-        endDot?.onUpdate()
+        startDot?.onUpdate()
         invalidateAnchorPositions()
     }
 
@@ -90,24 +88,24 @@ class Connection private constructor() : CubicCurve(), ChangeListener<Transform>
     }
 
     fun invalidateAnchorPositions() {
-        this.setStartPosition(this.startDot?.getAttachmentPoint())
-        this.setEndPosition(this.endDot?.getAttachmentPoint())
+        setStartPosition(this.startDot?.getAttachmentPoint())
+        setEndPosition(this.endDot?.getAttachmentPoint())
     }
 
     private fun setStartPosition(point: Point2D?) {
         point?.let {
-            this.startX = point.x
-            this.startY = point.y
-            this.updateBezierControlPoints()
+            startX = point.x
+            startY = point.y
+            updateBezierControlPoints()
 
         }
     }
 
     private fun setEndPosition(point: Point2D?) {
         point?.let {
-            this.endX = point.x
-            this.endY = point.y
-            this.updateBezierControlPoints()
+            endX = point.x
+            endY = point.y
+            updateBezierControlPoints()
         }
     }
 
