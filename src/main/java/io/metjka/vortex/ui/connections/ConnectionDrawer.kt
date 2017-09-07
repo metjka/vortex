@@ -4,6 +4,8 @@ import io.metjka.vortex.ui.TopLevelPane
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
 import javafx.geometry.Point2D
+import javafx.scene.Node
+import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 import javafx.scene.paint.Color
 import javafx.scene.shape.CubicCurve
@@ -11,20 +13,21 @@ import javafx.scene.shape.StrokeLineCap
 import javafx.scene.transform.Transform
 import mu.KotlinLogging
 
-class ConnectionDrawer(val topLevelPane: TopLevelPane) : CubicCurve(), ChangeListener<Transform> {
+class ConnectionDrawer private constructor(val topLevelPane: TopLevelPane) : CubicCurve(), ChangeListener<Transform> {
 
     val log = KotlinLogging.logger { }
 
-    private lateinit var dot: ConnectionDot<*>;
+    lateinit var dot: ConnectionDot;
 
     constructor(outputDot: OutputDot<*>, topLevelPane: TopLevelPane) : this(topLevelPane) {
         dot = outputDot
-        isMouseTransparent = true
-
-        stroke = Color.FORESTGREEN
-        strokeWidth = 4.0
-        strokeLineCap = StrokeLineCap.ROUND
-        fill = Color.TRANSPARENT
+        apply {
+            isMouseTransparent = true
+            stroke = Color.BLANCHEDALMOND
+            strokeWidth = 4.0
+            strokeLineCap = StrokeLineCap.ROUND
+            fill = Color.TRANSPARENT
+        }
 
         topLevelPane.addWire(this)
         setStartPosition(dot.getAttachmentPoint())
@@ -35,32 +38,32 @@ class ConnectionDrawer(val topLevelPane: TopLevelPane) : CubicCurve(), ChangeLis
 
     constructor(inputDot: InputDot<*>, topLevelPane: TopLevelPane) : this(topLevelPane) {
         dot = inputDot
-        isMouseTransparent = true
-
-        stroke = Color.FORESTGREEN
-        strokeWidth = 4.0
-        strokeLineCap = StrokeLineCap.ROUND
-        fill = Color.TRANSPARENT
+        apply {
+            isMouseTransparent = true
+            stroke = Color.BLANCHEDALMOND
+            strokeWidth = 4.0
+            strokeLineCap = StrokeLineCap.ROUND
+            fill = Color.TRANSPARENT
+        }
 
         topLevelPane.addWire(this)
         setStartPosition(dot.getAttachmentPoint())
         setFreePosition(dot.getAttachmentPoint())
 
         updateBezierControlPoints()
-
     }
 
     override fun changed(observable: ObservableValue<out Transform>?, oldValue: Transform?, newValue: Transform?) {
 
     }
 
-    fun setFreePosition(point2D: Point2D) {
+    private fun setFreePosition(point2D: Point2D) {
         when (dot) {
-            is OutputDot -> {
+            is OutputDot<*> -> {
                 endX = point2D.x
                 endY = point2D.y
             }
-            is InputDot -> {
+            is InputDot<*> -> {
                 startX = point2D.x
                 startY = point2D.y
             }
@@ -69,13 +72,13 @@ class ConnectionDrawer(val topLevelPane: TopLevelPane) : CubicCurve(), ChangeLis
         updateBezierControlPoints()
     }
 
-    fun setStartPosition(point: Point2D) {
+    private fun setStartPosition(point: Point2D) {
         when (dot) {
-            is OutputDot -> {
+            is OutputDot<*> -> {
                 startX = point.x
                 startY = point.y
             }
-            is InputDot -> {
+            is InputDot<*> -> {
                 endX = point.x
                 endY = point.y
             }
@@ -84,11 +87,44 @@ class ConnectionDrawer(val topLevelPane: TopLevelPane) : CubicCurve(), ChangeLis
         updateBezierControlPoints()
     }
 
-    fun handleMouseDrag(event: MouseEvent?) {
-        if (event != null) {
-            val point2D = topLevelPane.sceneToLocal(event.sceneX, event.sceneY)
+    fun move(point2D: Point2D?) {
+        if (point2D != null) {
             this.setFreePosition(point2D)
         }
+    }
+
+    fun handleRelease(mouseEvent: MouseEvent) {
+        if (mouseEvent.isSynthesized) {
+
+        } else if (mouseEvent.getButton() == MouseButton.PRIMARY) {
+            handleReleaseOn(mouseEvent.getPickResult().getIntersectedNode())
+        }
+    }
+
+    private fun handleReleaseOn(node: Node) {
+        val findPickedAnchor = findPickedAnchor(node)
+        if (findPickedAnchor == null) {
+            remove()
+        } else {
+            println(findPickedAnchor)
+            if (dot is OutputDot<*>) {
+                val connection = Connection(dot as OutputDot<*>, findPickedAnchor as InputDot<*>)
+
+                remove()
+            }
+        }
+    }
+
+    private fun findPickedAnchor(picked: Node): ConnectionDot? {
+        var next: Node? = picked
+        while (next != null) {
+            if (next is Target) {
+                return next.getAssociatedDot()
+            }
+            next = next.parent
+        }
+
+        return null
     }
 
     fun remove() {

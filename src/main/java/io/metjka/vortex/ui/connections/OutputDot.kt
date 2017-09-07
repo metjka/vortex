@@ -2,29 +2,26 @@ package io.metjka.vortex.ui.connections
 
 import io.metjka.vortex.ui.ComponentLoader
 import io.metjka.vortex.ui.NodeBlockContainer
-import io.metjka.vortex.ui.Type
 import io.metjka.vortex.ui.blocks.NodeBlock
 import javafx.fxml.FXML
 import javafx.geometry.Point2D
 import javafx.scene.shape.Circle
 import java.util.*
 
-class OutputDot<T>(block: NodeBlock, val type: Type) : ConnectionDot<T>(block), ComponentLoader {
-
-
+class OutputDot<T>(block: NodeBlock) : ConnectionDot(block), Target, ComponentLoader {
     @FXML
     lateinit var circle: Circle
 
     val typedValue: T? = null
 
-    val connections: MutableList<Connection<T>> = mutableListOf()
+    val connections: MutableList<Connection> = mutableListOf()
 
     init {
         loadFXML("InputDot")
     }
 
-    fun getOppositeConnectionDots(): ArrayList<InputDot<T>> {
-        val list = ArrayList<InputDot<T>>()
+    fun getOppositeConnectionDots(): ArrayList<InputDot<*>> {
+        val list = ArrayList<InputDot<*>>()
         for (c in this.connections) {
             c.endDot?.let {
                 list.add(it)
@@ -33,11 +30,11 @@ class OutputDot<T>(block: NodeBlock, val type: Type) : ConnectionDot<T>(block), 
         return list
     }
 
-    fun addConnection(connection: Connection<T>) {
+    fun addConnection(connection: Connection) {
         connections.add(connection)
     }
 
-    fun dropConnection(connection: Connection<T>) {
+    fun dropConnection(connection: Connection) {
         if (this.connections.contains(connection)) {
             this.connections.remove(connection)
         }
@@ -66,5 +63,7 @@ class OutputDot<T>(block: NodeBlock, val type: Type) : ConnectionDot<T>(block), 
         }
     }
 
-
+    override fun getAssociatedDot(): ConnectionDot {
+        return this
+    }
 }

@@ -8,11 +8,11 @@ import javafx.scene.shape.Circle
 import mu.KotlinLogging
 import java.util.*
 
-abstract class ConnectionDot<X>(val block: NodeBlock) : Circle() {
+abstract class ConnectionDot(val block: NodeBlock) : Circle() {
 
     val log = KotlinLogging.logger { }
 
-    var connection: Optional<Connection<X>> = Optional.empty()
+    var connection: Optional<Connection> = Optional.empty()
     var connectionDrawer: Optional<ConnectionDrawer> = Optional.empty()
     var wireInProgress: Boolean = false
 
@@ -34,7 +34,7 @@ abstract class ConnectionDot<X>(val block: NodeBlock) : Circle() {
     }
 
     companion object {
-        fun <X> initDraw(connectionDot: ConnectionDot<X>): ConnectionDrawer {
+        fun initDraw(connectionDot: ConnectionDot): ConnectionDrawer {
             val log = KotlinLogging.logger { }
             when (connectionDot) {
                 is InputDot<*> -> {
@@ -44,43 +44,41 @@ abstract class ConnectionDot<X>(val block: NodeBlock) : Circle() {
                         connectionDot.removeConnections()
                     }
 
-                    return ConnectionDrawer(connectionDot as InputDot<X>, connectionDot.topLevelPane)
+                    return ConnectionDrawer(connectionDot, connectionDot.topLevelPane)
                 }
                 is OutputDot<*> -> {
                     log.info("Drawing from output dot!")
 
-                    return ConnectionDrawer(connectionDot as OutputDot<X>, connectionDot.topLevelPane)
+                    return ConnectionDrawer(connectionDot, connectionDot.topLevelPane)
                 }
                 else -> throw IllegalArgumentException("Wrong connection type!")
             }
         }
     }
 
-    private fun handleMousePress(mouseEvent: MouseEvent?) {
+    private fun handleMousePress(mouseEvent: MouseEvent) {
         wireInProgress = true
-        if (!mouseEvent?.isSynthesized!!) {
+        if (!mouseEvent.isSynthesized) {
             connectionDrawer = Optional.of(initDraw(this))
-
         }
         mouseEvent.consume()
     }
 
-    private fun handleMouseDragged(mouseEvent: MouseEvent?) {
-        if (connectionDrawer.isPresent) {
-            val get = connectionDrawer.get()
-            get.handleMouseDrag(mouseEvent)
+    private fun handleMouseDragged(mouseEvent: MouseEvent) {
+        if (connectionDrawer.isPresent && wireInProgress) {
+            val point2D: Point2D? = topLevelPane.sceneToLocal(mouseEvent.sceneX, mouseEvent.sceneY)
+            val drawer = connectionDrawer.get()
+            drawer.move(point2D)
         }
     }
 
-
-    private fun handleMouseReleased(mouseEvent: MouseEvent?) {
+    private fun handleMouseReleased(mouseEvent: MouseEvent) {
         wireInProgress = false
         if (connectionDrawer.isPresent) {
             val drawer = connectionDrawer.get()
-            drawer.remove()
+            drawer.handleRelease(mouseEvent)
         }
     }
-
 
     abstract fun removeConnections()
     abstract fun hasConnection(): Boolean

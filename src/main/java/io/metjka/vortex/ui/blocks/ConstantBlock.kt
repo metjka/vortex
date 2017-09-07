@@ -12,7 +12,7 @@ class ConstantBlock(topLevelPane: TopLevelPane) : NodeBlock(topLevelPane, Consta
     @FXML
     lateinit var outputSpace: Pane
 
-    val outputDot = OutputDot<Number>(this, Type.NUMBER)
+    val outputDot = OutputDot<Number>(this)
 
     init {
         outputSpace.children?.add(0, outputDot)

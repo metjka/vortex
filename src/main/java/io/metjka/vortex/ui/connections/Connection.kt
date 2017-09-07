@@ -1,8 +1,6 @@
 package io.metjka.vortex.ui.connections
 
 import io.metjka.vortex.ui.TopLevelPane
-import io.metjka.vortex.ui.connections.InputDot
-import io.metjka.vortex.ui.connections.OutputDot
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
 import javafx.geometry.Point2D
@@ -14,16 +12,16 @@ import javafx.scene.transform.Transform
 import mu.KotlinLogging
 import java.util.*
 
-class Connection<T> private constructor(val topLevelPane: TopLevelPane) : CubicCurve(), ChangeListener<Transform> {
+class Connection private constructor() : CubicCurve(), ChangeListener<Transform> {
 
     val log = KotlinLogging.logger { }
 
 
-    var startDot: OutputDot<T>? = null
-    var endDot: InputDot<T>? = null
+    var startDot: OutputDot<*>? = null
+    var endDot: InputDot<*>? = null
+    lateinit var topLevelPane: TopLevelPane
 
     init {
-        topLevelPane.addConnection(this)
         stroke = Color.FORESTGREEN
         strokeWidth = 4.0
         strokeLineCap = StrokeLineCap.ROUND
@@ -31,23 +29,27 @@ class Connection<T> private constructor(val topLevelPane: TopLevelPane) : CubicC
 //        invalidateAnchorPositions()
     }
 
-    constructor(start: OutputDot<T>, topLevelPane: TopLevelPane) : this(topLevelPane) {
+    constructor(start: OutputDot<*>, end: InputDot<*>) : this() {
+        topLevelPane = start.topLevelPane
+
         startDot = start
+        endDot = end
+
         endDot?.connection = Optional.of(this)
+        startDot?.connections?.add(this)
+
         startDot?.localToSceneTransformProperty()?.addListener(this)
+        endDot?.localToSceneTransformProperty()?.addListener(this)
 
         setStartPosition(startDot?.getAttachmentPoint())
         setEndPosition(startDot?.getAttachmentPoint())
+
+        topLevelPane.addConnection(this)
+
+        endDot?.onUpdate()
+        invalidateAnchorPositions()
     }
 
-    constructor(end: InputDot<T>, topLevelPane: TopLevelPane) : this(topLevelPane) {
-        endDot = end
-        endDot?.connection = Optional.of(this)
-        endDot?.localToSceneTransformProperty()?.addListener(this)
-
-        setStartPosition(endDot?.getAttachmentPoint())
-        setEndPosition(endDot?.getAttachmentPoint())
-    }
 
     fun remove() {
         startDot?.localToSceneTransformProperty()?.removeListener(this)
@@ -105,7 +107,7 @@ class Connection<T> private constructor(val topLevelPane: TopLevelPane) : CubicC
         point?.let {
             this.endX = point.x
             this.endY = point.y
-             this.updateBezierControlPoints()
+            this.updateBezierControlPoints()
         }
     }
 

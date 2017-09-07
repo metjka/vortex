@@ -37,8 +37,8 @@ abstract class NodeBlock(val topLevelPane: TopLevelPane, blockName: String?) : S
         return node.localToScene(node.layoutBounds)
     }
 
-    fun getAllConnectionDots(): List<ConnectionDot<*>> {
-        val mutableListOf = mutableListOf<ConnectionDot<*>>()
+    fun getAllConnectionDots(): List<ConnectionDot> {
+        val mutableListOf = mutableListOf<ConnectionDot>()
         mutableListOf.addAll(getAllInputs())
         mutableListOf.addAll(getAllOutputs())
         return mutableListOf

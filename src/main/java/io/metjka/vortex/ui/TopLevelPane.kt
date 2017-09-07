@@ -203,8 +203,8 @@ class TopLevelPane() : Region(), NodeBlockContainer, Bundleable {
      * *
      * @param distance the maximum 'nearby' distance.
      */
-    fun allNearbyFreeAnchors(pos: Point2D, distance: Double): List<ConnectionDot<*>> {
-        val anchors = ArrayList<ConnectionDot<*>>()
+    fun allNearbyFreeAnchors(pos: Point2D, distance: Double): List<ConnectionDot> {
+        val anchors = ArrayList<ConnectionDot>()
         val testBounds = BoundingBox(pos.x - distance, pos.y - distance, distance * 2, distance * 2)
         for (nearBlock in this.streamChildren()
                 .filter { n -> n is NodeBlock }
@@ -224,8 +224,8 @@ class TopLevelPane() : Region(), NodeBlockContainer, Bundleable {
 
     fun cutIntersectingConnections(cutter: Shape) {
         ArrayList(this.wireLayer.children).stream()
-                .filter { node -> node is Connection<*> }.forEach { node ->
-            val wire = node as Connection<*>
+                .filter { node -> node is Connection }.forEach { node ->
+            val wire = node as Connection
             if ((Shape.intersect(wire, cutter) as Path).elements.size > 0) {
                 wire.remove()
             }

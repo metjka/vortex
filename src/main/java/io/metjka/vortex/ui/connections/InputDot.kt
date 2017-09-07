@@ -9,8 +9,7 @@ import javafx.geometry.Point2D
 import javafx.scene.shape.Circle
 import java.util.*
 
-class InputDot<T>(block: NodeBlock, image: Type) : ConnectionDot<T>(block), ComponentLoader {
-
+class InputDot<T>(block: NodeBlock, image: Type) : ConnectionDot(block), ComponentLoader, Target {
     @FXML
     lateinit var circle: Circle
 
@@ -42,5 +41,10 @@ class InputDot<T>(block: NodeBlock, image: Type) : ConnectionDot<T>(block), Comp
     fun onUpdate() {
         block.update()
     }
+
+    override fun getAssociatedDot(): ConnectionDot {
+        return this
+    }
+
 
 }
