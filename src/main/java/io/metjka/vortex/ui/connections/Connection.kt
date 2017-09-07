@@ -84,7 +84,7 @@ class Connection<T> private constructor(val topLevelPane: TopLevelPane) : CubicC
             }
         }
         strokeDashArray.clear()
-        updateBezierControlPoints(this)
+        this.updateBezierControlPoints()
     }
 
     fun invalidateAnchorPositions() {
@@ -96,7 +96,7 @@ class Connection<T> private constructor(val topLevelPane: TopLevelPane) : CubicC
         point?.let {
             this.startX = point.x
             this.startY = point.y
-            updateBezierControlPoints(this)
+            this.updateBezierControlPoints()
 
         }
     }
@@ -105,40 +105,8 @@ class Connection<T> private constructor(val topLevelPane: TopLevelPane) : CubicC
         point?.let {
             this.endX = point.x
             this.endY = point.y
-            updateBezierControlPoints(this)
+             this.updateBezierControlPoints()
         }
     }
 
-}
-val BEZIER_CONTROL_OFFSET = 150.0
-
-fun updateBezierControlPoints(wire: CubicCurve) {
-    val yOffset = getBezierYOffset(wire)
-    wire.controlX1 = wire.startX + yOffset
-    wire.controlY1 = wire.startY
-
-    wire.controlX2 = wire.endX - yOffset
-    wire.controlY2 = wire.endY
-}
-
-private fun getBezierYOffset(wire: CubicCurve): Double {
-    val distX = Math.abs(wire.endX - wire.startX) / 3
-
-    val diffY = wire.endY - wire.startY
-
-    val distY = if (diffY > 0) {
-        diffY / 2
-    } else {
-        Math.max(0.0, -diffY - 10)
-    }
-    if (distY < BEZIER_CONTROL_OFFSET) {
-        if (distX < BEZIER_CONTROL_OFFSET) {
-            // short lines are extra flexible
-            return Math.max(1.0, Math.max(distX, distY))
-        } else {
-            return BEZIER_CONTROL_OFFSET
-        }
-    } else {
-        return Math.cbrt(distY / BEZIER_CONTROL_OFFSET) * BEZIER_CONTROL_OFFSET
-    }
 }

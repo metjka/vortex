@@ -30,12 +30,23 @@ class ConnectionDrawer(val topLevelPane: TopLevelPane) : CubicCurve(), ChangeLis
         setStartPosition(dot.getAttachmentPoint())
         setFreePosition(dot.getAttachmentPoint())
 
-        updateBezierControlPoints(this)
-
+        updateBezierControlPoints()
     }
 
     constructor(inputDot: InputDot<*>, topLevelPane: TopLevelPane) : this(topLevelPane) {
         dot = inputDot
+        isMouseTransparent = true
+
+        stroke = Color.FORESTGREEN
+        strokeWidth = 4.0
+        strokeLineCap = StrokeLineCap.ROUND
+        fill = Color.TRANSPARENT
+
+        topLevelPane.addWire(this)
+        setStartPosition(dot.getAttachmentPoint())
+        setFreePosition(dot.getAttachmentPoint())
+
+        updateBezierControlPoints()
 
     }
 
@@ -55,7 +66,7 @@ class ConnectionDrawer(val topLevelPane: TopLevelPane) : CubicCurve(), ChangeLis
             }
             else -> throw IllegalArgumentException("Unknown dot type!")
         }
-        updateBezierControlPoints(this)
+        updateBezierControlPoints()
     }
 
     fun setStartPosition(point: Point2D) {
@@ -70,7 +81,7 @@ class ConnectionDrawer(val topLevelPane: TopLevelPane) : CubicCurve(), ChangeLis
             }
             else -> throw IllegalArgumentException("Unknown dot type!")
         }
-        updateBezierControlPoints(this)
+        updateBezierControlPoints()
     }
 
     fun handleMouseDrag(event: MouseEvent?) {
