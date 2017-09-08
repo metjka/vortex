@@ -64,6 +64,10 @@ class OutputDot<T>(block: NodeBlock) : ConnectionDot(block), Target, ComponentLo
         block.sendUpdateDownStream()
     }
 
+    fun update() {
+        block.sendUpdateDownStream()
+    }
+
     fun getValue(): T? {
         return typedValue
     }

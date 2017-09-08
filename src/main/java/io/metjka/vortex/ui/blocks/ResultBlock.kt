@@ -22,8 +22,10 @@ class ResultBlock(topLevelPane: TopLevelPane) : NodeBlock(topLevelPane, ResultBl
 
     override fun update() {
         val opositeConnectionDot = inputDot.getOpositeConnectionDot()
-        val value = opositeConnectionDot?.getValue() as Number
-        numberInputTextField.text = value.toString()
+        val value = opositeConnectionDot?.getValue() as Number?
+        if (value != null) {
+            numberInputTextField.text = value.toString()
+        }
     }
 
     override fun getAllInputs(): List<InputDot<*>> = listOf(inputDot)

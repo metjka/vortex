@@ -25,13 +25,14 @@ class MathBlock(topLevelPane: TopLevelPane) : NodeBlock(topLevelPane, MathBlock:
     }
 
     override fun update() {
-        val value1 = inputDot1.connection.get().startDot?.getValue() as Int?
-        val value2 = inputDot2.connection.get().startDot?.getValue() as Int?
-        if ((value1 != null) && (value2 != null)) {
-            val res = value1 + value2
-            outputDot.setValue(res)
+        if (inputDot1.connection.isPresent && inputDot2.connection.isPresent) {
+            val value1 = inputDot1.connection.get().startDot?.getValue() as Int?
+            val value2 = inputDot2.connection.get().startDot?.getValue() as Int?
+            if ((value1 != null) && (value2 != null)) {
+                val res = value1 + value2
+                outputDot.setValue(res)
+            }
         }
-
 
     }
 

@@ -44,7 +44,7 @@ class Connection private constructor() : CubicCurve(), ChangeListener<Transform>
         setStartPosition(startDot?.getAttachmentPoint())
         setEndPosition(startDot?.getAttachmentPoint())
 
-//        startDot?.onUpdate()
+        startDot?.update()
         invalidateAnchorPositions()
     }
 
@@ -56,7 +56,7 @@ class Connection private constructor() : CubicCurve(), ChangeListener<Transform>
         endDot?.removeConnections()
         topLevelPane.removeConnection(this)
 
-        endDot?.onUpdate()
+//        endDot?.onUpdate()
     }
 
     override fun changed(observable: ObservableValue<out Transform>?, oldValue: Transform?, newValue: Transform?) {
