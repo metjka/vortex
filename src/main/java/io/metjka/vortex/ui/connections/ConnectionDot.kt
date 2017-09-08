@@ -33,48 +33,34 @@ abstract class ConnectionDot(val block: NodeBlock) : Circle() {
         })
     }
 
-    companion object {
-        fun initDraw(connectionDot: ConnectionDot): ConnectionDrawer {
-            val log = KotlinLogging.logger { }
-            when {
-                (connectionDot is InputDot<*>) and connectionDot.hasConnection() -> {
-                    (connectionDot as InputDot<*>).let {
-                        log.info("Drawing from input dot!")
-
-                        if (connectionDot.hasConnection()) {
-                            connectionDot.removeConnections()
-                        }
-
-                        return ConnectionDrawer(connectionDot, connectionDot.topLevelPane)
-                    }
-                }
-                (connectionDot is OutputDot<*>) and connectionDot.hasConnection() -> {
-                    (connectionDot as OutputDot<*>).let {
-                        log.info("Drawing from output dot!")
-
-                        connectionDot.removeConnections()
-
-                        return ConnectionDrawer(connectionDot, connectionDot.topLevelPane)
-                    }
-
-                }
-                connectionDot is InputDot<*> -> {
+    private fun initDraw(connectionDot: ConnectionDot): ConnectionDrawer {
+        when {
+            (connectionDot is InputDot<*>) and connectionDot.hasConnection() -> {
+                (connectionDot as InputDot<*>).let {
                     log.info("Drawing from input dot!")
-
+                    val startDot = connectionDot.connection.get().startDot!!
                     if (connectionDot.hasConnection()) {
                         connectionDot.removeConnections()
                     }
+                    return ConnectionDrawer(startDot, connectionDot.getAttachmentPoint())
+                }
+            }
+            connectionDot is InputDot<*> -> {
+                log.info("Drawing from input dot!")
 
-                    return ConnectionDrawer(connectionDot, connectionDot.topLevelPane)
+                if (connectionDot.hasConnection()) {
+                    connectionDot.removeConnections()
                 }
-                connectionDot is OutputDot<*> -> {
-                    log.info("Drawing from output dot!")
 
-                    return ConnectionDrawer(connectionDot, connectionDot.topLevelPane)
-                }
-                else -> {
-                    throw IllegalArgumentException("Unknown behavior!")
-                }
+                return ConnectionDrawer(connectionDot)
+            }
+            connectionDot is OutputDot<*> -> {
+                log.info("Drawing from output dot!")
+
+                return ConnectionDrawer(connectionDot)
+            }
+            else -> {
+                throw IllegalArgumentException("Unknown behavior!")
             }
         }
     }

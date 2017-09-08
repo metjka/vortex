@@ -13,30 +13,17 @@ import javafx.scene.shape.StrokeLineCap
 import javafx.scene.transform.Transform
 import mu.KotlinLogging
 
-class ConnectionDrawer private constructor(val topLevelPane: TopLevelPane) : CubicCurve(), ChangeListener<Transform> {
+class ConnectionDrawer() : CubicCurve(), ChangeListener<Transform> {
 
     val log = KotlinLogging.logger { }
 
-    lateinit var dot: ConnectionDot;
+    private lateinit var dot: ConnectionDot;
 
-    constructor(outputDot: OutputDot<*>, topLevelPane: TopLevelPane) : this(topLevelPane) {
-        dot = outputDot
-        apply {
-            isMouseTransparent = true
-            stroke = Color.BLANCHEDALMOND
-            strokeWidth = 4.0
-            strokeLineCap = StrokeLineCap.ROUND
-            fill = Color.TRANSPARENT
-        }
+    lateinit var topLevelPane: TopLevelPane
 
-        topLevelPane.addWire(this)
-        setStartPosition(dot.getAttachmentPoint())
-        setFreePosition(dot.getAttachmentPoint())
+    constructor(inputDot: ConnectionDot, startPoint2D: Point2D? = null) : this() {
+        topLevelPane = inputDot.topLevelPane
 
-        updateBezierControlPoints()
-    }
-
-    constructor(inputDot: InputDot<*>, topLevelPane: TopLevelPane) : this(topLevelPane) {
         dot = inputDot
         apply {
             isMouseTransparent = true
@@ -47,8 +34,14 @@ class ConnectionDrawer private constructor(val topLevelPane: TopLevelPane) : Cub
         }
 
         topLevelPane.addWire(this)
+
         setStartPosition(dot.getAttachmentPoint())
-        setFreePosition(dot.getAttachmentPoint())
+
+        if (startPoint2D != null) {
+            setFreePosition(startPoint2D)
+        } else {
+            setFreePosition(dot.getAttachmentPoint())
+        }
 
         updateBezierControlPoints()
     }
@@ -96,8 +89,8 @@ class ConnectionDrawer private constructor(val topLevelPane: TopLevelPane) : Cub
     fun handleRelease(mouseEvent: MouseEvent) {
         if (mouseEvent.isSynthesized) {
             remove()
-        } else if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            handleReleaseOn(mouseEvent.getPickResult().getIntersectedNode())
+        } else if (mouseEvent.button == MouseButton.PRIMARY) {
+            handleReleaseOn(mouseEvent.pickResult.intersectedNode)
         }
     }
 
@@ -168,7 +161,7 @@ class ConnectionDrawer private constructor(val topLevelPane: TopLevelPane) : Cub
         return null
     }
 
-    fun remove() {
+    private fun remove() {
         topLevelPane.removeWire(this)
     }
 
