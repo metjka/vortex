@@ -1,156 +1,111 @@
 package io.metjka.vortex.ui.connections
 
-import io.metjka.vortex.ui.ComponentLoader
-import io.metjka.vortex.ui.serialize.Bundleable
+import io.metjka.vortex.ui.TopLevelPane
 import javafx.beans.value.ChangeListener
 import javafx.beans.value.ObservableValue
 import javafx.geometry.Point2D
+import javafx.scene.input.MouseEvent
 import javafx.scene.paint.Color
 import javafx.scene.shape.CubicCurve
+import javafx.scene.shape.StrokeLineCap
 import javafx.scene.transform.Transform
+import mu.KotlinLogging
+import java.util.*
 
-/**
- * Created by Ihor Salnikov on 1.3.2017, 9:30 PM.
- * https://github.com/metjka/VORT
- */
-class Connection<R>(val start: OutputAnchor<R>, val end: InputAnchor<R>) : CubicCurve(), ChangeListener<Transform>, Bundleable, ComponentLoader {
+class Connection private constructor() : CubicCurve(), ChangeListener<Transform> {
 
-    val BEZIER_CONTROL_OFFSET = 150.0
+    val log = KotlinLogging.logger { }
 
-    private var error: Boolean
+
+    var startDot: OutputDot<*>? = null
+    var endDot: InputDot<*>? = null
+    lateinit var topLevelPane: TopLevelPane
 
     init {
-        this.isMouseTransparent = true
-        this.fill = null
-
-        this.error = false
-
-        start.topLevelPane.addConnection(this)
-        this.invalidateAnchorPositions()
-        this.start.addConnection(this)
-        this.start.localToSceneTransformProperty().addListener(this)
-
-        this.end.setConnection(this)
-        this.end.localToSceneTransformProperty().addListener(this)
-        this.end.onUpdate()
-
+        stroke = Color.FORESTGREEN
+        strokeWidth = 4.0
+        strokeLineCap = StrokeLineCap.ROUND
+        fill = Color.TRANSPARENT
+//        invalidateAnchorPositions()
     }
 
-    companion object {
-        val BEZIER_CONTROL_OFFSET = 150.0
+    constructor(start: OutputDot<*>?, end: InputDot<*>?) : this() {
+        topLevelPane = start?.topLevelPane!!
 
-        protected fun lengthSquared(wire: CubicCurve): Double {
-            val diffX = wire.startX - wire.endX
-            val diffY = wire.startY - wire.endY
-            return diffX * diffX + diffY * diffY
-        }
+        startDot = start
+        endDot = end
 
-        protected fun updateBezierControlPoints(wire: CubicCurve) {
-            val yOffset = getBezierYOffset(wire)
-            wire.controlX1 = wire.startX
-            wire.controlY1 = wire.startY + yOffset
-            wire.controlX2 = wire.endX
-            wire.controlY2 = wire.endY - yOffset
-        }
+        endDot?.connection = Optional.of(this)
+        startDot?.addConnection(this)
 
-        private fun getBezierYOffset(wire: CubicCurve): Double {
-            val distX = Math.abs(wire.endX - wire.startX) / 3
-            val diffY = wire.endY - wire.startY
-            val distY = if (diffY > 0) diffY / 2 else Math.max(0.0, -diffY - 10)
-            if (distY < BEZIER_CONTROL_OFFSET) {
-                if (distX < BEZIER_CONTROL_OFFSET) {
-                    // short lines are extra flexible
-                    return Math.max(1.0, Math.max(distX, distY))
-                } else {
-                    return BEZIER_CONTROL_OFFSET
-                }
-            } else {
-                return Math.cbrt(distY / BEZIER_CONTROL_OFFSET) * BEZIER_CONTROL_OFFSET
-            }
-        }
-    }
+        startDot?.localToSceneTransformProperty()?.addListener(this)
+        endDot?.localToSceneTransformProperty()?.addListener(this)
 
-    private fun invalidateAnchorPositions() {
-        this.setStartPosition(this.start.getAttachmentPoint())
-        this.setEndPosition(this.end.getAttachmentPoint())
+        setStartPosition(startDot?.getAttachmentPoint())
+        setEndPosition(startDot?.getAttachmentPoint())
+
+//        startDot?.onUpdate()
+        invalidateAnchorPositions()
     }
 
     fun remove() {
-        start.localToSceneTransformProperty().removeListener(this)
-        end.localToSceneTransformProperty().removeListener(this)
+        startDot?.localToSceneTransformProperty()?.removeListener(this)
+        endDot?.localToSceneTransformProperty()?.removeListener(this)
 
-        start.dropConnection(this)
-        end.removeConnections()
-        start.topLevelPane.removeConnection(this)
+        startDot?.dropConnection(this)
+        endDot?.removeConnections()
+        topLevelPane.removeConnection(this)
 
-        start.invalidateVisualState()
-        end.onUpdate()
+        endDot?.onUpdate()
     }
 
     override fun changed(observable: ObservableValue<out Transform>?, oldValue: Transform?, newValue: Transform?) {
         invalidateAnchorPositions()
     }
 
+    fun setFreePosition(mouseEvent: MouseEvent) {
+        val sceneToLocal = topLevelPane.sceneToLocal(mouseEvent.sceneX, mouseEvent.sceneY)
+        val newX = sceneToLocal.x
+        val newY = sceneToLocal.y
+        val point2D = Point2D(newX, newY)
+        when {
+            endDot != null && startDot == null -> {
+                startX = point2D.x
+                startY = point2D.y
+
+            }
+            startDot != null && endDot == null -> {
+                this.startX = point2D.x
+                this.setStartY(point2D.y)
+            }
+            else -> {
+                log.error("Wtf!")
+            }
+        }
+        strokeDashArray.clear()
+        this.updateBezierControlPoints()
+    }
+
+    fun invalidateAnchorPositions() {
+        setStartPosition(this.startDot?.getAttachmentPoint())
+        setEndPosition(this.endDot?.getAttachmentPoint())
+    }
+
     private fun setStartPosition(point: Point2D?) {
         point?.let {
-            this.startX = point.x
-            this.startY = point.y
-            updateBezierControlPoints(this)
+            startX = point.x
+            startY = point.y
+            updateBezierControlPoints()
 
         }
     }
 
     private fun setEndPosition(point: Point2D?) {
         point?.let {
-            this.endX = point.x
-            this.endY = point.y
-            updateBezierControlPoints(this)
+            endX = point.x
+            endY = point.y
+            updateBezierControlPoints()
         }
     }
 
-    protected fun updateBezierControlPoints(wire: CubicCurve) {
-        val yOffset = getBezierYOffset(wire)
-        wire.controlX1 = wire.startX
-        wire.controlY1 = wire.startY + yOffset
-        wire.controlX2 = wire.endX
-        wire.controlY2 = wire.endY - yOffset
-    }
-
-    private fun getBezierYOffset(wire: CubicCurve): Double {
-        val distX = Math.abs(wire.endX - wire.startX) / 3
-        val diffY = wire.endY - wire.startY
-        val distY = if (diffY > 0) diffY / 2 else Math.max(0.0, -diffY - 10)
-        if (distY < BEZIER_CONTROL_OFFSET) {
-            if (distX < BEZIER_CONTROL_OFFSET) {
-                // short lines are extra flexible
-                return Math.max(1.0, Math.max(distX, distY))
-            } else {
-                return BEZIER_CONTROL_OFFSET
-            }
-        } else {
-            return Math.cbrt(distY / BEZIER_CONTROL_OFFSET) * BEZIER_CONTROL_OFFSET
-        }
-    }
-
-    fun hasError(): Boolean {
-        return error
-    }
-
-    fun invalidateVisualState() {
-        this.error = !this.end.getContainer().isContainedWithin(this.start.getContainer())
-
-        if (this.error) {
-            this.stroke = Color.RED
-            this.strokeDashArray.clear()
-            this.setStrokeWidth(3.0)
-        } else {
-            this.stroke = Color.BLACK
-            this.strokeDashArray.clear()
-            this.setStrokeWidth(3.0)
-        }
-    }
-
-    override fun toBundle(): MutableMap<String, Any> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

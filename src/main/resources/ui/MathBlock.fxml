@@ -1,52 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
-<?import javafx.scene.control.Label?>
-<fx:root type="StackPane" xmlns:fx="http://javafx.com/fxml/">
+<?import java.net.URL?>
+<fx:root type="StackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
 
-    <BorderPane>
-        <top>
-            <HBox alignment="CENTER" spacing="50">
-                <VBox fx:id="inputSpace1" pickOnBounds="false" alignment="CENTER">
-                    <Label styleClass="inputType">Int</Label>
-                </VBox>
-                <VBox fx:id="inputSpace2" pickOnBounds="false" alignment="CENTER">
-                    <Label styleClass="inputType" alignment="CENTER">Int</Label>
-                </VBox>
-            </HBox>
-        </top>
-        <center>
-            <BorderPane styleClass="block, value" pickOnBounds="false">
-                <center>
-                    <VBox alignment="TOP_CENTER">
-                        <Label styleClass="labra">Math</Label>
-                        <ComboBox fx:id="methodComboBox">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="ADD"/>
-                                    <String fx:value="EXT"/>
-                                    <String fx:value="MIX"/>
-                                    <String fx:value="MIN"/>
-                                    <String fx:value="MAX"/>
-                                    <String fx:value="MULL"/>
-                                </FXCollections>
-                            </items>
-                        </ComboBox>
-                        <VBox minHeight="5"/>
-                        <TextField fx:id="textField" maxWidth="120" editable="false"/>
-                    </VBox>
-                </center>
+    <VBox minWidth="180" prefWidth="150" styleClass="block, value">
+        <stylesheets>
+            <URL value="@layout.css"/>
+            <URL value="@colours.css"/>
+        </stylesheets>
+        <HBox alignment="TOP_CENTER" minHeight="20.0" styleClass="header">
+            <Label text="Math" textFill="WHITE"/>
+        </HBox>
+        <VBox styleClass="blockcontent">
+            <BorderPane>
+                <left>
+                    <BorderPane pickOnBounds="false">
+                        <center>
+                            <VBox alignment="TOP_CENTER">
+                                <ComboBox fx:id="methodComboBox" maxWidth="-Infinity" prefWidth="130.0"
+                                          promptText="ADD">
+                                    <items>
+
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="ADD"/>
+                                            <String fx:value="EXT"/>
+                                            <String fx:value="MIX"/>
+                                            <String fx:value="MIN"/>
+                                            <String fx:value="MAX"/>
+                                            <String fx:value="MULL"/>
+                                        </FXCollections>
+                                    </items>
+                                    <VBox.margin>
+                                        <Insets left="5.0" top="5.0"/>
+                                    </VBox.margin>
+                                </ComboBox>
+                                <VBox minHeight="5"/>
+                            </VBox>
+                        </center>
+                    </BorderPane>
+                </left>
+                <right>
+                    <StackPane fx:id="outputSpace" minHeight="20.0" prefHeight="20.0"/>
+                </right>
             </BorderPane>
-        </center>
-
-        <bottom>
-            <VBox fx:id="outputSpace" pickOnBounds="false" alignment="CENTER">
-                <Label fx:id="outType" styleClass="inputType">Int</Label>
-            </VBox>
-        </bottom>
-    </BorderPane>
-
+            <BorderPane>
+                <left>
+                    <StackPane fx:id="inputSpace1" minHeight="20.0" prefHeight="20.0"/>
+                </left>
+            </BorderPane>
+            <BorderPane>
+                <left>
+                    <StackPane fx:id="inputSpace2" minHeight="20.0" prefHeight="20.0"/>
+                </left>
+            </BorderPane>
+        </VBox>
+    </VBox>
 </fx:root>

@@ -3,16 +3,13 @@ version '1.2'
 
 buildscript {
 
-    ext.kotlin_version = '1.1.1'
+    ext.kotlin_version = '1.1.4-3'
 
     repositories {
         mavenCentral()
         jcenter()
-        maven {
-            url 'http://dl.bintray.com/kotlin/kotlin-eap-1.1/'
-        }
-    }
 
+    }
     dependencies {
         classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -24,18 +21,24 @@ apply plugin: 'kotlin'
 apply plugin: 'project-report'
 apply plugin: 'javafx-gradle-plugin'
 
-
-sourceCompatibility = 1.8
-
 repositories {
     mavenCentral()
-    maven {
-        url 'http://dl.bintray.com/kotlin/kotlin-eap-1.1/'
-    }
+}
+
+jfx {
+    // minimal requirement for jfxJar-task
+    mainClass = 'com.metjka.vort.ui.VortApplication'
+
+    // minimal requirement for jfxNative-task
+    vendor = 'Metjka'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.1'
 }
 
 dependencies {
-    compile("com.github.thomasnield:rxkotlinfx:2.0.2")
+    compile("com.github.thomasnield:rxkotlinfx:2.1.1")
 //    compile("io.reactivex:rxkotlin:0.60.0")
     compile("org.slf4j:slf4j-simple:1.7.22")
     compile("com.google.code.gson:gson:2.8.0")
@@ -46,11 +49,4 @@ dependencies {
     compile("io.github.microutils:kotlin-logging:1.4.1")
 
     testCompile("junit:junit:4.12")
-}
-jfx {
-    // minimal requirement for jfxJar-task
-    mainClass = 'com.metjka.vort.ui.VortApplication'
-
-    // minimal requirement for jfxNative-task
-    vendor = 'Metjka'
 }

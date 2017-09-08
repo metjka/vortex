@@ -23,7 +23,7 @@ public class TouchContext {
     /**
      * The container this context handling events for.
      */
-    private final BlockContainer container;
+    private final NodeBlockContainer container;
 
     /**
      * the last mouse Position the pan action was handled for
@@ -47,7 +47,7 @@ public class TouchContext {
      */
     private Line mouseCutLine;
 
-    public TouchContext(BlockContainer container, boolean willPanTouchArea) {
+    public TouchContext(NodeBlockContainer container, boolean willPanTouchArea) {
         super();
         this.container = container;
         this.willPanTouchArea = willPanTouchArea;
@@ -114,7 +114,7 @@ public class TouchContext {
                 if (distance > 300) {
                     this.dropMouseCutLine();
                 } else if (distance > 75) {
-                    this.mouseCutLine.setVisible(true);
+                    this.mouseCutLine.setVisible(false);
                 }
 
             } else if (distance < 10 && lengthSQ > 100 * 100) {

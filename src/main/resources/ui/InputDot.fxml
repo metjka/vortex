@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<fx:root type="Circle" xmlns="http://javafx.com/javafx/8.0.60"
+         xmlns:fx="http://javafx.com/fxml/1" fx:id="circle"
+         radius="7.0" stroke="chocolate" strokeType="INSIDE"
+         BorderPane.alignment="CENTER"
+/>
+
+
+

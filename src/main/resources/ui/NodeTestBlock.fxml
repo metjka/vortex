@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root type="StackPane" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox prefHeight="200.0" prefWidth="100.0">
+        <stylesheets>
+            <URL value="@layout.css"/>
+            <URL value="@colours.css"/>
+        </stylesheets>
+        <styleClass>
+            <String fx:value="value"/>
+            <String fx:value="block"/>
+        </styleClass>
+        <HBox alignment="TOP_CENTER" prefHeight="38.0" prefWidth="150.0" styleClass="header">
+            <Label text="Node" textFill="WHITE"/>
+        </HBox>
+        <VBox prefHeight="200.0" prefWidth="200.0" styleClass="blockcontent">
+            <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true"
+                       BorderPane.alignment="CENTER">
+            </ImageView>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+                <left>
+                    <StackPane fx:id="inputSpace" minHeight="20.0" prefHeight="20.0" BorderPane.alignment="CENTER"/>
+                </left>
+                <center>
+                    <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <Label alignment="CENTER" text="Image" textFill="WHITE">
+                            <padding>
+                                <Insets left="6.0"/>
+                            </padding>
+                        </Label>
+                    </Pane>
+                </center>
+            </BorderPane>
+        </VBox>
+    </VBox>
+</fx:root>

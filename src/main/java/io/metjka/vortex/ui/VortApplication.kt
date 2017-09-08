@@ -1,5 +1,6 @@
 package io.metjka.vortex.ui
 
+import io.metjka.vortex.ui.blocks.MathBlock
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.text.Font
@@ -11,7 +12,6 @@ import java.util.prefs.Preferences
  * https://github.com/metjka/VORT
  */
 class VortApplication : Application() {
-
 
     companion object {
 
@@ -27,7 +27,7 @@ class VortApplication : Application() {
 
         stagee = primaryStage
 
-        Font.loadFont(this::class.java.getResourceAsStream("/ui/fonts/titillium.otf"), 20.0)
+        Font.loadFont(this::class.java.getResourceAsStream("/ui/fonts/FiraCode-Light.otf"), 20.0)
 
         val toplevelPane = TopLevelPane()
         val mainOverlay = MainOverlay(toplevelPane)
@@ -47,5 +47,11 @@ class VortApplication : Application() {
 
         toplevelPane.requestFocus()
 
+        toplevelPane.addBlock(MathBlock(toplevelPane))
+        initApp(toplevelPane)
+    }
+
+    fun initApp(toplevelPane: TopLevelPane) {
+        toplevelPane.addBlock(MathBlock(toplevelPane))
     }
 }

@@ -25,13 +25,14 @@
                         <VBox minHeight="10"/>
 
                         <Label styleClass="labra">Saturation</Label>
-                        <Slider fx:id="saturationSlider" showTickMarks="true" min="0" value="100" max="200"   minWidth="100"/>
-                        <Label fx:id="saturationLabel"  styleClass="labra"/>
+                        <Slider fx:id="saturationSlider" showTickMarks="true" min="0" value="100" max="200"
+                                minWidth="100"/>
+                        <Label fx:id="saturationLabel" styleClass="labra"/>
 
                         <VBox minHeight="10"/>
 
                         <Label styleClass="labra">Value</Label>
-                        <Slider fx:id="valueSlider" showTickMarks="true" min="0" value="100" max="200"  minWidth="100"/>
+                        <Slider fx:id="valueSlider" showTickMarks="true" min="0" value="100" max="200" minWidth="100"/>
                         <Label fx:id="valueLabel" styleClass="labra"/>
 
                     </VBox>

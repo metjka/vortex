@@ -1,11 +1,15 @@
 .block {
     -fx-text-fill: black;
-    -fx-border-color: black;
-    -fx-effect: dropshadow(two-pass-box, rgba(0, 0, 0, 0.8), 10, 0.0, 3, 3)
+    -fx-border-color: #337da2;
+    -fx-effect: dropshadow(two-pass-box, rgba(0, 0, 0, 0.5), 15, 0.0, 2, 2)
 }
 
 .activated .block {
     -fx-effect: dropshadow(two-pass-box, beige, 10, 0.0, 0, 0)
+}
+
+.blockcontent {
+    -fx-padding: 3 3 3 3;
 }
 
 .nested {
@@ -15,12 +19,11 @@
     -fx-border-radius: 7px;
 }
 
-.invalid .block {
-    -fx-border-color: red;
-}
-
 .block .header {
+    -fx-background-color: #bd6f38;
     -fx-text-fill: black;
+    -fx-background-radius: 3 3 0 0;
+    -fx-border-radius: 3 3 0 0;
 }
 
 .block .title {
@@ -31,20 +34,10 @@
     -fx-text-fill: black;
 }
 
-.function.block {
-    -fx-background-color: #E97F02;
-    -fx-background-radius: 7px;
-    -fx-border-radius: 9px;
-}
-
-.function.nested {
-    -fx-background-color: #E97F02;
-}
-
 .value.block {
-    -fx-background-color: rgba(87, 85, 85, 0.5);
-    -fx-background-radius: 7px;
-    -fx-border-radius: 7px;
+    -fx-background-color: rgba(69, 69, 69, 0.5);
+    -fx-background-radius: 3px;
+    -fx-border-radius: 3px;
 }
 
 .value.nested {
@@ -216,3 +209,21 @@ Lane .padding {
     -fx-background-color: #3d1d1d;
 }
 
+.combo-box .list-cell {
+    -fx-background: #593c3d;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-padding: 3 0 2 7;
+    -fx-cell-size: 1.66667em;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover {
+    -fx-background: -fx-accent;
+    -fx-background-color: -fx-selection-bar;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover {
+    -fx-background-color: #ff727a;
+    -fx-text-fill: -fx-text-inner-color;
+}

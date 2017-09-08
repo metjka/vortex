@@ -1,4 +1,4 @@
-package io.metjka.vortex.ui;
+package io.metjka.vortex.ui.blocks;
 
 import javafx.event.EventHandler;
 import javafx.event.EventType;
