@@ -44,10 +44,9 @@ class Connection private constructor() : CubicCurve(), ChangeListener<Transform>
         setStartPosition(startDot?.getAttachmentPoint())
         setEndPosition(startDot?.getAttachmentPoint())
 
-        startDot?.onUpdate()
+//        startDot?.onUpdate()
         invalidateAnchorPositions()
     }
-
 
     fun remove() {
         startDot?.localToSceneTransformProperty()?.removeListener(this)

@@ -9,10 +9,10 @@ import javafx.scene.shape.Circle
 import java.util.*
 
 class OutputDot<T>(block: NodeBlock) : ConnectionDot(block), Target, ComponentLoader {
-    @FXML
-    lateinit var circle: Circle
 
-    val typedValue: T? = null
+    @FXML lateinit var circle: Circle
+
+    var typedValue: T? = null
 
     val connections: MutableList<Connection> = mutableListOf()
 
@@ -40,20 +40,12 @@ class OutputDot<T>(block: NodeBlock) : ConnectionDot(block), Target, ComponentLo
         }
     }
 
-    override fun hasConnection(): Boolean {
-        return connections.isNotEmpty()
-    }
-
     override fun getAttachmentPoint(): Point2D {
         return topLevelPane.sceneToLocal(localToScene(Point2D(0.0, 0.0)))
     }
 
     override fun getContainer(): NodeBlockContainer {
         return block.topLevelPane
-    }
-
-    fun onUpdate() {
-//        block.update()
     }
 
     override fun removeConnections() {
@@ -66,4 +58,18 @@ class OutputDot<T>(block: NodeBlock) : ConnectionDot(block), Target, ComponentLo
     override fun getAssociatedDot(): ConnectionDot {
         return this
     }
+
+    fun setValue(value: T) {
+        typedValue = value
+        block.sendUpdateDownStream()
+    }
+
+    fun getValue(): T? {
+        return typedValue
+    }
+
+    override fun hasConnection(): Boolean {
+        return connections.isNotEmpty()
+    }
+
 }

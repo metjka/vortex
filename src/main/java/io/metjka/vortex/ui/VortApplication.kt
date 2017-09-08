@@ -1,5 +1,6 @@
 package io.metjka.vortex.ui
 
+import io.metjka.vortex.ui.blocks.MathBlock
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.text.Font
@@ -45,5 +46,12 @@ class VortApplication : Application() {
         primaryStage?.show()
 
         toplevelPane.requestFocus()
+
+        toplevelPane.addBlock(MathBlock(toplevelPane))
+        initApp(toplevelPane)
+    }
+
+    fun initApp(toplevelPane: TopLevelPane) {
+        toplevelPane.addBlock(MathBlock(toplevelPane))
     }
 }

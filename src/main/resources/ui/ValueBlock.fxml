@@ -23,7 +23,7 @@
             <BorderPane>
                 <left>
                     <StackPane alignment="BOTTOM_LEFT">
-                        <TextField maxHeight="27.0" maxWidth="-Infinity" minHeight="27" minWidth="-Infinity"
+                        <TextField fx:id="numberInputTextField" maxHeight="27.0" maxWidth="-Infinity" minHeight="27" minWidth="-Infinity"
                                    prefHeight="27.0" prefWidth="120.0" styleClass="inputValue"/>
                         <padding>
                             <Insets bottom="3.0" left="3.0" top="3.0"/>

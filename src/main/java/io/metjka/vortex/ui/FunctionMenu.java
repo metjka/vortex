@@ -1,9 +1,6 @@
 package io.metjka.vortex.ui;
 
-import io.metjka.vortex.ui.blocks.ConstantBlock;
-import io.metjka.vortex.ui.blocks.DragContext;
-import io.metjka.vortex.ui.blocks.NodeBlock;
-import io.metjka.vortex.ui.blocks.NodeTestBlock;
+import io.metjka.vortex.ui.blocks.*;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
@@ -71,9 +68,12 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
         Button closeButton = new MenuButton("Close", bm -> close(bm));
         closeButton.getStyleClass().add("escape");
 
-        Button outputBlock = new MenuButton("Outputblock", bm -> addBlock(new NodeTestBlock(parent)));
-        Button mathBlock = new MenuButton("Constant block", bm -> addBlock(new ConstantBlock(parent)));
-//        Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ConstantBlock(parent)));
+        Button imageBlock = new MenuButton("Preview", bm -> addBlock(new NodeTestBlock(parent)));
+        Button constantBlock = new MenuButton("Value", bm -> addBlock(new ValueBlock(parent)));
+        Button mathBlock = new MenuButton("Math", bm -> addBlock(new MathBlock(parent)));
+        Button resultBlock = new MenuButton("Math result", bm -> addBlock(new ResultBlock(parent)));
+
+//        Button constantBlock = new MenuButton("Constant", bm -> addBlock(new ValueBlock(parent)));
 //        Button node = new MenuButton("Node", bm -> addBlock(new NodeTestBlock(parent)));
 //        Button imageBlock = new MenuButton("Image", bm -> addBlock(new ImageBlock(parent)));
 //        Button convolutionBlock = new MenuButton("Convolution", bm -> addBlock(new ConvolutionBlock(parent)));
@@ -89,13 +89,8 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
 //        Button hueSaturationBlock = new MenuButton("HSB", bm -> addBlock(new HueSaturationValueBlock(parent)));
 
         utilSpace.getChildren().addAll(
-                closeButton, outputBlock, mathBlock
-//                ,
-//                constantBlock, mathBlock, node
-//                , imageBlock, convolutionBlock, imagePreviewBlock,
-//                invertBlock, greyscaleBlock, sobelBlock, sepiaBlock, rotateBlock, brightnessBlock, gammaBlock,
-//                contrastBlock, hueSaturationBlock
-        );
+                closeButton, constantBlock, mathBlock, imageBlock,
+                resultBlock);
 
         for (Node button : utilSpace.getChildren()) {
             ((Region) button).setMaxWidth(Double.MAX_VALUE);
@@ -129,7 +124,7 @@ public class FunctionMenu extends StackPane implements ComponentLoader {
             block.refreshContainer();
         }
 
-        block.update();
+//        block.update();
         this.blockCounter++;
     }
 

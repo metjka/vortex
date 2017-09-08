@@ -30,6 +30,10 @@ class InputDot<T>(block: NodeBlock, image: Type) : ConnectionDot(block), Compone
         return block.topLevelPane
     }
 
+    fun getOpositeConnectionDot(): OutputDot<*>? {
+        return connection.get().startDot
+    }
+
     override fun removeConnections() {
         if (connection.isPresent) {
             val con = connection.get()
@@ -42,8 +46,6 @@ class InputDot<T>(block: NodeBlock, image: Type) : ConnectionDot(block), Compone
         block.update()
     }
 
-    override fun getAssociatedDot(): ConnectionDot {
-        return this
-    }
+    override fun getAssociatedDot(): ConnectionDot = this
 
 }

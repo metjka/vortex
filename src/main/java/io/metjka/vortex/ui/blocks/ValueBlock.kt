@@ -4,17 +4,25 @@ import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.connections.InputDot
 import io.metjka.vortex.ui.connections.OutputDot
 import javafx.fxml.FXML
+import javafx.scene.control.TextField
 import javafx.scene.layout.Pane
 
-class ConstantBlock(topLevelPane: TopLevelPane) : NodeBlock(topLevelPane, ConstantBlock::class.simpleName) {
+class ValueBlock(topLevelPane: TopLevelPane) : NodeBlock(topLevelPane, ValueBlock::class.simpleName) {
 
-    @FXML
-    lateinit var outputSpace: Pane
+    @FXML lateinit var outputSpace: Pane
+    @FXML lateinit var numberInputTextField: TextField
 
     val outputDot = OutputDot<Number>(this)
 
     init {
         outputSpace.children?.add(0, outputDot)
+        numberInputTextField.text = 0.toString()
+
+        numberInputTextField.textProperty().addListener { a, b, newValue ->
+            if ("" != newValue) {
+                outputDot.setValue(newValue.toInt())
+            }
+        }
     }
 
     override fun update() {
