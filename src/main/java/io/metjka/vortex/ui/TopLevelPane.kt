@@ -1,9 +1,9 @@
 package io.metjka.vortex.ui
 
 import com.google.common.collect.ImmutableMap
+import io.metjka.vortex.ui.blocks.NodeBlock
 import io.metjka.vortex.ui.connections.Connection
 import io.metjka.vortex.ui.connections.ConnectionDot
-import io.metjka.vortex.ui.blocks.NodeBlock
 import io.metjka.vortex.ui.serialize.Bundleable
 import javafx.geometry.BoundingBox
 import javafx.geometry.Bounds

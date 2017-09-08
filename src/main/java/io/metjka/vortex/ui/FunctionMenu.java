@@ -1,6 +1,9 @@
 package io.metjka.vortex.ui;
 
-import io.metjka.vortex.ui.blocks.*;
+import io.metjka.vortex.ui.blocks.ConstantBlock;
+import io.metjka.vortex.ui.blocks.DragContext;
+import io.metjka.vortex.ui.blocks.NodeBlock;
+import io.metjka.vortex.ui.blocks.NodeTestBlock;
 import javafx.animation.ScaleTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;

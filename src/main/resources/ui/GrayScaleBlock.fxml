@@ -5,7 +5,7 @@
     <BorderPane>
 
         <top>
-            <VBox fx:id="inputSpace"  pickOnBounds="false" alignment="CENTER">
+            <VBox fx:id="inputSpace" pickOnBounds="false" alignment="CENTER">
                 <Label styleClass="inputType">Image</Label>
             </VBox>
         </top>

@@ -31,13 +31,13 @@
             </ImageView>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                 <left>
-                    <StackPane fx:id="inputSpace" minHeight="20.0" prefHeight="20.0" BorderPane.alignment="CENTER" />
+                    <StackPane fx:id="inputSpace" minHeight="20.0" prefHeight="20.0" BorderPane.alignment="CENTER"/>
                 </left>
                 <center>
                     <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                         <Label alignment="CENTER" text="Image" textFill="WHITE">
                             <padding>
-                                <Insets left="6.0" />
+                                <Insets left="6.0"/>
                             </padding>
                         </Label>
                     </Pane>

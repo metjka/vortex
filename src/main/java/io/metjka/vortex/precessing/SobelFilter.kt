@@ -19,8 +19,7 @@ class SobelFilter(val fastImage: FastImage) {
         val obsSobelVertical = Observable.fromCallable { convolution.convolve(Convolution.SOBEL_VERTICAL) }
 
 
-
-        val zip = zip(obsSobelHorizontal, obsSobelVertical, BiFunction<FastImage, FastImage,FastImage> { r1, r2 ->
+        val zip = zip(obsSobelHorizontal, obsSobelVertical, BiFunction<FastImage, FastImage, FastImage> { r1, r2 ->
             val fast = FastImage(width, height)
             for (x in 0..width - 1) {
                 for (y in 0..height - 1) {
