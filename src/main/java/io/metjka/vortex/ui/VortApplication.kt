@@ -2,9 +2,12 @@ package io.metjka.vortex.ui
 
 import io.metjka.vortex.ui.blocks.MathBlock
 import javafx.application.Application
+import javafx.fxml.FXMLLoader
+import javafx.scene.Node
 import javafx.scene.Scene
 import javafx.scene.text.Font
 import javafx.stage.Stage
+import java.io.IOException
 import java.util.prefs.Preferences
 
 /**
@@ -54,4 +57,21 @@ class VortApplication : Application() {
     fun initApp(toplevelPane: TopLevelPane) {
         toplevelPane.addBlock(MathBlock(toplevelPane))
     }
+}
+
+
+fun Node.loadXML(name: String) {
+
+    try {
+        val url = javaClass.getResource(String.format("/ui/%s.fxml", name))
+        val fxmlLoader = FXMLLoader(url)
+        fxmlLoader.setRoot(this)
+        fxmlLoader.setController(this)
+
+        fxmlLoader.load<Any>()
+    } catch (e: IOException) {
+        throw RuntimeException("A required FXML file, $name, could not be loaded.", e)
+    }
+
+
 }

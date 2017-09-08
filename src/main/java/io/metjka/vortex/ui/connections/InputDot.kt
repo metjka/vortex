@@ -1,20 +1,20 @@
 package io.metjka.vortex.ui.connections
 
-import io.metjka.vortex.ui.ComponentLoader
 import io.metjka.vortex.ui.NodeBlockContainer
 import io.metjka.vortex.ui.Type
 import io.metjka.vortex.ui.blocks.NodeBlock
+import io.metjka.vortex.ui.loadXML
 import javafx.fxml.FXML
 import javafx.geometry.Point2D
 import javafx.scene.shape.Circle
 import java.util.*
 
-class InputDot<T>(block: NodeBlock, image: Type) : ConnectionDot(block), ComponentLoader, Target {
+class InputDot<T>(block: NodeBlock, image: Type) : ConnectionDot(block), Target {
     @FXML
     lateinit var circle: Circle
 
     init {
-        loadFXML("InputDot")
+        loadXML("InputDot")
 
     }
 

@@ -1,14 +1,14 @@
 package io.metjka.vortex.ui.connections
 
-import io.metjka.vortex.ui.ComponentLoader
 import io.metjka.vortex.ui.NodeBlockContainer
 import io.metjka.vortex.ui.blocks.NodeBlock
+import io.metjka.vortex.ui.loadXML
 import javafx.fxml.FXML
 import javafx.geometry.Point2D
 import javafx.scene.shape.Circle
 import java.util.*
 
-class OutputDot<T>(block: NodeBlock) : ConnectionDot(block), Target, ComponentLoader {
+class OutputDot<T>(block: NodeBlock) : ConnectionDot(block), Target {
 
     @FXML lateinit var circle: Circle
 
@@ -17,7 +17,7 @@ class OutputDot<T>(block: NodeBlock) : ConnectionDot(block), Target, ComponentLo
     val connections: MutableList<Connection> = mutableListOf()
 
     init {
-        loadFXML("InputDot")
+        loadXML("InputDot")
     }
 
     fun getOppositeConnectionDots(): ArrayList<InputDot<*>> {

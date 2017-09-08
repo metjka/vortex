@@ -1,21 +1,21 @@
 package io.metjka.vortex.ui.blocks
 
-import io.metjka.vortex.ui.ComponentLoader
 import io.metjka.vortex.ui.TopLevelPane
 import io.metjka.vortex.ui.connections.ConnectionDot
 import io.metjka.vortex.ui.connections.InputDot
 import io.metjka.vortex.ui.connections.OutputDot
+import io.metjka.vortex.ui.loadXML
 import javafx.geometry.BoundingBox
 import javafx.geometry.Bounds
 import javafx.scene.layout.StackPane
 import java.util.stream.Collectors
 
-abstract class NodeBlock(val topLevelPane: TopLevelPane, blockName: String?) : StackPane(), ComponentLoader {
+abstract class NodeBlock(val topLevelPane: TopLevelPane, blockName: String?) : StackPane() {
 
     val dragContext: DragContext
 
     init {
-        loadFXML(blockName)
+        loadXML(blockName!!)
 
         topLevelPane.attachBlock(this)
         isPickOnBounds = false
