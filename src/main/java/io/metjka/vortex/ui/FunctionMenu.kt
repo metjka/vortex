@@ -3,20 +3,15 @@ package io.metjka.vortex.ui
 import io.metjka.vortex.ui.blocks.*
 import javafx.animation.ScaleTransition
 import javafx.fxml.FXML
-import javafx.geometry.Bounds
 import javafx.geometry.Point2D
-import javafx.scene.Node
 import javafx.scene.control.Accordion
-import javafx.scene.control.Button
-import javafx.scene.control.TitledPane
 import javafx.scene.input.MouseEvent
 import javafx.scene.input.TouchPoint
 import javafx.scene.layout.Pane
 import javafx.scene.layout.Region
 import javafx.scene.layout.StackPane
 import javafx.util.Duration
-
-import java.util.ArrayList
+import java.util.*
 import java.util.function.Consumer
 
 class FunctionMenu(byMouse: Boolean, private val parent: TopLevelPane) : StackPane() {
@@ -24,7 +19,7 @@ class FunctionMenu(byMouse: Boolean, private val parent: TopLevelPane) : StackPa
     /**
      * The context that deals with dragging for this Menu
      */
-    protected var dragContext: DragContext
+    private var dragContext: DragContext = DragContext(this)
 
     /**
      * Keep track of how many blocks are placed from this menu
@@ -41,14 +36,13 @@ class FunctionMenu(byMouse: Boolean, private val parent: TopLevelPane) : StackPa
     lateinit var utilSpace: Pane
 
     init {
-        this.dragContext = DragContext(this)
         loadXML("FunctionMenu")
         // drop all synthesized mouse events
         categoryContainer.addEventFilter(MouseEvent.ANY) { e -> if (e.isSynthesized) e.consume() }
 
         // Hiding all other categories on expanding one of them.
         val allCatPanes = ArrayList(categoryContainer.panes)
-        categoryContainer.expandedPaneProperty().addListener { e ->
+        categoryContainer.expandedPaneProperty().addListener { _ ->
             val expPane = categoryContainer.expandedPane
             if (expPane != null) {
                 categoryContainer.panes.retainAll(expPane)
@@ -58,10 +52,10 @@ class FunctionMenu(byMouse: Boolean, private val parent: TopLevelPane) : StackPa
             }
         }
 
-        this.categorySpace?.children?.add(categoryContainer)
+        this.categorySpace.children?.add(categoryContainer)
 
         /* Create content for utilSpace. */
-        val closeButton = MenuButton("Close", Consumer{ bm -> close(bm!!) })
+        val closeButton = MenuButton("Close", Consumer{ bm -> close(bm) })
         closeButton.styleClass.add("escape")
 
         val imageBlock = MenuButton("Preview", Consumer{ addBlock(NodeTestBlock(parent)) })
@@ -84,11 +78,11 @@ class FunctionMenu(byMouse: Boolean, private val parent: TopLevelPane) : StackPa
         //        Button contrastBlock = new MenuButton("Contrast", bm -> addBlock(new ContrastBlock(parent)));
         //        Button hueSaturationBlock = new MenuButton("HSB", bm -> addBlock(new HueSaturationValueBlock(parent)));
 
-        utilSpace?.children?.addAll(
+        utilSpace.children?.addAll(
                 closeButton, constantBlock, mathBlock, imageBlock,
                 resultBlock)
 
-        for (button in utilSpace?.children!!) {
+        for (button in utilSpace.children!!) {
             (button as Region).maxWidth = java.lang.Double.MAX_VALUE
         }
 
@@ -99,7 +93,7 @@ class FunctionMenu(byMouse: Boolean, private val parent: TopLevelPane) : StackPa
         val opening = ScaleTransition(if (byMouse) Duration.ONE else Duration.millis(300.0), this)
         opening.toX = 1.0
         opening.toY = 1.0
-        opening.setOnFinished { e -> this.isMouseTransparent = false }
+        opening.setOnFinished { _ -> this.isMouseTransparent = false }
         opening.play()
     }
 
@@ -141,7 +135,7 @@ class FunctionMenu(byMouse: Boolean, private val parent: TopLevelPane) : StackPa
         val closing = ScaleTransition(if (byMouse) Duration.ONE else Duration.millis(300.0), this)
         closing.toX = 0.3
         closing.toY = 0.1
-        closing.setOnFinished { e -> parent.removeMenu(this) }
+        closing.setOnFinished { parent.removeMenu(this) }
         closing.play()
     }
 }
